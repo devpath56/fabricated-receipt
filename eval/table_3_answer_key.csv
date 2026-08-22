@@ -1,0 +1,46 @@
+invoice_id,check,expected,why
+INV-1001,duplicate,PASS,
+INV-1001,job_status,PASS,
+INV-1001,vendor,PASS,
+INV-1002,duplicate,PASS,
+INV-1002,job_status,PASS,
+INV-1002,vendor,FAIL,"vendor_name ""Skyline Structural Grp."" != canonical for V001"
+INV-1003,duplicate,PASS,
+INV-1003,job_status,PASS,
+INV-1003,vendor,PASS,
+INV-1004,duplicate,PASS,
+INV-1004,job_status,PASS,
+INV-1004,vendor,PASS,
+INV-1005,duplicate,PASS,
+INV-1005,job_status,PASS,
+INV-1005,vendor,PASS,
+INV-1006,duplicate,FAIL,"exact: same invoice_number, fms_id, billing_period and amount as INV-1005, which is PAID"
+INV-1006,job_status,PASS,
+INV-1006,vendor,FAIL,"vendor_name ""Northgate Civil"" != canonical for V004"
+INV-1007,duplicate,PASS,
+INV-1007,job_status,PASS,
+INV-1007,vendor,PASS,
+INV-1008,duplicate,FAIL,"fuzzy: different invoice_number, same fms_id, vendor_id, billing_period and amount as INV-1007"
+INV-1008,job_status,PASS,
+INV-1008,vendor,FAIL,"vendor_name ""Bayside Interiors and Finishes"" != canonical for V005 (& -> and)"
+INV-1009,duplicate,PASS,
+INV-1009,job_status,PASS,
+INV-1009,vendor,PASS,
+INV-1010,duplicate,PASS,
+INV-1010,job_status,PASS,
+INV-1010,vendor,PASS,
+INV-1011,duplicate,PASS,
+INV-1011,job_status,PASS,
+INV-1011,vendor,FAIL,"vendor_name ""Meridian H.V.A.C. Svcs"" != canonical for V007"
+INV-1012,duplicate,PASS,
+INV-1012,job_status,PASS,
+INV-1012,vendor,PASS,
+INV-1013,duplicate,PASS,
+INV-1013,job_status,FAIL,BX024-011 current_phase is (Completed)
+INV-1013,vendor,PASS,
+INV-1014,duplicate,PASS,
+INV-1014,job_status,FAIL,E23-0010 current_phase is (Cancelled)
+INV-1014,vendor,PASS,
+INV-1015,duplicate,PASS,
+INV-1015,job_status,PASS,
+INV-1015,vendor,FAIL,"vendor_name ""Empire Electric Systems"" != canonical for V003 (dropped Electrical/Corp.)"

@@ -78,8 +78,13 @@ Four files, and the split between the last two is deliberate:
 |---|---|
 | [`sql/table_3_invoices.sql`](../sql/table_3_invoices.sql) | the DDL |
 | [`sql/table_3_invoices_data.sql`](../sql/table_3_invoices_data.sql) | the 15 rows as INSERTs, with the per-invoice grounding as comments |
-| [`data/table_3_invoices.csv`](../data/table_3_invoices.csv) | the same 15 rows, 8 columns, nothing else — **this is what the pipeline reads** |
-| [`data/table_3_answer_key.csv`](../data/table_3_answer_key.csv) | 45 rows: every invoice x every check, with the expected verdict |
+| [`eval/table_3_invoices.csv`](../eval/table_3_invoices.csv) | the same 15 rows, 8 columns, nothing else — **this is what the pipeline reads** |
+| [`eval/table_3_answer_key.csv`](../eval/table_3_answer_key.csv) | 45 rows: every invoice x every check, with the expected verdict |
+
+They live in `eval/`, not `data/`. `.gitignore` carries `data/*.csv` because that is where
+`scripts/pull.mjs` caches the downloaded NYC files — a first attempt put them there and git
+silently dropped both, leaving this document linking to files the repo did not have. `eval/` is
+where this repo already keeps committed ground truth.
 
 **The answer key is a separate file on purpose.** A column of expected verdicts sitting inside the
 invoice CSV is an answer leaking into the model's input. Ground truth is only ground truth while
@@ -204,5 +209,6 @@ where a current-state claim is made.
 |---|---|
 | (a) or (b) in Decision 14 — is the demo about the check or the schema? | product |
 | Should `table_1_current_projects` be a materialised view or a nightly load? 10 periods exist and the newest wins; nothing yet decides what happens when a project disappears between periods | eng |
+| **`eval/vendor-aliases.seed.json` already holds REAL vendor names and this handoff did not use them.** 1,036 distinct raw names from NYC Capital Awards (`n6ej-pebd`), 48 clusters with more than one spelling, $40.77M — 10.9% of dollars — sitting in those clusters. The 7 vendors here are invented, so check 2 is graded against drift that was authored rather than observed. Rebuilding the 15 rows on real names would make the vendor check the only one in the demo whose failures are real | product + eng |
 | Vendor resolution has no data to resolve against. A real `vendor_master` would give it work; inline `vendor_id` means the demo compares two columns in one row | product |
 | The 94 non-positive budgets and the 39 multi-agency IDs are real rows a live pipeline hits. Are they in scope, or filtered out with the filter stated? | product |
