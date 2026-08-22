@@ -54,10 +54,16 @@ export function checkDeck(s) {
   }
 
   // 3. the token stops on the spine must land on real phase centres
+  // Derive the spine's geometry from the markup, never from constants that go stale
+  // when the figure is redrawn. An empty centre set is itself a failure.
   const centres = new Set();
-  for (const m of b.matchAll(/<rect x="210" y="([\d.]+)" width="420" height="60"/g))
-    centres.add(Number(m[1]) + 30);
-  const START_CY = 76;
+  const spine = /<g class="spine">([\s\S]*?)<\/g>\s*\n\s*<g stroke/.exec(b);
+  if (!spine) bad.push('spine group not found in #wf');
+  else for (const m of spine[1].matchAll(/<rect x="[\d.]+" y="([\d.]+)" width="[\d.]+" height="([\d.]+)"/g))
+    centres.add(Number(m[1]) + Number(m[2]) / 2);
+  if (!centres.size) bad.push('no phase rects found in the #wf spine');
+  const START_CY = Number((/<g class="tok"><circle cx="[\d.]+" cy="([\d.]+)"/.exec(b) || [])[1] ?? NaN);
+  if (!Number.isFinite(START_CY)) bad.push('token start cy not found in #wf');
   for (const m of (wf ? wf[1].matchAll(/tok:(\d+)/g) : []))
     if (!centres.has(Number(m[1]) + START_CY))
       bad.push(`tok:${m[1]} -> y=${Number(m[1]) + START_CY} is not a phase centre (${[...centres].sort((a, c) => a - c)})`);
@@ -86,8 +92,8 @@ const src = readFileSync('docs/deck.html', 'utf8');
 if (process.argv.includes('--selftest')) {
   // NEGATIVE CONTROLS: each mutation must be caught by a different clause above.
   const cases = [
-    ['class the step machine names is renamed', s => s.replace('class="ph ph6"', 'class="ph phZZ"')],
-    ['a token stop no longer lands on a phase', s => s.replace('tok:470', 'tok:999')],
+    ['class the step machine names is renamed', s => s.replace('class="ph ph2"', 'class="ph phZZ"')],
+    ['a token stop no longer lands on a phase', s => s.replace('tok:164', 'tok:9999')],
     ['a theme token is removed', s => s.replace('  --ask:#ffcf25;', '')],
     ['a marker definition is dropped', s => s.replace(/<marker id="ah-deny"[\s\S]*?<\/marker>/, '')],
     ['the N key binding is removed', s => s.replace("e.key === 'n'", "e.key === 'Q'")],
@@ -95,9 +101,18 @@ if (process.argv.includes('--selftest')) {
     ['a shape leaves the persona diagram viewBox', s => s.replace('<rect x="344" y="196" width="104"', '<rect x="344" y="1196" width="104"')],
     ['a class the persona animation drives is renamed', s => s.replace('class="wave"', 'class="waveXX"')],
   ];
+  // A control whose replace() matches nothing is a NO-OP, and a no-op is
+  // indistinguishable from a miss unless it is checked separately. Both times a
+  // figure was redrawn, controls went stale this way and reported MISSED.
   let ok = true;
   for (const [name, mutate] of cases) {
-    const found = checkDeck(mutate(src));
+    const mutated = mutate(src);
+    if (mutated === src) {
+      console.log(`STALE    ${name} -> its target string no longer exists; the control mutated nothing`);
+      ok = false;
+      continue;
+    }
+    const found = checkDeck(mutated);
     const caught = found.length > 0;
     console.log(`${caught ? 'caught  ' : 'MISSED  '} ${name}${caught ? ` -> ${found[0]}` : ''}`);
     if (!caught) ok = false;
