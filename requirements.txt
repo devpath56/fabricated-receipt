@@ -1,0 +1,5 @@
+streamlit>=1.32
+pandas>=2.0
+# optional, better fuzzy matching for vendor_resolution.py -- falls back
+# to stdlib difflib automatically if not installed
+rapidfuzz>=3.0
