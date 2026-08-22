@@ -1,0 +1,78 @@
+<meta charset="utf-8">
+<title>Check 2 — Vendor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="shell.css">
+
+<main class="app">
+  <header class="bar">
+    <div>
+      <span class="bar__k">Check 2 of 4</span>
+      <h1 class="bar__t">Vendor</h1>
+    </div>
+    <p class="bar__q">Is this the correct vendor? Exactly one, or halt.</p>
+  </header>
+
+  <section data-state="loading" class="st">
+    <div class="sk sk--lg" aria-hidden="true"></div>
+    <div class="sk" aria-hidden="true"></div>
+    <div class="sk sk--sm" aria-hidden="true"></div>
+    <p class="st__say" role="status">Resolving the payee name against 986 vendor records…</p>
+  </section>
+
+  <section data-state="empty" class="st">
+    <h2 class="st__h">No vendor name to resolve</h2>
+    <p class="st__p">Check 1 found no readable payee on this document, so there is nothing to match.
+      Resolve intake first.</p>
+    <p class="mono st__hint">986 vendors · 48 carry more than one real spelling</p>
+  </section>
+
+  <section data-state="error" class="st">
+    <h2 class="st__h st__h--bad">The vendor master could not be read</h2>
+    <p class="st__p"><span class="mono">data/vendors.csv</span> is absent. Nothing was matched, and
+      no vendor was chosen — this is a missing input, not a verdict.</p>
+    <p class="st__p mono dim">regenerate with: node scripts/gen-csv.mjs</p>
+    <button class="btn" type="button">Retry</button>
+  </section>
+
+  <section data-state="success" class="st">
+    <div class="verdict verdict--ok">
+      <span class="verdict__k">Resolved</span>
+      <span class="verdict__n">candidate set = 1</span>
+    </div>
+    <div class="tw">
+      <table class="tbl">
+        <caption class="tbl__cap">On the invoice: <span class="mono">Brighter Choice Community School</span></caption>
+        <thead><tr><th scope="col">Vendor</th><th scope="col">Canonical name</th><th scope="col">Spellings</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">V0560</th><td>Brighter Choice Community School</td><td class="num">1</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">One record, one spelling. Check 3 can now search this vendor's whole payment
+      history rather than one string.</p>
+  </section>
+
+  <section data-state="partial" class="st">
+    <div class="verdict verdict--ask">
+      <span class="verdict__k">Comment</span>
+      <span class="verdict__n">candidate set = 2 — halted</span>
+    </div>
+    <div class="tw">
+      <table class="tbl">
+        <caption class="tbl__cap">On the invoice: <span class="mono">PUBLIC SCHOOL 44</span></caption>
+        <thead><tr><th scope="col">Vendor</th><th scope="col">Spelling on file</th><th scope="col">Paid to date</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">V0150</th><td>Public School 44</td><td class="mono num">130,899.15</td></tr>
+          <tr><th scope="row">V0150</th><td>PUBLIC SCHOOL 44</td><td class="mono num">0.00</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note note--ask"><strong>Two records match this name and the system will not pick.</strong>
+      It asks which, because guessing here is the $340,000 error. Resolve them and check 3 sees a
+      payment history a literal match would have missed.</p>
+    <p class="mono st__hint">48 of 986 vendors carry more than one spelling · $40,767,000 across them</p>
+  </section>
+</main>
+<script src="shell.js"></script>

@@ -1,0 +1,85 @@
+<meta charset="utf-8">
+<title>Check 1 — Intake</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="shell.css">
+
+<main class="app">
+  <header class="bar">
+    <div>
+      <span class="bar__k">Check 1 of 4</span>
+      <h1 class="bar__t">Intake</h1>
+    </div>
+    <p class="bar__q">Is this invoice complete enough to check?</p>
+  </header>
+
+  <!-- STATE: loading -->
+  <section data-state="loading" class="st">
+    <div class="sk sk--lg" aria-hidden="true"></div>
+    <div class="sk" aria-hidden="true"></div>
+    <div class="sk sk--sm" aria-hidden="true"></div>
+    <p class="st__say" role="status">Reading the document…</p>
+  </section>
+
+  <!-- STATE: empty -->
+  <section data-state="empty" class="st">
+    <h2 class="st__h">No invoice selected</h2>
+    <p class="st__p">Pick an invoice from the queue to run intake against its scanned document.</p>
+    <p class="mono st__hint">600 invoices loaded · 72 carry a missing field</p>
+  </section>
+
+  <!-- STATE: error -->
+  <section data-state="error" class="st">
+    <h2 class="st__h st__h--bad">The document could not be read</h2>
+    <p class="st__p">OCR returned no text for <span class="mono">INV-00417</span>. This is not a
+      verdict on the invoice — nothing was checked.</p>
+    <ul class="st__list">
+      <li>The file may be a scan of a blank page</li>
+      <li>The file may be missing at <span class="mono">docs/invoices/INV-00417.pdf</span></li>
+    </ul>
+    <button class="btn" type="button">Retry</button>
+  </section>
+
+  <!-- STATE: success -->
+  <section data-state="success" class="st">
+    <div class="verdict verdict--ok">
+      <span class="verdict__k">Approve</span>
+      <span class="verdict__n">4 / 4 fields present</span>
+    </div>
+    <table class="tbl">
+      <caption class="tbl__cap"><span class="mono">INV-00001</span> · read by OCR</caption>
+      <thead><tr><th scope="col">Required field</th><th scope="col">Read as</th><th scope="col">State</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">po_id</th><td class="mono">P-3RV105L</td><td><span class="pill pill--ok">present</span></td></tr>
+        <tr><th scope="row">vendor_name</th><td>Brighter Choice Community School</td><td><span class="pill pill--ok">present</span></td></tr>
+        <tr><th scope="row">amount</th><td class="mono num">33,256.99</td><td><span class="pill pill--ok">present</span></td></tr>
+        <tr><th scope="row">period</th><td class="mono">202605</td><td><span class="pill pill--ok">present</span></td></tr>
+      </tbody>
+    </table>
+    <p class="note">Every field was read from the document, not from the database row. Intake
+      exists so no later check answers a question about a document nobody read.</p>
+  </section>
+
+  <!-- STATE: partial — the low-confidence state the deck promised -->
+  <section data-state="partial" class="st">
+    <div class="verdict verdict--ask">
+      <span class="verdict__k">Comment</span>
+      <span class="verdict__n">2 / 4 fields present</span>
+    </div>
+    <table class="tbl">
+      <caption class="tbl__cap"><span class="mono">INV-00417</span> · read by OCR</caption>
+      <thead><tr><th scope="col">Required field</th><th scope="col">Read as</th><th scope="col">State</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">po_id</th><td class="mono dim">—</td><td><span class="pill pill--ask">absent</span></td></tr>
+        <tr><th scope="row">vendor_name</th><td>Brooklyn Bridge Park</td><td><span class="pill pill--ok">present</span></td></tr>
+        <tr><th scope="row">amount</th><td class="mono dim">unreadable</td><td><span class="pill pill--ask">absent</span></td></tr>
+        <tr><th scope="row">period</th><td class="mono">202605</td><td><span class="pill pill--ok">present</span></td></tr>
+      </tbody>
+    </table>
+    <p class="note note--ask"><strong>It does not guess and it does not refuse.</strong> Two fields
+      are named as absent and the invoice goes back. <span class="mono">confidence 0.50 — 2 of 4
+      checks could run</span></p>
+  </section>
+</main>
+<script src="shell.js"></script>
