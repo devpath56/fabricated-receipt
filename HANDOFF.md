@@ -19,7 +19,8 @@ git clone https://github.com/devpath56/fabricated-receipt && cd fabricated-recei
 node scripts/pull.mjs        # 4 datasets, no auth, no key, no dependencies
 node scripts/failures.mjs    # reproduces both failures; exits non-zero if the numbers drift
 node scripts/grain.mjs       # proves no table in this project has a unique key
-node scripts/findings.mjs    # the joinability, status and conflict findings above
+node scripts/findings.mjs    # joinability, status and conflict findings — READ THIS FIRST
+node scripts/check-docs.mjs  # fails if these docs name a dropped dataset or a retired id
 node scripts/seed-aliases.mjs # emits the vendor-alias gold-set seed
 node scripts/check-deck.mjs   # guards docs/deck.html; --selftest proves the check can fail
 ```
@@ -130,7 +131,7 @@ fourth: *"unique project and budget line combination"*.
 | Citywide Budget and Schedule | [`fb86-vt7u`](https://data.cityofnewyork.us/d/fb86-vt7u) | `budget_and_schedule.json` | 5,801 | the bridge — budget, spend, phase, schedule, agency. Both `fms_id` and `pid` |
 | Budget Spend History and Variance | [`qj5n-h5qp`](https://data.cityofnewyork.us/d/qj5n-h5qp) | `spend_history.json` | 53,495 | monthly snapshots. Earliest = original budget; `budget_variance` = delta vs prior month |
 | Capital Awards | [`n6ej-pebd`](https://data.cityofnewyork.us/d/n6ej-pebd) | `capital_awards.json` | 1,256 | **free-text recipient names + dollars** — the entity-resolution surface |
-| Capital Project Schedules and Budgets | [`2xh6-psuq`](https://data.cityofnewyork.us/d/2xh6-psuq) | `project_schedules.json` | 13,437 | **phase + status + budget vs estimate vs actual** — the obligation-semantics surface |
+| ~~Capital Project Schedules~~ | ~~`2xh6-psuq`~~ | ~~`project_schedules.json`~~ | 13,437 | **DROPPED** — shares no field with the spine, and `current_phase` already carries what we wanted. See §3b |
 
 API base `https://data.cityofnewyork.us/resource/<id>.json`. No auth, no key, no rate limit that
 matters at this size.
@@ -141,7 +142,7 @@ matters at this size.
 |---|---|
 | "the Capital Projects family is all keyed on FMS ID" | `2cmn-uidm` (Capital Commitment Plan) has **no `fms_id` column** — keys on `budline`, `projtype`, `funding`. It is **not used** in this build |
 | "vendor entity resolution has no anchor in NYC data" | **`n6ej-pebd` does** — 48 real alias clusters, $40,767,000, zero fabrication |
-| "retention / obligation semantics have no NYC anchor" | **partly wrong.** No retention, but `2xh6-psuq` carries a real 3-value status enum and budget-vs-estimate-vs-actual |
+| "retention / obligation semantics have no NYC anchor" | **half right.** No retention — and the dataset we reached for, ~~`2xh6-psuq`~~, turned out not to join at all. Job status comes from `current_phase` on the spine instead |
 
 ---
 
@@ -183,7 +184,7 @@ NYC documents `fms_id` as the primary key. Measured across 5,801 rows: **5,608 d
 | `budget_and_schedule` | 5,801 | `fms_id` *(documented PK)* | **5,608** | **193 collisions** |
 | `spend_history` | 53,495 | `fms_id + year_month_reported` | 52,910 | 585 duplicate month-snapshots |
 | `capital_awards` | 1,256 | `fiscal_year + org + project + district` | 1,166 | 90 indistinguishable rows |
-| `project_schedules` | 13,437 | `building + phase + type` | 8,754 | no key found at 3 columns |
+| ~~`project_schedules`~~ *(dropped)* | 13,437 | `building + phase + type` | 8,754 | no key found at 3 columns — and no key to the spine either |
 
 **This is the strongest single fact in the project.** The publisher states a primary key; one line of
 code disproves it. Full detail in [`docs/GRAIN.md`](docs/GRAIN.md).
@@ -208,17 +209,16 @@ Seed lives at `eval/vendor-aliases.seed.json`. **Recall is a lower bound** — i
 punctuation, case and legal suffixes. Anything needing a similarity threshold is deliberately absent;
 finding those is the resolver's job and the seed is the floor it must clear.
 
-## The status enum
+## The status enum — from the DROPPED dataset, kept as record
 
-`project_status_name` in `2xh6-psuq`:
+`project_status_name` in ~~`2xh6-psuq`~~ *(dropped)*:
 
 | value | rows |
 |---|---|
-| `PNS` | 4,789 |
+
 | `In-Progress` | 4,373 |
 | `Complete` | 4,275 |
 
-- **`PNS` is undefined in the data and is the largest bucket.** Any total including it asserts
   something nobody has established.
 - Phases: `Construction` 6,299 · `Design` 1,967 · `Scope` 1,967 · `CM,F&E` 1,911 ·
   `Purch & Install` 1,060 · `F&E` 177 · `CM,Art,F&E` 46 · `CM` 10.
@@ -234,7 +234,7 @@ finding those is the resolver's job and the seed is the floor it must clear.
 ## Two datasets we carried for days do not join
 
 ```
-fb86-vt7u <-> 2xh6-psuq : NO SHARED FIELD
+fb86-vt7u <-> ~~2xh6-psuq~~ *(dropped)* : NO SHARED FIELD
 fb86-vt7u <-> n6ej-pebd : NO SHARED FIELD
 ```
 
@@ -243,7 +243,7 @@ fb86-vt7u <-> n6ej-pebd : NO SHARED FIELD
 | `fb86-vt7u` | **the spine.** The only table with both keys, plus budget, spend and phase |
 | `qj5n-h5qp` | joins on `fms_id` |
 | `n6ej-pebd` | **standalone.** Survives as a vendor-name corpus, nothing more |
-| `2xh6-psuq` | **standalone. Dropped** — school construction keyed on building id, and the field we wanted is already on the spine |
+| ~~`2xh6-psuq`~~ *(dropped)* | **standalone. Dropped** — school construction keyed on building id, and the field we wanted is already on the spine |
 
 ## Job status needs no join
 
@@ -300,49 +300,37 @@ HWHARPERG   pending / design
 
 # 4. The four checks
 
-From the morning sync. Each row is a job the system must do, the **deterministic** check that
-catches it failing, what it costs if uncaught, and whether an off-the-shelf eval exists.
+Each check names the error it catches, the deterministic test that catches it, and what it costs
+when nobody does.
 
-**Six are in demo scope; E6 and E8 are out** — see the scope note under the table.
-
-| # | Job | Deterministic check | $ if uncaught | Plug-in eval |
+| # | Check | The question | Deterministic test | Cost if uncaught |
 |---|---|---|---|---|
-| 1 | Resolve "contractor A" to one vendor entity | Candidate set size must be exactly **1** after normalisation; if >1, halt and ask. Assert no unresolved alias in the payee set | $68k–$270k/yr — 1–4 duplicate payments/yr at the named-incident unit cost | **None finance-specific.** Abt-Buy / Amazon-Google test the technique, not the domain. Use `eval/vendor-aliases.seed.json` as the floor |
-| 2 | Translate question → SQL at the right grain | Parse to AST; assert grain, filters and join type **before** execution. Question says "total" → assert an aggregate exists | Not separately quantifiable — surfaces as 3 or 5 | **BIRD** and **Spider 2.0** for execution accuracy; **BookSQL** for accounting phrasing. The only genuinely plug-and-play items in this column |
-| 3 | Execute join without leaking | Anti-join count on both sides; cardinality contract asserted pre-join (declare 1:N, throw on unexpected 1:1); unmatched rows **and dollars** returned on the answer | 31.2% of payables invisible; fan-out exposure 7.0% of joined dollars | **Nothing off-the-shelf. This is the gap** — our own gold set is the eval |
-| 4 | Tie out to the source total | Returned rows + dropped rows must equal source total within tolerance. **Fail closed** — refuse, don't degrade | Prevents the wrong-number-served case entirely. Value = the avoided incident | **None.** Reconciliation tolerance is a business decision, not a benchmark |
-| 5 | Apply obligation semantics — status, approved vs pending, already-paid, change orders | Assert every dollar carries a status enum; **refuse to total across mixed statuses** without an explicit filter | ~$6M retention exposure at 5% of base; realistic annual error a fraction of that | **None.** BookSQL's accounting structure is closest and covers neither retention nor change orders |
-| 6 | Render faithfully | Narration graded against the **executed AST** — every claim must map to a clause. "All projects" with an inner join = unsupported | $15.6k–$31k/yr per accountant | **RAGAS** faithfulness, **TRUE**, or **SelfCheckGPT** — adapt with the AST as evidence rather than retrieved text |
+| **1** | Intake | Is the invoice complete enough to check at all? | Every required field present and readable. Any absent → **cannot evaluate**, name the fields | **$25,000 / yr** in rework |
+| **2** | Vendor | Is this the correct vendor? | Candidate set must resolve to **exactly one** entity after normalisation. If >1, halt and ask — never pick | **$340,000** per wrong payment |
+| **3** | Paid before | Has this vendor already been paid for this? | Search **every** spelling resolved by check 2, against `po_id` + amount + period. A prior `paid` row is a hard deny | **$272,000 / yr** |
+| **4** | Job status | Is the job still live? | Normalise `current_phase`, then: `Completed`/`Cancelled` → deny; **more than one phase for the key → comment** | **$10,000,000** per mis-coded job |
 
-**Jobs 3 and 4 are where nothing exists off the shelf. That is the differentiator, and it is also
-where the demo lives.**
+**Check 3 depends entirely on check 2.** A duplicate search run against one spelling of a vendor
+finds nothing and reports clean. Resolve the vendor, and the duplicate appears. That dependency is
+the demo, and it is why check 2 is built first.
 
-### What "out of scope" means
+**Check 1 is where Mistral OCR earns its place** — it reads the document and reports which required
+fields are absent, by name, before anything downstream answers a question about a document nobody
+read.
 
-| | |
-|---|---|
-| **not** | unimportant, or absent from the workflow |
-| **is** | not built by Sunday, and the demo **says so out loud** |
+## Three answers, and confidence is a count
 
-- **E6 · authority + balance** needs an authority matrix and a live disbursal balance. Neither exists
-  in open data, and faking either turns a real demo into a rigged one.
-- **E8 · other contractual** needs waivers, certificates and certified payroll — **documents, not
-  tables.** The natural next build.
-- Both stay on the diagram, drawn dashed. **A gap you name is credibility; a gap you hide is the
-  thing they find.**
+| Answer | When | Confidence |
+|---|---|---|
+| **Approve** | Every applicable check passed | `checks passed ÷ checks applicable` |
+| **Comment** | A check returned **cannot evaluate** | names each one |
+| **Deny** | A check **failed outright** | `1.00` — certain |
 
-### The dependency that decides build order
+**A check that could not run is never counted as passed.** It leaves the denominator and routes to
+Comment. A model reporting "95% confident" has produced another fabricated receipt.
 
-```
-E1 --> E2 --> E7          vendor identity gates the duplicate hunt
-        |
-E3 --> E4 --> E5          the join gates the status question
-```
-
-- **E2 is the critical-path eval.** E7 cannot be graded before it, and E7 is the closing beat.
-- A duplicate search that runs against *one* spelling of a vendor finds nothing and reports clean.
-- E3 and E4 are independent of E2 and can be built in parallel by a second person.
-
+**We do not automate the decision.** The tool supplies the query, the rows and the tie-out. Angela
+decides — and when someone asks why she approved it, she has the receipt.
 
 ---
 
@@ -352,59 +340,57 @@ Each step names its deliverable, its blocker, and what proves it finished.
 
 | # | step | deliverable | blocked by | proof it finished | owner |
 |---|---|---|---|---|---|
-| 0a | Pull all four datasets | `data/*.json` | — | ✅ **done** — 5,801 + 53,495 + 1,256 + 13,437 rows | done |
+| 0a | Pull the data | `data/*.json` | — | ✅ **done** — `fb86-vt7u` 5,801 · `qj5n-h5qp` 53,495 · `n6ej-pebd` 1,256 | done |
 | 0b | Seed alias clusters | `eval/vendor-aliases.seed.json` | 0a | ✅ **done** — 48 clusters, $40,767,000 | done |
 | 0c | Grain contract | `docs/GRAIN.md` | 0a | ✅ **done** — 0 of 4 tables have a unique key | done |
-| 1 | Reproduce failures 1 and 2 | `scripts/failures.mjs` | 0a | ✅ **done** — prints 207/382/$9.93B · 2,356/$64.84B/31.2%, exits non-zero on drift | done |
-| 2 | Entity resolution *(job 1)* | candidate-set-size-1 assertion; >1 halts and asks | 0b | all 48 seed clusters resolve; an injected alias throws | **Shivam** |
-| 3 | Grain + AST capture *(job 2)* | parse to AST, assert grain / filters / join type pre-execution | 0c | "total" without an aggregate throws; the `ON p.pid = b.pid` inner join is detected | **Shivam** |
-| 4 | Cardinality + anti-join guards *(job 3)* | two assertions that throw | 1 | **revert either → step 1 goes green while lying** | **Isha** |
-| 5 | Tie-out, fail closed *(job 4)* | refusal path with tolerance | 4 | the $142.76B answer is **refused**, not served | **Isha** |
-| 6 | Status-enum contract *(job 5)* | every dollar carries a status; mixed-status totals refuse | 0a | summing `Complete` + `In-Progress` + `PNS` throws | **Isha** |
-| 7a | Off-the-shelf eval | BIRD · Spider 2.0 · BookSQL scored | 3 | baseline execution accuracy recorded | **Shivam** |
-| 7b | Faithfulness grader *(job 6)* | narration vs AST; every claim maps to a clause | 3 | "all projects" + inner join = unsupported | **Shivam** |
-| 7c | Vendor-alias gold set | hand-verified extension of the seed | 2 | 20 hand-checked; judge agreement measured | **Shivam** |
-| 8 | The one screen | answer → query → dropped rows → refusal | 5 | refusal state renders as designed, not as an error | **Devansh** |
-| 9 | Demo arc | 3 beats, rehearsed | 8 | end-to-end twice, under 3:00 | **Devansh** |
+| 0d | Joinability + status findings | `scripts/findings.mjs` | 0a | ✅ **done** — 2 datasets do not join; 502 dead rows; 96 conflicting keys | done |
+| **1** | **Invoice generator** | `scripts/gen-invoices.mjs` → `eval/invoices.json`, `eval/vendors.json`, `eval/documents.json` | 0b, 0d | Every `po_id` is a real `fms_id`; every `vendor_name` a real spelling; **planted duplicate / alias / missing-field counts printed** | **Shivam** |
+| 2 | Check 2 · vendor resolver | candidate-set-size-1 assertion; >1 halts and asks | 1 | All 48 seed clusters resolve; an injected alias throws | **Shivam** |
+| 3 | Check 3 · paid before | search every resolved spelling on `po_id` + amount + period | 2 | The planted duplicate is found **only after** check 2 resolves; a single-spelling search misses it | **Shivam** |
+| 4 | Check 4 · job status | phase normaliser + conflict detector | 0d | 5 alias pairs collapse; **502 dead rows deny; 96 conflicting keys comment** | **Isha** |
+| 5 | Check 1 · intake | required-field extraction via Mistral OCR | 1 | Scored against `documents.missing_field`; a removed field is named, not guessed | **Shivam** |
+| 6 | Verdict + confidence | approve / comment / deny with `passed ÷ applicable` | 2, 3, 4 | An unevaluable check **never** counts as passed; it leaves the denominator | **Isha** |
+| 7 | Fail-closed refusal | refuse rather than degrade | 6 | A `cannot evaluate` routes to Comment; never to Approve | **Isha** |
+| 8 | The one screen | answer → checks → the query that ran → refusal state | 6 | Refusal renders as designed, not as an error | **Devansh** |
+| 9 | Demo arc | 3 invoices, 3 verdicts, rehearsed | 8 | End to end twice, under 3:00 | **Devansh** |
 
-**Serial chains:** `0b → 2` · `0c → 3 → 7a/7b` · `1 → 4 → 5` · `8 → 9`. Everything else overlaps.
+**Step 1 is the only blocker.** Steps 2, 3 and 5 all wait on it. Step 4 does not — it runs on real
+data and can start now.
 
-**Kill criterion:** if step 4's guards don't flip red on revert, the harness isn't real and the demo
-has no second act. Test this before building anything downstream of it.
+**Serial chains:** `1 → 2 → 3` · `1 → 5` · `2,3,4 → 6 → 7` · `8 → 9`.
+
+**Kill criterion:** if check 3 finds the planted duplicate *without* check 2 having resolved the
+vendor, the dependency is not real and the demo has no second act. Test that first.
 
 ## Owners
 
 | | owns | steps | first thing to do |
 |---|---|---|---|
-| **Shivam** | the eval | 2, 3, 7a, 7b, 7c | `node scripts/seed-aliases.mjs`, read the 48 clusters, then write the resolver that must clear them |
-| **Isha** | build plan · the guards | 4, 5, 6 | `scripts/failures.mjs` — wrap both failures in assertions that throw |
-| **Devansh** | front end · demo | 8, 9 | the refusal state — hardest design problem here |
-
-Nobody is blocked on anybody. Steps 0a–0c and 1 are already done and committed.
+| **Shivam** | the data and the eval | 1, 2, 3, 5 | `node scripts/findings.mjs`, then write the generator — everyone else is waiting on it |
+| **Isha** | the guards and the verdict | 4, 6, 7 | Check 4 on real data. `node scripts/findings.mjs` prints your positive class: 502 dead rows, 96 conflicts |
+| **Devansh** | front end and demo | 8, 9 | The refusal state — the hardest design problem here |
 
 ---
 
 # 6. What to have cold before you start
 
-**Isha** — join cardinality (`GROUP BY key HAVING COUNT(*) > 1` on **both** sides, always) · the
-anti-join is the product (every join emits matched / unmatched-left / unmatched-right, in rows *and*
-dollars) · fail-closed tie-out (control total ± tolerance, else refuse — never degrade gracefully) ·
-Socrata SoQL (**`$limit` defaults to 1000** — that default alone can fake a passing demo) · the
-silent-default anti-pattern from *Release It!*
+**Shivam** — entity resolution with a *declared* ground truth (the generator plants the duplicates,
+so precision and recall are computable) · why an exact string match on a vendor name is the bug and
+not the baseline · Mistral OCR's document API and what it returns for a missing field · scoring a
+check that can answer "I cannot tell" as well as yes and no.
 
-**Shivam** — `sqlglot` (parse emitted SQL, walk the AST, diff joins and filters against the
-narration; this makes grading **deterministic** instead of another LLM call) · execution accuracy vs
-exact-set match and why neither is enough · schema linking / semantic-layer retrieval · groundedness
-where the evidence is an **execution plan** · gold sets seeded from failure modes, not easy
-questions · judge calibration against ~20 hand labels.
+**Isha** — enum normalisation before comparison (`Design` and `(Design)` are one phase) · **a key
+returning two answers is a comment, never a pick** · fail-closed refusal: no best-effort number, no
+quiet rounding · Socrata SoQL — **`$limit` defaults to 1000**, and that default alone can fake a
+passing demo · the silent-default anti-pattern from *Release It!*
 
-**Devansh** — the refusal state as a *designed* state · receipt as progressive disclosure (number →
-query → dropped rows) · `font-variant-numeric: tabular-nums` and signed deltas · semantic colour
-(duplicated / dropped / reconciled) held separate from the accent · failure-first demo arc.
+**Devansh** — the refusal state as a *designed* state · the receipt as progressive disclosure
+(answer → which checks ran → the query) · `font-variant-numeric: tabular-nums` · semantic colour for
+approve / comment / deny held separate from the accent · failure-first demo arc.
 
-**All three, 20 minutes together, before anything else:** original vs revised budget · committed vs
-actual vs forecast · change order · retention. If those aren't cold, every gold case skews the same
-direction and the eval passes while the product lies.
+**All three, 20 minutes together, first:** what a purchase order is · why the contractor pays before
+it is paid · retention · change order. If those are not cold, every generated invoice will be wrong
+in the same direction and the eval will pass while the product lies.
 
 ---
 
@@ -412,11 +398,11 @@ direction and the eval passes while the product lies.
 
 | # | question | blocks |
 |---|---|---|
-| 1 | What does **`PNS`** mean? It is the largest status bucket and is undefined in the data | Step 6's refusal rule, and any total over `project_schedules` |
-| 2 | Do ~30–50 hand-written gold cases over *real* NYC data satisfy "real data only", or does hand-authoring count as synthetic? | Steps 7a–7c |
-| 3 | Cost of refusing a good answer vs serving a wrong one | Step 5's tolerance, therefore its acceptance criteria |
-| 4 | Which four columns the budget screen reproduces | Step 8 scope |
-| 5 | Is `project_schedules` usable at all without a unique key, or does it need an agreed de-duplication rule first? | Step 6 |
+| 1 | What planted **duplicate rate** makes check 3 credible without making it trivial? | Step 1's generator config |
+| 2 | Does an invoice whose `po_id` returns **conflicting phases** comment, or deny? | Step 4's rule, therefore step 6's confidence |
+| 3 | Do generated invoices over real budget lines satisfy "real data only", or must we say synthetic on stage? | The demo's opening line |
+| 4 | Does check 5 (intake) need real scanned PDFs, or is a rendered invoice enough for OCR to be meaningful? | Step 5's scope |
+| 5 | What tolerance counts as a tie-out? | Step 7's refusal threshold |
 
 ---
 
@@ -433,6 +419,7 @@ scripts/pull.mjs        pull 4 NYC datasets via Socrata. no auth, no deps
 scripts/failures.mjs    reproduce failures 1 and 2; exits non-zero on drift
 scripts/grain.mjs       measure the real grain of every table
 scripts/findings.mjs    the findings that decide the build plan
+scripts/check-docs.mjs  refuses docs that still name dropped datasets or retired ids
 scripts/seed-aliases.mjs emit the vendor-alias gold-set seed
 
 eval/                   gold sets and graders          (Shivam)
@@ -452,5 +439,5 @@ data/                   gitignored — regenerate with pull.mjs
 | Status and phase distributions | **Counted** over all 13,437 rows |
 | $68,000 and $200,000 | Named incidents at named companies — the only two quotable dollar figures |
 | Hours saved, adoption cost, retention exposure, all other ranges | **Estimates** |
-| Plug-in eval suitability (BIRD, Spider 2.0, BookSQL, RAGAS, TRUE, SelfCheckGPT) | **Named from knowledge, not benchmarked here.** Verify fit before committing a day to any of them |
-| What `PNS` means | **Unknown.** Not in the data, not guessed |
+| Off-the-shelf eval suitability | **Superseded.** Those were text-to-SQL and RAG benchmarks for a design that no longer generates SQL |
+

@@ -144,8 +144,8 @@ API base: `https://data.cityofnewyork.us/resource/<id>.json`. No auth, no key.
 
 **Why this beats a synthetic dataset.** The monthly snapshot trail in `qj5n-h5qp` is an
 original-versus-revised budget history — **the change-order story in contractor terms**, in real
-money, published by the party that owns it. Pair it with BookSQL for question variety and
-accounting structure.
+money, published by the party that owns it. Pair it with BookSQL for question variety and *(superseded)*
+accounting structure. *(Superseded — the design no longer generates SQL.)*
 
 ---
 
@@ -242,7 +242,7 @@ screenshot.
 |---|---|---|---|
 | **Devansh** | Front end · demo | 8, 9 | The one screen: question in, number out, receipt underneath. The failure-first demo arc — three minutes, opens on the wrong answer. The refusal state, designed rather than bolted on |
 | **Isha** | Build plan · the guards | 3, 4 | The build plan itself — what ships Saturday, what ships Sunday. Tie-out and cardinality contracts, both fail-closed. Unmatched-row accounting surfaced on the answer |
-| **Shivam** | The eval — can start now, unblocked | 1, 2, 5, 6, 7 | Pull `fb86-vt7u` and `qj5n-h5qp` from the Socrata API. First 10 gold question→query pairs, including two that fan out. The faithfulness grader: narration vs executed plan |
+| **Shivam** | The eval — can start now, unblocked | 1, 2, 5, 6, 7 | Pull `fb86-vt7u` and `qj5n-h5qp` from the Socrata API. First 10 gold question→query pairs, including two that fan out. The faithfulness grader: narration vs executed plan | *(superseded)*
 
 ### The critical path
 
@@ -253,7 +253,7 @@ screenshot.
 | 3 | Cardinality + anti-join guards | two assertions that throw | 2 | revert either → step 2 goes green while lying |
 | 4 | Tie-out, fail closed | refusal path with tolerance | 3 | the $142.76B answer is **refused**, not served |
 | 5 | Executed-query capture | SQL → AST → joins, filters, aggregates | 1 | detects the `ON p.pid = b.pid` inner join |
-| 6 | Faithfulness grader | narration vs AST, scored | 5 | flags "all projects" as unsupported |
+| 6 | ~~Faithfulness grader~~ | *superseded — there is no AST in the current design* | — | — |
 | 7 | Gold set | 30–50 cases, ≥2 seeded from step 2 | 5 | grader scores the set; 20 hand-checked |
 | 8 | The one screen | answer → query → dropped rows | 4 | refusal state renders as designed, not as an error |
 | 9 | Demo arc | 3 beats, rehearsed | 8 | end-to-end twice, under 3:00 |

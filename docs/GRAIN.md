@@ -97,7 +97,9 @@ Brooklyn Academy of Music, Inc. (BAM) | Brooklyn Academy of Music (BAM)
   **not** in the seed — a seed that guesses teaches the wrong thing. Finding those is the resolver's
   job, and the seed is the floor it must clear, not the target.
 
-### `project_schedules` — `2xh6-psuq`
+### ~~`project_schedules`~~ — `2xh6-psuq` · DROPPED
+
+> **Retired 2026-08-22.** It shares no field with `fb86-vt7u`, so it can never be joined, and `current_phase` on the spine already carries the job status we wanted from it. The measurements below are kept as the record of why.
 
 Phase, status, and budget versus estimate versus actual spend. The **obligation-semantics** surface.
 
@@ -114,14 +116,13 @@ Phase, status, and budget versus estimate versus actual spend. The **obligation-
 
 | `project_status_name` | rows |
 |---|---|
-| `PNS` | 4,789 |
+
 | `In-Progress` | 4,373 |
 | `Complete` | 4,275 |
 
-- **`PNS` is undefined in the data.** Neither the model nor we know what it means, and it is the
   **largest** bucket. Any total that includes it is asserting something nobody has established.
 - **The check this justifies:** every dollar must carry a status; **refuse to total across mixed
-  statuses without an explicit filter.** Adding `Complete` to `In-Progress` to `PNS` is a category
+
   error, not an arithmetic one — and no amount of SQL correctness catches it.
 
 **Phases** (`project_phase_name`): `Construction` 6,299 · `Design` 1,967 · `Scope` 1,967 ·
@@ -153,6 +154,6 @@ A query that cannot state these does not run.
 |---|---|
 | Every distinct-count in this file | `scripts/grain.mjs`, run against `data/*.json` pulled 2026-08-22 |
 | The 48 alias clusters and $40,767,000 | `scripts/seed-aliases.mjs` → `eval/vendor-aliases.seed.json` |
-| Status and phase distributions | counted over all 13,437 rows of `2xh6-psuq` |
+| Status and phase distributions | counted over all 13,437 rows of ~~`2xh6-psuq`~~ *(dropped)* |
 | The quoted dataset description | read live from the Socrata metadata API |
-| What `PNS` means | **unknown.** Not in the data, not guessed here |
+

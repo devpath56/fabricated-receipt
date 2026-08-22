@@ -71,8 +71,8 @@ Brooklyn Academy of Music, Inc. (BAM) | Brooklyn Academy of Music (BAM)
 
 | # | Step | What breaks |
 |---|---|---|
-| D1 | Pull the project status from the ERP | `Complete` · `In-Progress` · `PNS` |
-| D2 | Status ambiguous or undefined → stop and ask | ⚠️ The **largest** bucket in our data (`PNS`, 4,789 rows) is undefined anywhere |
+| D1 | Pull the project status from the ERP | `Construction` · `(Pending)` · `(Completed)` · `(Cancelled)` — real values from `fb86-vt7u.current_phase` |
+| D2 | Status ambiguous or conflicting → stop and ask | ⚠️ **96** keys return more than one phase, carrying **$60,366,832,689**. `OFFSHRWND` is both `pending` and `pre-design` |
 | D3 | Current phase matches what is being billed | Construction billing arriving during Design is a scope or coding error |
 | D4 | Pay app: verify % complete per line against the schedule of values | The sub's 60% against the field's 40% — the most common dispute in the trade |
 | D5 | Walk it, or call the superintendent, above a threshold | **The one step no system does for her** |
@@ -84,13 +84,13 @@ Brooklyn Academy of Music, Inc. (BAM) | Brooklyn Academy of Music (BAM)
 
 | # | Step | What breaks |
 |---|---|---|
-| E1 | Original contract value on this FMS ID | The baseline |
-| E2 | **Approved** change orders, summed | Approved only |
-| E3 | **Pending** change orders — note them, exclude them | ⚠️ Billing against a pending CO is the classic overrun. It looks approvable and is not |
-| E4 | Revised contract value = E1 + E2 | Never E1 + E2 + E3 |
-| E5 | Previously billed to date on this contract | |
-| E6 | This invoice + E5 ≤ E4? | If not, the invoice exceeds the contract. Stop |
-| E7 | Committed vs actual vs forecast — is the budget line still funded? | A funded contract on an exhausted budget line still cannot be paid |
+| check 1 | Original contract value on this FMS ID | The baseline |
+| check 2 | **Approved** change orders, summed | Approved only |
+| check 4 | **Pending** change orders — note them, exclude them | ⚠️ Billing against a pending CO is the classic overrun. It looks approvable and is not |
+| check 4 | Revised contract value = check 1 + check 2 | Never check 1 + check 2 + check 4 |
+| check 4 | Previously billed to date on this contract | |
+| check 4 | This invoice + check 4 ≤ check 4? | If not, the invoice exceeds the contract. Stop |
+| check 3 | Committed vs actual vs forecast — is the budget line still funded? | A funded contract on an exhausted budget line still cannot be paid |
 
 ## F — Have we already paid this?
 
@@ -149,9 +149,9 @@ reading a ledger rather than by the pipeline.
 |---|---|---|---|
 | B1–B2 | 1 · entity resolution | candidate set must be exactly **1** after normalisation; if >1, halt and ask | 2 (Shivam) |
 | C3–C5 | 3 · join without leaking | cardinality contract asserted pre-join; unmatched rows **and dollars** returned on the answer | 4 (Isha) |
-| C6, E1–E7 | 2 · right grain | parse to AST; assert grain, filters and join type **before** execution | 3 (Shivam) |
-| D1–D3, E2–E3 | 5 · obligation semantics | every dollar carries a status enum; **refuse** to total across mixed statuses without an explicit filter | 6 (Isha) |
-| E6, F1–F4 | 4 · tie-out, fail closed | returned + dropped must equal the source total within tolerance, else refuse — never degrade | 5 (Isha) |
+| C6, check 1–check 3 | 2 · right grain | parse to AST; assert grain, filters and join type **before** execution | 3 (Shivam) |
+| D1–D3, check 2–check 4 | 5 · obligation semantics | every dollar carries a status enum; **refuse** to total across mixed statuses without an explicit filter | 6 (Isha) |
+| check 4, F1–F4 | 4 · tie-out, fail closed | returned + dropped must equal the source total within tolerance, else refuse — never degrade | 5 (Isha) |
 | every step | 6 · faithful rendering | narration graded against the **executed** AST; every claim maps to a clause | 7b (Shivam) |
 
 **Deliberately not automated:**
@@ -165,69 +165,53 @@ reading a ledger rather than by the pipeline.
 
 ---
 
-## The eight evals — and what the demo actually builds
+## The four checks — what the workflow above becomes
 
-The checklist above is the **workflow**. This is the **eval layer** over it: eight questions, each
-answerable by a check, each owning one phase. Nothing here is granular by design — a step is what
-she does, an eval is what we grade.
+The checklist above is the **workflow**. This is the **check layer** over it: four errors, each
+answerable by a deterministic test. Nothing here is granular by design — a step is what she does,
+a check is what we grade.
 
-| # | eval | the question it answers | phase | demo |
+| # | Check | The question | Phase it covers | Cost if uncaught |
 |---|---|---|---|---|
-| **E1** | Intake | Is this invoice ready for downstream analysis at all? If not, **reject with a comment** | A | ✅ in |
-| **E2** | **Vendor ID** | Is this the correct vendor? Similar names create confusion | B | ⭐ **headline** |
-| **E3** | FMS ID ↔ invoice join | Is this budget **sanctioned**? | C | ✅ in |
-| **E4** | FMS ID ↔ PID join | Does the **PID exist**? | C | ✅ in |
-| **E5** | Job status | What is the status of this sanctioned project? | D | ✅ in |
-| **E6** | Auth balance for disbursal | Is there authority and balance to disburse? | E | ⬜ **out** |
-| **E7** | **Paid before** | Has this vendor already been paid for this? | F | ⭐ **headline** |
-| **E8** | Other contractual requirements | Lien waivers, insurance, certified payroll, retention | G | ⬜ **out** |
+| **1** | Intake | Is the invoice complete enough to check? | A | $25,000 / yr |
+| **2** | Vendor | Is this the correct vendor? | B | $340,000 |
+| **3** | Paid before | Has this vendor already been paid for this? | F | $272,000 / yr |
+| **4** | Job status | Is the job still live? | C, D | $10,000,000 |
 
-**Six in, two out.** Phase H is not an eval — it is the **action** the eight produce.
+**Not built:** phases E and G — authority-and-balance, and the contractual documents. Real steps,
+out of demo scope, named rather than hidden.
 
-### Why E2 and E7 carry the demo
+**No invoice-to-budget join exists.** The invoice carries `po_id`, which *is* the budget key. The
+only lookup in the system is check 4's, and it is not a join either — `current_phase` sits on the
+same row.
 
-They are the two whose failure we can show in **real published data**, with no staging:
+### Check 3 depends entirely on check 2
 
-| eval | the evidence on screen | source |
+A duplicate search run against *one* spelling of a vendor finds nothing and reports clean.
+**Resolve the vendor, and the duplicate appears.** That dependency is the demo, and it is why
+check 2 is built first.
+
+```
+1 --> 2 --> 3          vendor identity gates the duplicate hunt
+1 --> 5                intake gates the OCR check
+4                      independent — runs on real data today
+```
+
+### What each check has, and what must be generated
+
+| check | real | generated |
 |---|---|---|
-| **E2** vendor ID | 48 entities spelled more than one way, holding **$40,767,000** — 10.9% of $374,735,000 | `capital_awards` · `n6ej-pebd` |
-| **E7** paid before | The **$68,000** rebar failure: one invoice, two vendor records, both paid. E7 is only as good as E2 | named incident |
-| *(supporting)* **E3 + E4** | **207** projects fan out; **2,356** rows carry no PID at all, holding **$64,836,845,710** — 31.2% of the period | `budget_and_schedule` · `fb86-vt7u` |
-
-**E7 depends entirely on E2.** A duplicate search that runs against one spelling of a vendor finds
-nothing and reports clean. That dependency *is* the demo: fix the vendor, and the duplicate appears.
-
-### What "out of scope" means here
-
-| | |
-|---|---|
-| **not** | unimportant, or absent from the workflow |
-| **is** | not built by Sunday, and the demo **says so out loud** |
-
-- **E6** needs an authority matrix and a live disbursal balance. Neither exists in open data, and
-  faking either turns a real demo into a rigged one.
-- **E8** needs lien waivers, certificates and certified payroll — documents, not tables. It is the
-  natural next build and the obvious place a document-parsing layer earns its place.
-- Both stay on the diagram, drawn as out-of-scope, so a judge sees the **whole** workflow and sees
-  exactly where we stopped. A gap you name is credibility; a gap you hide is the thing they find.
-
-### The dependency that decides build order
-
-```
-E1 ──► E2 ──► E7          vendor identity gates the duplicate hunt
-        │
-E3 ──► E4 ──► E5          the join gates the status question
-```
-
-- **E2 is the critical-path eval.** E7 cannot be graded before it, and E7 is the closing beat.
-- E3 and E4 are independent of E2 and can be built in parallel by a second person.
+| 1 · Intake | nothing | documents + `missing_field` ground truth |
+| 2 · Vendor | 48 alias clusters, $40,767,000 | the invoice side; the vendor master is **derived** |
+| 3 · Paid before | 5,608 real `fms_id` values | the ledger and its payment history |
+| 4 · Job status | `current_phase` · 502 dead rows · 96 conflicting keys | **none** |
 
 ## How to use this file when writing the gold set
 
 | rule | |
 |---|---|
 | 1 | A gold question must map to a **lettered step**. If it maps to none, it is a benchmark question, not a product question |
-| 2 | At least one case per **eval E1–E5 and E7**; the richest sets belong to E2 and E7 — the four phases with measured failures behind them |
+| 2 | At least one case per **check 1–4**; the richest sets belong to checks 2 and 3 — the four phases with measured failures behind them |
 | 3 | Every case states the **expected refusal**, not only the expected answer. "Refuse, and say what did not tie out" is a correct answer |
 | 4 | Seed from the failures we measured, not from questions that work. `eval/vendor-aliases.seed.json` is the floor for B, not the target |
-| 5 | `PNS` cases exist and must **refuse** until someone tells us what `PNS` means |
+
