@@ -72,8 +72,18 @@ phase names. A hand-typed list of "valid phases" is how this check goes quietly 
 
 ### 15 invoices, 10 real project IDs, and four planted failures.
 
-Full DDL in [`table_3_invoices.sql`](../sql/table_3_invoices.sql); the rows in
-[`table_3_invoices_data.sql`](../sql/table_3_invoices_data.sql).
+Four files, and the split between the last two is deliberate:
+
+| file | what it is |
+|---|---|
+| [`sql/table_3_invoices.sql`](../sql/table_3_invoices.sql) | the DDL |
+| [`sql/table_3_invoices_data.sql`](../sql/table_3_invoices_data.sql) | the 15 rows as INSERTs, with the per-invoice grounding as comments |
+| [`data/table_3_invoices.csv`](../data/table_3_invoices.csv) | the same 15 rows, 8 columns, nothing else — **this is what the pipeline reads** |
+| [`data/table_3_answer_key.csv`](../data/table_3_answer_key.csv) | 45 rows: every invoice x every check, with the expected verdict |
+
+**The answer key is a separate file on purpose.** A column of expected verdicts sitting inside the
+invoice CSV is an answer leaking into the model's input. Ground truth is only ground truth while
+the thing being graded cannot see it.
 
 | `INV-1001` | `MC024-008` | `V001` | Skyline Structural Group LLC | `SKY-2025-0417` | `2025-05` | $286,731.96 | PAID |
 | `INV-1002` | `MC024-008` | `V001` | **Skyline Structural Grp.** | `SKY-2025-0488` | `2025-09` | $191,154.64 | APPROVED |
