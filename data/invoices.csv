@@ -1,0 +1,601 @@
+invoice_id,po_id,vendor_id,vendor_name,amount,period,status,submitted_at,doc_uri,missing_field,label_is_duplicate,label_dead_job
+INV-00001,P-3RV105L,V0560,Brighter Choice Community School,33256.99,202605,paid,2026-05-19,docs/invoices/INV-00001.pdf,none,false,false
+INV-00002,SANDBOMB,V0289,"P.S. 274, Kosciusko",1301710.56,202605,pending,2026-05-25,docs/invoices/INV-00002.pdf,none,false,false
+INV-00003,P-404NTPG,V0475,Multicultural High School,19186.03,202605,paid,2026-05-15,docs/invoices/INV-00003.pdf,none,false,false
+INV-00004,HBQA24750,V0074,"Ohel Children's Home and Family Services, Inc.",1643544.47,202605,pending,2026-05-03,docs/invoices/INV-00004.pdf,none,false,false
+INV-00005,P-302BLEE,V0241,21K525 - Edward R. Murrow H.S.,161924.68,202605,denied,2026-05-23,docs/invoices/INV-00005.pdf,none,false,false
+INV-00006,GQROWB-01,V0728,BROOKLYN GARDENS ELEMENTARY SCHOOL,19213.37,202605,paid,2026-05-05,docs/invoices/INV-00006.pdf,none,false,false
+INV-00007,PW322PLAN,V0756,NYC DOE Brooklyn STEAM Center,3815803.14,202605,paid,2026-05-12,docs/invoices/INV-00007.pdf,none,false,false
+INV-00008,CO288MS4,V0933,I.S. 382,14229.15,202605,pending,2026-05-12,docs/invoices/INV-00008.pdf,none,false,false
+INV-00009,BED-803,V0006,"Brooklyn Academy of Music, Inc. (BAM)",214324.26,202605,denied,2026-05-05,docs/invoices/INV-00009.pdf,none,false,false
+INV-00010,P-400ZO22,V0684,P.S. 261 PHILIP LIVINGSTON,16285.8,202605,paid,2026-05-18,docs/invoices/INV-00010.pdf,none,false,false
+INV-00011,P-200PPLS,V0209,Community Healthcare Network Inc.,79161.74,202605,paid,2026-05-13,docs/invoices/INV-00011.pdf,po_id,false,false
+INV-00012,BED-807,V0150,Public School 44,130899.15,202605,paid,2026-05-24,docs/invoices/INV-00012.pdf,none,false,false
+INV-00013,BED-807,V0150,PUBLIC SCHOOL 44,130899.15,202605,pending,2026-05-03,docs/invoices/INV-00013.pdf,none,true,false
+INV-00014,P-2TRE18B,V0411,The Noel Pointer Foundation,181683.41,202605,denied,2026-05-12,docs/invoices/INV-00014.pdf,none,false,false
+INV-00015,CO281ADA,V0635,P.S. 106 EDWARD EVERETT HALE,18038.98,202605,paid,2026-05-24,docs/invoices/INV-00015.pdf,none,false,false
+INV-00016,RWX023,V0150,Public School 44,650443.98,202605,denied,2026-05-20,docs/invoices/INV-00016.pdf,none,false,false
+INV-00017,50202405,V0009,"Gallim Dance Company, Inc.",71743.49,202605,paid,2026-05-02,docs/invoices/INV-00017.pdf,period,false,false
+INV-00018,HWR00513,V0972,K891 - The Brooklyn STEAM Center at the Navy Yard,55057.16,202605,paid,2026-05-15,docs/invoices/INV-00018.pdf,none,false,false
+INV-00019,HWQ187A,V0499,"PS 185, Walter Kassenbrock",2954706.79,202605,paid,2026-05-23,docs/invoices/INV-00019.pdf,none,false,false
+INV-00020,P-1TRE27A,V0056,Issue Project Room,635.25,202605,denied,2026-05-03,docs/invoices/INV-00020.pdf,none,false,false
+INV-00021,SEQ200509,V0010,Office of the Brooklyn Borough President,102369.19,202605,paid,2026-05-15,docs/invoices/INV-00021.pdf,period,false,true
+INV-00022,LQHIROOF,V0877,NYC Health + Hospitals/ Kings County,205898.82,202605,paid,2026-05-25,docs/invoices/INV-00022.pdf,none,false,false
+INV-00023,SBMTOSW,V0238,18K589 - Arts & Media Preparatory Academy,2890197.94,202605,pending,2026-05-06,docs/invoices/INV-00023.pdf,none,false,false
+INV-00024,HWS2021XM,V0009,"Gallim Dance Company, Inc.",201542.07,202605,paid,2026-05-14,docs/invoices/INV-00024.pdf,po_id,false,false
+INV-00025,S216-401D,V0274,Leaders High School 21K572,70714.09,202605,paid,2026-05-12,docs/invoices/INV-00025.pdf,none,false,false
+INV-00026,P-5ANCH02,V0540,RIVERDALE AVENUE COMMUNITY SCHOOL,1516844.55,202605,pending,2026-05-03,docs/invoices/INV-00026.pdf,none,false,false
+INV-00027,P-4STMCPG,V0725,HIGH SCHOOL FOR SERVICE & LEARNING AT ERASMUS,168745.99,202605,paid,2026-05-02,docs/invoices/INV-00027.pdf,none,false,false
+INV-00028,P-203SBIP,V0150,Public School 44,71428.31,202605,paid,2026-05-20,docs/invoices/INV-00028.pdf,none,false,false
+INV-00029,HWPR26KR,V0057,The Brooklyn Historical Society,202002.77,202605,paid,2026-05-26,docs/invoices/INV-00029.pdf,none,false,false
+INV-00030,HWSRT200F,V0203,New York Blood Center,1016664.77,202605,pending,2026-05-13,docs/invoices/INV-00030.pdf,none,false,false
+INV-00031,HWK876,V0144,P.S. 321 WILLIAM PENN,1934792.82,202605,paid,2026-05-06,docs/invoices/INV-00031.pdf,none,false,false
+INV-00032,SANDRESM1,V0247,BEDFORD ACADEMY HIGH SCHOOL,75372468.65,202605,paid,2026-05-14,docs/invoices/INV-00032.pdf,none,false,false
+INV-00033,PWX78BXP,V0118,Middle School 763- Brooklyn Science and Engineering Academy,6447.01,202605,paid,2026-05-23,docs/invoices/INV-00033.pdf,amount,false,false
+INV-00034,37202102,V0171,"Howard Houses Tenants Council, Inc",314948.83,202605,denied,2026-05-02,docs/invoices/INV-00034.pdf,none,false,false
+INV-00035,F175EMS17,V0276,Mark Twain IS 239,2895001.82,202605,denied,2026-05-16,docs/invoices/INV-00035.pdf,none,false,false
+INV-00036,LBC21MNRF,V0443,ASPIRATIONS DIPLOMA PLUS HIGH SCHOOL,724133.21,202605,paid,2026-05-06,docs/invoices/INV-00036.pdf,none,false,false
+INV-00037,P-6PKTR23,V0074,"Ohel Children's Home and Family Services, Inc.",170.84,202605,pending,2026-05-03,docs/invoices/INV-00037.pdf,none,false,true
+INV-00038,P-413LPCT,V0183,"DPR -  Cadman Park Conservancy, Inc.",175231.65,202605,paid,2026-05-23,docs/invoices/INV-00038.pdf,none,false,false
+INV-00039,SER200103,V0045,Brooklyn Bridge Park Corporation,90054.33,202605,pending,2026-05-12,docs/invoices/INV-00039.pdf,none,false,true
+INV-00040,PW19325A,V0471,Middle School 681 - Madiba Prep Middle School,2848268.01,202605,denied,2026-05-12,docs/invoices/INV-00040.pdf,none,false,false
+INV-00041,27202401,V0472,Middle School 722 New Heights Middle School,19007.29,202605,denied,2026-05-16,docs/invoices/INV-00041.pdf,none,false,false
+INV-00042,P-5TRE24A,V0118,Middle School 763- Brooklyn Science and Engineering Academy,357460.42,202605,paid,2026-05-23,docs/invoices/INV-00042.pdf,none,false,false
+INV-00043,HWQ1027,V0021,Public School 249-The Caton School,534589.96,202605,pending,2026-05-23,docs/invoices/INV-00043.pdf,none,false,true
+INV-00044,POD106COM,V0256,District 20 Early Childhood Centers (20K768),3794.89,202605,paid,2026-05-06,docs/invoices/INV-00044.pdf,none,false,false
+INV-00045,21202101,V0642,P.S./I.S. 137 RACHEL JEAN MITCHELL,27985.38,202605,paid,2026-05-22,docs/invoices/INV-00045.pdf,none,false,false
+INV-00046,PW77QPLNT,V0136,P.S. 279 Herman Schreiber School,337124.36,202605,denied,2026-05-26,docs/invoices/INV-00046.pdf,none,false,false
+INV-00047,S216-402G,V0009,"Gallim Dance Company, Inc.",301607.9,202605,denied,2026-05-08,docs/invoices/INV-00047.pdf,none,false,false
+INV-00048,TF18-LUMP,V0342,Public School 273-The Wortman School,286437.02,202605,denied,2026-05-10,docs/invoices/INV-00048.pdf,none,false,false
+INV-00049,NSCC,V0207,The Brookdale Hospital Medical Center,328793.96,202605,paid,2026-05-28,docs/invoices/INV-00049.pdf,none,false,false
+INV-00050,75202402,V0002,Wildlife Conservation Society New York Aquarium,11625.27,202605,pending,2026-05-04,docs/invoices/INV-00050.pdf,vendor_name,false,false
+INV-00051,NYCFTVM,V0247,Bedford Academy High School,166224.05,202605,paid,2026-05-09,docs/invoices/INV-00051.pdf,none,false,false
+INV-00052,HED603,V0065,Brooklyn Arts Council,873137.2,202605,paid,2026-05-09,docs/invoices/INV-00052.pdf,none,false,false
+INV-00053,P-3CBHVAC,V0691,P.S. 298 DR. BETTY SHABAZZ,153783.77,202605,pending,2026-05-04,docs/invoices/INV-00053.pdf,none,false,false
+INV-00054,LSLRPBX5,V0811,K498 Brooklyn High School For Law And Technology 1396 Broadway,89225.86,202605,paid,2026-05-24,docs/invoices/INV-00054.pdf,none,false,false
+INV-00055,CO80ROOF2,V0475,Multicultural High School,681653.04,202605,paid,2026-05-11,docs/invoices/INV-00055.pdf,none,false,true
+INV-00056,CO80ROOF2,V0475,MULTICULTURAL HIGH SCHOOL,681653.04,202605,pending,2026-05-13,docs/invoices/INV-00056.pdf,none,true,true
+INV-00057,SAND44BVR,V0072,Brooklyn Legal Services Corp. A,413883.15,202605,denied,2026-05-18,docs/invoices/INV-00057.pdf,none,false,false
+INV-00058,HWPR24QX,V0877,NYC Health + Hospitals/Kings County,1535505.84,202605,paid,2026-05-13,docs/invoices/INV-00058.pdf,amount,false,false
+INV-00059,P-412LBRT,V0074,"Ohel Children's Home and Family Services, Inc.",18162.67,202605,pending,2026-05-04,docs/invoices/INV-00059.pdf,none,false,false
+INV-00060,HBM1147,V0143,PS 316 - Elijah G. Stroud,2145099.84,202605,paid,2026-05-05,docs/invoices/INV-00060.pdf,none,false,false
+INV-00061,HBQA24718,V0733,LYONS COMMUNITY SCHOOL,3939481.59,202605,denied,2026-05-04,docs/invoices/INV-00061.pdf,none,false,false
+INV-00062,HWCSCH98,V0002,Wildlife Conservation Society - New York Aquarium,668981.36,202605,paid,2026-05-21,docs/invoices/INV-00062.pdf,period,false,false
+INV-00063,HWCSCH98,V0002,Wildlife Conservation Society New York Aquarium,668981.36,202605,pending,2026-05-17,docs/invoices/INV-00063.pdf,none,true,false
+INV-00064,CRO-604,V0208,Institute for Community Living Inc,110553.22,202605,paid,2026-05-28,docs/invoices/INV-00064.pdf,none,false,false
+INV-00065,PV302BPH1,V0002,Wildlife Conservation Society - New York Aquarium,189102.33,202605,paid,2026-05-25,docs/invoices/INV-00065.pdf,none,false,false
+INV-00066,PV302BPH1,V0002,Wildlife Conservation Society New York Aquarium,189102.33,202605,pending,2026-05-21,docs/invoices/INV-00066.pdf,none,true,false
+INV-00067,QB041-011,V0707,I.S. 381,161822.47,202605,paid,2026-05-16,docs/invoices/INV-00067.pdf,none,false,true
+INV-00068,P-3HLSNKN,V0751,PS 262 EL HAJJ MALIK EL SHABAZZ,16174.36,202605,pending,2026-05-12,docs/invoices/INV-00068.pdf,none,false,false
+INV-00069,PWSTORCCT,V0243,22K425- James Madison High School,35634.12,202605,paid,2026-05-26,docs/invoices/INV-00069.pdf,none,false,false
+INV-00070,P-2HOOPER,V0443,ASPIRATIONS DIPLOMA PLUS HIGH SCHOOL,7386.82,202605,paid,2026-05-08,docs/invoices/INV-00070.pdf,none,false,false
+INV-00071,ST001-021,V0045,Brooklyn Bridge Park Corporation,15683.79,202605,pending,2026-05-20,docs/invoices/INV-00071.pdf,none,false,false
+INV-00072,HED-568,V0494,Pathways In Technology Early College High School (P-TECH),2532600.74,202605,paid,2026-05-15,docs/invoices/INV-00072.pdf,none,false,true
+INV-00073,P-3COLUBT,V0125,Public School 132K - The Conselyea School,28998.5,202605,paid,2026-05-20,docs/invoices/INV-00073.pdf,none,false,false
+INV-00074,SEQ200613,V0216,Bedford Stuyvesant Restoration Corp.,260288.44,202605,paid,2026-05-26,docs/invoices/INV-00074.pdf,none,false,false
+INV-00075,BUSHUTIL,V0045,Brooklyn Bridge Park,1511301.83,202605,paid,2026-05-07,docs/invoices/INV-00075.pdf,none,false,false
+INV-00076,25201901,V0656,I.S. 171 ABRAHAM LINCOLN,36050.4,202605,pending,2026-05-22,docs/invoices/INV-00076.pdf,none,false,false
+INV-00077,P-308STCP,V0026,23K363 - Brownsville Collaborative Middle School,175461.27,202605,paid,2026-05-17,docs/invoices/INV-00077.pdf,none,false,false
+INV-00078,74202601,V0882,DOT - CD 45,2743.01,202605,paid,2026-05-10,docs/invoices/INV-00078.pdf,none,false,false
+INV-00079,SE-812,V0741,RED HOOK NEIGHBORHOOD SCHOOL,723366.14,202605,paid,2026-05-13,docs/invoices/INV-00079.pdf,none,false,true
+INV-00080,HWK1153,V0746,BROOKLYN INSTITUTE FOR LIBERAL ARTS,308864,202605,pending,2026-05-21,docs/invoices/INV-00080.pdf,po_id,false,true
+INV-00081,WATERST,V0056,Issue Project Room,797297.9,202605,denied,2026-05-19,docs/invoices/INV-00081.pdf,none,false,false
+INV-00082,CC253B,V0815,K549 The Brooklyn School For Social Justice 400 Irving Avenue,527793.06,202605,paid,2026-05-11,docs/invoices/INV-00082.pdf,none,false,true
+INV-00083,HWR705,V0475,MULTICULTURAL HIGH SCHOOL,525760.77,202605,pending,2026-05-08,docs/invoices/INV-00083.pdf,none,false,true
+INV-00084,NR-STRUCT,V0465,John Dewey High School,23242036,202605,denied,2026-05-12,docs/invoices/INV-00084.pdf,none,false,false
+INV-00085,26202401,V0946,K373-75 The Brooklyn Transition Center,14316.91,202605,pending,2026-05-17,docs/invoices/INV-00085.pdf,po_id,false,false
+INV-00086,MC001-025,V0877,NYC Health + Hospitals/ Kings County,11130.85,202605,denied,2026-05-02,docs/invoices/INV-00086.pdf,none,false,false
+INV-00087,8THSTREET,V0876,SUNY Health Science Center at Brooklyn,13859.56,202605,paid,2026-05-25,docs/invoices/INV-00087.pdf,period,false,false
+INV-00088,P-309MSSC,V0583,DPR - Bildersee,245665.65,202605,denied,2026-05-22,docs/invoices/INV-00088.pdf,none,false,false
+INV-00089,QC006-022,V0485,P.S. 309 THE GEORGE E. WIBECAN PREPARATORY ACADEMY,56165.23,202605,pending,2026-05-09,docs/invoices/INV-00089.pdf,none,false,false
+INV-00090,P-307SOLB,V0567,Marlboro Houses,39939.05,202605,paid,2026-05-19,docs/invoices/INV-00090.pdf,none,false,false
+INV-00091,HBRA24939,V0160,Ronald Edmonds Learning Center II,316207.18,202605,paid,2026-05-11,docs/invoices/INV-00091.pdf,none,false,false
+INV-00092,P-1BXTEN2,V0189,DPR - Prospect Park Alliance,88152.31,202605,paid,2026-05-20,docs/invoices/INV-00092.pdf,none,false,false
+INV-00093,CT2-INTER,V0877,NYC Health + Hospitals/Kings County,613827.17,202605,pending,2026-05-08,docs/invoices/INV-00093.pdf,none,false,false
+INV-00094,CWFSBARGE,V0652,K158 P.S. 158 Warwick 400 Ashford Street,8452428.31,202605,paid,2026-05-14,docs/invoices/INV-00094.pdf,none,false,false
+INV-00095,HWR00505,V0262,IS 96 Seth Low,529480.62,202605,pending,2026-05-18,docs/invoices/INV-00095.pdf,none,false,false
+INV-00096,LQSHRN-23,V0144,P.S. 321 William Penn,7469.84,202605,pending,2026-05-06,docs/invoices/INV-00096.pdf,period,false,false
+INV-00097,CWFSHOMEP,V0312,PS 372 The Children's School,2765104.89,202605,paid,2026-05-05,docs/invoices/INV-00097.pdf,none,false,true
+INV-00098,ACEDCA214,V0411,The Noel Pointer Foundation,1055662.85,202605,paid,2026-05-16,docs/invoices/INV-00098.pdf,none,false,false
+INV-00099,P-3GTACQM,V0604,Hispanic Information & Telecommunication Network Inc.,30286.33,202605,pending,2026-05-02,docs/invoices/INV-00099.pdf,none,false,false
+INV-00100,BNY910SBB,V0161,School for Democracy and Leadership,2434524.3,202605,paid,2026-05-11,docs/invoices/INV-00100.pdf,vendor_name,false,false
+INV-00101,HWP25QC1,V0232,"Federation of Italian-American Organizations of Brooklyn, Ltd.",3293327.34,202605,pending,2026-05-06,docs/invoices/INV-00101.pdf,none,false,false
+INV-00102,P-503WLFP,V0150,PUBLIC SCHOOL 44,632035.35,202605,pending,2026-05-24,docs/invoices/INV-00102.pdf,none,false,false
+INV-00103,P-501WLKR,V0402,DOT - Wykoff Safe Street,176899.86,202605,paid,2026-05-22,docs/invoices/INV-00103.pdf,none,false,false
+INV-00104,SANDY5-54,V0840,K160 P.S. 160 William T. Sampson 5105 Fort Hamilton Parkway,29041.5,202605,paid,2026-05-24,docs/invoices/INV-00104.pdf,none,false,false
+INV-00105,P-2COFEPK,V0009,Gallim Dance Company,12953.29,202605,pending,2026-05-14,docs/invoices/INV-00105.pdf,none,false,false
+INV-00106,HWK00504,V0487,"P.S. 397, Foster Laurie",1162.69,202605,pending,2026-05-17,docs/invoices/INV-00106.pdf,none,false,true
+INV-00107,SANDG1HS,V0203,New York Blood Center,149232.61,202605,pending,2026-05-11,docs/invoices/INV-00107.pdf,po_id,false,false
+INV-00108,FATERMTBC,V0449,Brooklyn Technical High School,191741.81,202605,paid,2026-05-24,docs/invoices/INV-00108.pdf,none,false,false
+INV-00109,HW2CR13CW,V0050,Maimonides Medical Center,296116.77,202605,pending,2026-05-11,docs/invoices/INV-00109.pdf,none,false,true
+INV-00110,P-303LESP,V0247,Bedford Academy High School,6693.93,202605,denied,2026-05-03,docs/invoices/INV-00110.pdf,none,false,false
+INV-00111,P-4DSTG06,V0006,Brooklyn Academy of Music (BAM),525939.09,202605,paid,2026-05-16,docs/invoices/INV-00111.pdf,amount,false,false
+INV-00112,P-414RB59,V0385,NYCHA - Howard Houses,200391.59,202605,denied,2026-05-06,docs/invoices/INV-00112.pdf,period,false,false
+INV-00113,PW77DDCAC,V0604,Hispanic Information and Telecommunication Network Inc.,38961.85,202605,paid,2026-05-19,docs/invoices/INV-00113.pdf,none,false,true
+INV-00114,PW77GLDBR,V0656,I.S. 171 ABRAHAM LINCOLN,833257.24,202605,paid,2026-05-18,docs/invoices/INV-00114.pdf,period,false,false
+INV-00115,PS-348A,V0783,DOT - 16th Avenue Trench Restoration,54450.01,202605,paid,2026-05-12,docs/invoices/INV-00115.pdf,none,false,false
+INV-00116,P-200884L,V0189,DPR - Prospect Park Alliance,12587.85,202605,paid,2026-05-03,docs/invoices/INV-00116.pdf,none,false,true
+INV-00117,P-200884L,V0189,DPR - Prospect Park Alliance,12587.85,202605,pending,2026-05-15,docs/invoices/INV-00117.pdf,none,true,true
+INV-00118,CRO-607,V0347,Public School 316 Elijah G. Stroud Elementary School,13122.83,202605,pending,2026-05-20,docs/invoices/INV-00118.pdf,none,false,false
+INV-00119,P-1CPIJJP,V0183,"DPR -  Cadman Park Conservancy, Inc.",92158.12,202605,paid,2026-05-07,docs/invoices/INV-00119.pdf,none,false,false
+INV-00120,P-1CPIJJP,V0183,"DPR - Cadman Park Conservancy, Inc.",92158.12,202605,pending,2026-05-18,docs/invoices/INV-00120.pdf,none,true,false
+INV-00121,911MEMOR,V0155,PS 770 The New American Academy,163549.05,202605,denied,2026-05-03,docs/invoices/INV-00121.pdf,vendor_name,false,false
+INV-00122,PWHLDGFND,V0877,NYC Health + Hospitals/Kings County,59175.86,202605,paid,2026-05-24,docs/invoices/INV-00122.pdf,amount,false,false
+INV-00123,CS-NC-BAF,V0602,Shema Kolainu,1731083.58,202605,paid,2026-05-27,docs/invoices/INV-00123.pdf,none,false,false
+INV-00124,F175MC304,V0562,P.S. 380 John Wayne Elementary,337877.97,202605,paid,2026-05-03,docs/invoices/INV-00124.pdf,none,false,false
+INV-00125,P-202CLOT,V0556,"PS/IS 229, Dyker School",794299.57,202605,paid,2026-05-20,docs/invoices/INV-00125.pdf,none,false,false
+INV-00126,TF012026,V0520,Public School 161 The Crown,412678.63,202605,denied,2026-05-22,docs/invoices/INV-00126.pdf,none,false,false
+INV-00127,P-5FABBAS,V0209,Community Healthcare Network Inc.,41196.63,202605,paid,2026-05-26,docs/invoices/INV-00127.pdf,none,false,false
+INV-00128,PV101HVAC,V0199,"DPR - Brooklyn Greenway Initiative, Inc.",427633.17,202605,denied,2026-05-02,docs/invoices/INV-00128.pdf,none,false,false
+INV-00129,PW282-2L,V0330,Public School 157-K,322051.39,202605,paid,2026-05-21,docs/invoices/INV-00129.pdf,none,false,false
+INV-00130,PWQ77QBH2,V0365,THE BROOKLYN SCHOOL OF INQUIRY,3786.17,202605,paid,2026-05-14,docs/invoices/INV-00130.pdf,none,false,false
+INV-00131,SEK200387,V0168,PS 10 - Magnet School Of Math Science & Design Tech,89447.97,202605,denied,2026-05-13,docs/invoices/INV-00131.pdf,period,false,false
+INV-00132,PW348-73,V0424,15K519,323013.07,202605,paid,2026-05-03,docs/invoices/INV-00132.pdf,none,false,false
+INV-00133,PO79BMAHO,V0035,Ridgewood Bushwick Senior Citizens Council,39689.45,202605,paid,2026-05-27,docs/invoices/INV-00133.pdf,none,false,false
+INV-00134,P-200LMBF,V0065,Brooklyn Arts Council,30773.15,202605,paid,2026-05-22,docs/invoices/INV-00134.pdf,none,false,false
+INV-00135,CI-142-L,V0972,K891 - The Brooklyn STEAM Center at the Navy Yard,179324.51,202605,pending,2026-05-15,docs/invoices/INV-00135.pdf,none,false,false
+INV-00136,CXHP08PAR,V0455,STAR Early College School at Erasmus Hall (17K543),4994060.71,202605,denied,2026-05-23,docs/invoices/INV-00136.pdf,none,false,false
+INV-00137,P-105SLRG,V0144,P.S. 321 William Penn,10650.06,202605,paid,2026-05-19,docs/invoices/INV-00137.pdf,none,false,true
+INV-00138,ACECUN234,V0411,The Noel Pointer Foundation,631562.24,202605,paid,2026-05-21,docs/invoices/INV-00138.pdf,period,false,false
+INV-00139,HL82TREMF,V0144,P.S. 321 WILLIAM PENN,379646.83,202605,paid,2026-05-16,docs/invoices/INV-00139.pdf,none,false,false
+INV-00140,P-501SKYL,V0562,P.S. 380 John Wayne Elementary,164127.02,202605,denied,2026-05-16,docs/invoices/INV-00140.pdf,none,false,false
+INV-00141,JOC-16-L,V0131,P.S. 247,2632577.16,202605,denied,2026-05-21,docs/invoices/INV-00141.pdf,none,false,false
+INV-00142,C75EWNIC,V0975,"PRATT AREA COMMUNITY COUNCIL, INC. (DBA IMPACCT BROOKLYN)",670509.59,202605,paid,2026-05-23,docs/invoices/INV-00142.pdf,po_id,false,false
+INV-00143,SER002329,V0045,Brooklyn Bridge Park,1524719.47,202605,pending,2026-05-19,docs/invoices/INV-00143.pdf,none,false,false
+INV-00144,HH112CWFR,V0082,Mott Hall Intermediate School,46429.91,202605,paid,2026-05-04,docs/invoices/INV-00144.pdf,none,false,false
+INV-00145,CONEYWIRD,V0177,Local Development Corporation of East New York,970682.1,202605,paid,2026-05-09,docs/invoices/INV-00145.pdf,none,false,false
+INV-00146,48202003,V0183,"DPR - Cadman Park Conservancy, Inc.",14802.02,202605,paid,2026-05-26,docs/invoices/INV-00146.pdf,none,false,false
+INV-00147,HWPR20MCL,V0074,"Ohel Children's Home and Family Services, Inc.",555826.79,202605,pending,2026-05-12,docs/invoices/INV-00147.pdf,none,false,false
+INV-00148,P-1KNGSBR,V0163,Central Brooklyn Ascend Charter School,42773.88,202605,pending,2026-05-28,docs/invoices/INV-00148.pdf,none,false,false
+INV-00149,P-312INWD,V0216,Bedford Stuyvesant Restoration Corp.,3694.66,202605,paid,2026-05-17,docs/invoices/INV-00149.pdf,none,false,false
+INV-00150,P-1CROUL9,V0228,Per Scholas,132773.64,202605,pending,2026-05-28,docs/invoices/INV-00150.pdf,none,false,false
+INV-00151,F175WP303,V0204,Kingsbrook Jewish Medical Center,52740.72,202605,paid,2026-05-13,docs/invoices/INV-00151.pdf,none,false,false
+INV-00152,BNYFNCLIN,V0189,DPR -  Prospect Park Alliance,685687.24,202605,denied,2026-05-28,docs/invoices/INV-00152.pdf,po_id,false,false
+INV-00153,P-4OLMST8,V0074,"Ohel Children's Home and Family Services, Inc.",87804.22,202605,paid,2026-05-28,docs/invoices/INV-00153.pdf,vendor_name,false,false
+INV-00154,HBCR24B,V0026,23K363 - Brownsville Collaborative Middle School,1423063.21,202605,paid,2026-05-10,docs/invoices/INV-00154.pdf,none,false,false
+INV-00155,STUYBULK2,V0331,Public School 158K - Warwick,200126.91,202605,paid,2026-05-27,docs/invoices/INV-00155.pdf,none,false,false
+INV-00156,P-5STFMHN,V0208,Institute for Community Living Inc,23512.53,202605,paid,2026-05-16,docs/invoices/INV-00156.pdf,none,false,false
+INV-00157,P-5STFMHN,V0208,INSTITUTE FOR COMMUNITY LIVING,23512.53,202605,pending,2026-05-04,docs/invoices/INV-00157.pdf,none,true,false
+INV-00158,21202101,V0006,Brooklyn Academy of Music (BAM),107970.76,202605,paid,2026-05-03,docs/invoices/INV-00158.pdf,none,false,false
+INV-00159,HWM1689,V0485,P.S. 309 The George E. Wibecan Preparatory Academy,343751.03,202605,paid,2026-05-14,docs/invoices/INV-00159.pdf,none,false,false
+INV-00160,P-4RAINE2,V0443,Aspirations Diploma Plus High School,163499.44,202605,paid,2026-05-19,docs/invoices/INV-00160.pdf,po_id,false,false
+INV-00161,PS-348A,V0783,DOT - 16th Avenue Trench Restoration,73129.82,202605,paid,2026-05-19,docs/invoices/INV-00161.pdf,none,false,false
+INV-00162,34202401,V0552,P.S. 12--Jacqueline Peek-Davis Elementary School,11293.55,202605,denied,2026-05-11,docs/invoices/INV-00162.pdf,none,false,false
+INV-00163,HU001-023,V0877,NYC Health + Hospitals/ Kings County,39912.47,202605,pending,2026-05-19,docs/invoices/INV-00163.pdf,none,false,false
+INV-00164,P-411CRPG,V0929,K051 MS 51 William Alexander Middle School,163344.23,202605,denied,2026-05-18,docs/invoices/INV-00164.pdf,none,false,false
+INV-00165,P-408HMSC,V0487,"P.S. 397, Foster Laurie",46173.36,202605,pending,2026-05-18,docs/invoices/INV-00165.pdf,none,false,false
+INV-00166,HWQ1190-C,V0572,Habitat for Humanity NYC Inc,6216949.09,202605,denied,2026-05-28,docs/invoices/INV-00166.pdf,none,false,false
+INV-00167,LNCA13TRE,V0877,NYC Health + Hospitals/ Kings County,49243.08,202605,paid,2026-05-11,docs/invoices/INV-00167.pdf,none,false,true
+INV-00168,HWPLZ018M,V0002,Wildlife Conservation Society - New York Aquarium,769008.97,202605,paid,2026-05-10,docs/invoices/INV-00168.pdf,none,false,false
+INV-00169,HWPLZ018M,V0002,Wildlife Conservation Society New York Aquarium,769008.97,202605,pending,2026-05-05,docs/invoices/INV-00169.pdf,none,true,false
+INV-00170,SANDHMES4,V0026,23K363 - Brownsville Collaborative Middle School,84107.79,202605,paid,2026-05-20,docs/invoices/INV-00170.pdf,none,false,false
+INV-00171,P-400ZOO8,V0122,P.S. 040 George W. Carver,480786.92,202605,denied,2026-05-02,docs/invoices/INV-00171.pdf,none,false,false
+INV-00172,OH-95-L,V0187,"DPR -  Grand Street District Management Association, Inc.",4603763.11,202605,paid,2026-05-16,docs/invoices/INV-00172.pdf,none,false,false
+INV-00173,OH-95-L,V0187,"DPR - Grand Street District Management Association, Inc.",4603763.11,202605,pending,2026-05-12,docs/invoices/INV-00173.pdf,none,true,false
+INV-00174,HS040-009,V0009,"Gallim Dance Company, Inc.",20.12,202605,denied,2026-05-03,docs/invoices/INV-00174.pdf,none,false,false
+INV-00175,HH112AAFS,V0245,ABRAHAM LINCOLN HIGH SCHOOL,6581.13,202605,paid,2026-05-08,docs/invoices/INV-00175.pdf,none,false,true
+INV-00176,P-2LITCHF,V0945,84K730 Summit Academy Charter School,127341.62,202605,paid,2026-05-08,docs/invoices/INV-00176.pdf,none,false,false
+INV-00177,SOLARDB1,V0074,"Ohel Children's Home and Family Services, Inc.",302619.57,202605,paid,2026-05-20,docs/invoices/INV-00177.pdf,none,false,false
+INV-00178,21202108,V0247,BEDFORD ACADEMY HIGH SCHOOL,556542.51,202605,paid,2026-05-10,docs/invoices/INV-00178.pdf,none,false,false
+INV-00179,ACEDOE211,V0312,PS 372 - The Children's School,382340.9,202605,pending,2026-05-12,docs/invoices/INV-00179.pdf,none,false,false
+INV-00180,GKCI05-2A,V0208,INSTITUTE FOR COMMUNITY LIVING,681318.05,202605,paid,2026-05-12,docs/invoices/INV-00180.pdf,none,false,false
+INV-00181,GKCI05-2A,V0208,INSTITUTE FOR COMMUNITY LIVING,681318.05,202605,pending,2026-05-17,docs/invoices/INV-00181.pdf,none,true,false
+INV-00182,P-307SBPG,V0365,THE BROOKLYN SCHOOL OF INQUIRY,70465.22,202605,paid,2026-05-26,docs/invoices/INV-00182.pdf,amount,false,false
+INV-00183,LBM15MPRF,V0469,MESA Charter High School,217123.96,202605,pending,2026-05-15,docs/invoices/INV-00183.pdf,none,false,false
+INV-00184,P-3CPIART,V0795,K527 Urban Assembly Institute Of Math And Science For Young Women 283 Adams Street,78942.4,202605,paid,2026-05-14,docs/invoices/INV-00184.pdf,none,false,false
+INV-00185,MED673,V0060,Museum of Contemporary African Diasporan Arts,780377.14,202605,paid,2026-05-27,docs/invoices/INV-00185.pdf,none,false,false
+INV-00186,AG01NELS,V0877,NYC Health + Hospitals/ Kings County,19175.85,202605,pending,2026-05-01,docs/invoices/INV-00186.pdf,none,false,false
+INV-00187,34202303,V0878,"NYC Health + Hospitals/ Gotham Health, East New York",76556,202605,denied,2026-05-28,docs/invoices/INV-00187.pdf,none,false,false
+INV-00188,SEED-LPPR,V0568,"Howard Houses Tenant Council, Inc.",155391.52,202605,paid,2026-05-27,docs/invoices/INV-00188.pdf,none,false,false
+INV-00189,P-4FTTOTB,V0605,PS 295/MS 443K,193139.86,202605,pending,2026-05-24,docs/invoices/INV-00189.pdf,none,false,false
+INV-00190,FVESSGANR,V0663,P.S. 189 THE BILINGUAL CENTER,279809.49,202605,paid,2026-05-15,docs/invoices/INV-00190.pdf,none,false,false
+INV-00191,HWP23QC2,V0721,FRANKLIN DELANO ROOSEVELT HIGH SCHOOL 5,608023.82,202605,pending,2026-05-07,docs/invoices/INV-00191.pdf,none,false,false
+INV-00192,BBJ-M,V0183,"DPR -  Cadman Park Conservancy, Inc.",237307734.2,202605,paid,2026-05-28,docs/invoices/INV-00192.pdf,none,false,false
+INV-00193,BBJ-M,V0183,"DPR - Cadman Park Conservancy, Inc.",237307734.2,202605,pending,2026-05-08,docs/invoices/INV-00193.pdf,none,true,false
+INV-00194,ACEHHC803,V0759,K009 P.S. 009 TEUNIS G. BERGEN 80 UNDERHILL AVENUE,298923.46,202605,pending,2026-05-28,docs/invoices/INV-00194.pdf,none,false,false
+INV-00195,CO304RF1,V0056,"ISSUE Project Room, Inc.",626205.18,202605,denied,2026-05-02,docs/invoices/INV-00195.pdf,none,false,false
+INV-00196,E13-0002,V0474,"MS 266, Park Place Community Middle School",598562.32,202605,pending,2026-05-11,docs/invoices/INV-00196.pdf,none,false,true
+INV-00197,74202601,V0130,P.S. 023 Carter G. Woodson,1314.91,202605,paid,2026-05-01,docs/invoices/INV-00197.pdf,none,false,false
+INV-00198,P-202CBPK,V0551,PS 195K The Manhattan Beach School,1154728.87,202605,paid,2026-05-23,docs/invoices/INV-00198.pdf,period,false,false
+INV-00199,33202402,V0002,Wildlife Conservation Society New York Aquarium,122375.51,202605,pending,2026-05-03,docs/invoices/INV-00199.pdf,none,false,false
+INV-00200,CONEYINF,V0248,Beginning with Children Charter School 2 K037,38209.45,202605,denied,2026-05-16,docs/invoices/INV-00200.pdf,none,false,true
+INV-00201,CA091QB25,V0026,23K363 Brownsville Collaborative Middle School,43028.59,202605,paid,2026-05-17,docs/invoices/INV-00201.pdf,none,false,false
+INV-00202,HBCD017C,V0414,"City Harvest, Inc.",178721.5,202605,paid,2026-05-15,docs/invoices/INV-00202.pdf,amount,false,false
+INV-00203,MIBBNC04B,V0595,Myrtle Avenue Revitalization Project LDC (MARP),3288965.72,202605,pending,2026-05-06,docs/invoices/INV-00203.pdf,vendor_name,false,false
+INV-00204,BNYTIFUND,V0229,Sephardic Community Center,231393.09,202605,pending,2026-05-16,docs/invoices/INV-00204.pdf,none,false,false
+INV-00205,LQSTWSOLR,V0665,P.S. 197 - THE KINGS HIGHWAY ACADEMY,5622.75,202605,paid,2026-05-13,docs/invoices/INV-00205.pdf,none,false,false
+INV-00206,P-6TPR24B,V0118,Middle School 763- Brooklyn Science and Engineering Academy,134345.64,202605,paid,2026-05-17,docs/invoices/INV-00206.pdf,none,false,false
+INV-00207,LQCA19QVB,V0612,PARKSIDE PREPARATORY ACADEMY,834775.77,202605,pending,2026-05-07,docs/invoices/INV-00207.pdf,none,false,false
+INV-00208,WI-318-L,V0056,Issue Project Room,203612.23,202605,paid,2026-05-21,docs/invoices/INV-00208.pdf,none,false,false
+INV-00209,12202101,V0365,THE BROOKLYN SCHOOL OF INQUIRY,137433.2,202605,paid,2026-05-11,docs/invoices/INV-00209.pdf,none,false,false
+INV-00210,SNSTFRGH2,V0122,P.S. 040 George W. Carver,2144480.6,202605,paid,2026-05-02,docs/invoices/INV-00210.pdf,none,false,false
+INV-00211,PO79-ADA,V0312,PS 372 - The Children's School,1233063.54,202605,denied,2026-05-12,docs/invoices/INV-00211.pdf,none,false,false
+INV-00212,RH-94-L,V0124,Public School 123 -The Suydam School,57059.74,202605,denied,2026-05-25,docs/invoices/INV-00212.pdf,none,false,false
+INV-00213,F204RAND9,V0189,DPR - Prospect Park Alliance,12799.11,202605,paid,2026-05-02,docs/invoices/INV-00213.pdf,none,false,false
+INV-00214,F204RAND9,V0189,DPR - Prospect Park Alliance,12799.11,202605,pending,2026-05-02,docs/invoices/INV-00214.pdf,none,true,false
+INV-00215,HBCD019,V0020,K188,366820.37,202605,pending,2026-05-05,docs/invoices/INV-00215.pdf,none,false,false
+INV-00216,CA202-006,V0289,"P.S. 274, Kosciusko",12320.29,202605,paid,2026-05-19,docs/invoices/INV-00216.pdf,none,false,true
+INV-00217,CA202-006,V0289,P.S. 274 KOSCIUSKO,12320.29,202605,pending,2026-05-17,docs/invoices/INV-00217.pdf,none,true,true
+INV-00218,PW29310R,V0130,P.S. 023 CARTER G. WOODSON,708994.18,202605,paid,2026-05-09,docs/invoices/INV-00218.pdf,none,false,false
+INV-00219,PW266TOIL,V0459,I.S. 162 The Willoughby School,250252.24,202605,paid,2026-05-23,docs/invoices/INV-00219.pdf,none,false,false
+INV-00220,HB1070EN,V0118,Middle School 763 - Brooklyn Science and Engineering Academy,900639.92,202605,paid,2026-05-15,docs/invoices/INV-00220.pdf,none,false,false
+INV-00221,HB1070EN,V0118,Middle School 763- Brooklyn Science and Engineering Academy,900639.92,202605,pending,2026-05-14,docs/invoices/INV-00221.pdf,none,true,false
+INV-00222,HWCWSTPR,V0050,Maimonides Medical Center,87564.08,202605,paid,2026-05-23,docs/invoices/INV-00222.pdf,none,false,false
+INV-00223,11202209,V0026,23K363 - Brownsville Collaborative Middle School,1106268.29,202605,paid,2026-05-27,docs/invoices/INV-00223.pdf,none,false,false
+INV-00224,P-210DRPG,V0604,Hispanic Information and Telecommunication Network Inc.,48654.24,202605,paid,2026-05-07,docs/invoices/INV-00224.pdf,none,false,false
+INV-00225,P-5SWRC23,V0540,Riverdale Avenue Community School,124730.82,202605,pending,2026-05-03,docs/invoices/INV-00225.pdf,none,false,false
+INV-00226,HL82BUSHC,V0187,"DPR - Grand Street District Management Association, Inc.",155451.81,202605,paid,2026-05-08,docs/invoices/INV-00226.pdf,none,false,false
+INV-00227,LQRVRN-25,V0977,"Comunilife, Inc.",328867.5,202605,pending,2026-05-16,docs/invoices/INV-00227.pdf,none,false,false
+INV-00228,P-200PPEP,V0381,"FIFTH AVE COMMITTEE, INC",16754.83,202605,paid,2026-05-02,docs/invoices/INV-00228.pdf,none,false,false
+INV-00229,ACEDOS241,V0604,Hispanic Information and Telecommunication Network Inc.,66752.8,202605,denied,2026-05-18,docs/invoices/INV-00229.pdf,none,false,false
+INV-00230,HS047-013,V0248,Beginning with Children Charter School 2 K037,13145.66,202605,paid,2026-05-24,docs/invoices/INV-00230.pdf,none,false,true
+INV-00231,22202602,V0169,Midwood High School 22K405,4437.32,202605,paid,2026-05-19,docs/invoices/INV-00231.pdf,none,false,false
+INV-00232,22202602,V0169,Midwood High School 22K405,4437.32,202605,pending,2026-05-11,docs/invoices/INV-00232.pdf,none,true,false
+INV-00233,PV034RR77,V0147,Public School 373 - Brooklyn Transition Center,1405814.33,202605,paid,2026-05-10,docs/invoices/INV-00233.pdf,none,false,false
+INV-00234,P-1WASHPK,V0351,Public School 59 William Floyd,379828.08,202605,paid,2026-05-20,docs/invoices/INV-00234.pdf,none,false,false
+INV-00235,P-203HVKP,V0035,"Ridgewood Bushwick Senior Citizens Council, Inc.",91281.18,202605,paid,2026-05-27,docs/invoices/INV-00235.pdf,none,false,false
+INV-00236,EO26-0074,V0596,"BEL Community Housing, LLC",20729.48,202605,paid,2026-05-16,docs/invoices/INV-00236.pdf,none,false,true
+INV-00237,P-2TRSD23,V0880,NYCDOT - Tillary Street,161463.86,202605,paid,2026-05-20,docs/invoices/INV-00237.pdf,none,false,false
+INV-00238,P-400ZO18,V0443,Aspirations Diploma Plus High School,19041.61,202605,paid,2026-05-13,docs/invoices/INV-00238.pdf,none,false,false
+INV-00239,HHNC001,V0299,P753K- Brooklyn School for Career Development,17686.5,202605,paid,2026-05-10,docs/invoices/INV-00239.pdf,none,false,false
+INV-00240,NYCFEMISS,V0250,Carroll Gardens School for Innovation (MS442),989576.08,202605,paid,2026-05-17,docs/invoices/INV-00240.pdf,none,false,false
+INV-00241,PO79-375P,V0150,Public School 44,717766.38,202605,pending,2026-05-17,docs/invoices/INV-00241.pdf,none,false,true
+INV-00242,P-2BDCHOS,V0312,PS 372 - The Children's School,49644.1,202605,denied,2026-05-27,docs/invoices/INV-00242.pdf,none,false,false
+INV-00243,P-412DOP3,V0155,"PS 770, The New American Academy",371583.49,202605,paid,2026-05-11,docs/invoices/INV-00243.pdf,vendor_name,false,false
+INV-00244,CA049-019,V0183,"DPR -  Cadman Park Conservancy, Inc.",99046.21,202605,paid,2026-05-09,docs/invoices/INV-00244.pdf,none,false,true
+INV-00245,CA049-019,V0183,"DPR - Cadman Park Conservancy, Inc.",99046.21,202605,pending,2026-05-01,docs/invoices/INV-00245.pdf,none,true,true
+INV-00246,HBCR26B,V0002,Wildlife Conservation Society New York Aquarium,391719.21,202605,paid,2026-05-12,docs/invoices/INV-00246.pdf,none,false,false
+INV-00247,HAM18MHCC,V0490,P.S. 91 THE ALBANY AVENUE SCHOOL,374792.56,202605,paid,2026-05-05,docs/invoices/INV-00247.pdf,none,false,false
+INV-00248,HAM18MHCC,V0490,P.S.91 The Albany Avenue School,374792.56,202605,pending,2026-05-03,docs/invoices/INV-00248.pdf,none,true,false
+INV-00249,WI-EXP,V0487,"P.S. 397, Foster Laurie",23942587.45,202605,paid,2026-05-06,docs/invoices/INV-00249.pdf,none,false,true
+INV-00250,BWSJOCG26,V0209,"COMMUNITY HEALTHCARE NETWORK, INC",1137739.04,202605,denied,2026-05-10,docs/invoices/INV-00250.pdf,none,false,false
+INV-00251,RH-83,V0497,PS 124K Silas B. Dutcher Elementary School,4199666.95,202605,pending,2026-05-25,docs/invoices/INV-00251.pdf,none,false,false
+INV-00252,P-6CPSTR1,V0142,PS 307,209600.5,202605,paid,2026-05-28,docs/invoices/INV-00252.pdf,none,false,false
+INV-00253,P-3SHARCS,V0144,P.S. 321 WILLIAM PENN,186268.74,202605,paid,2026-05-16,docs/invoices/INV-00253.pdf,none,false,false
+INV-00254,PO79BMAHX,V0187,"DPR -  Grand Street District Management Association, Inc.",18053.59,202605,paid,2026-05-18,docs/invoices/INV-00254.pdf,po_id,false,true
+INV-00255,P-203RBP1,V0476,Origins High School,175423.24,202605,paid,2026-05-27,docs/invoices/INV-00255.pdf,none,false,false
+INV-00256,PW326CB17,V0187,"DPR -  Grand Street District Management Association, Inc.",5707.95,202605,pending,2026-05-14,docs/invoices/INV-00256.pdf,po_id,false,false
+INV-00257,HBM1027,V0460,I.S. 187 - The Christa McAuliffe School,5213693.93,202605,paid,2026-05-26,docs/invoices/INV-00257.pdf,none,false,false
+INV-00258,SANDY5-54,V0840,K160 P.S. 160 William T. Sampson 5105 Fort Hamilton Parkway,20695.02,202605,paid,2026-05-05,docs/invoices/INV-00258.pdf,none,false,false
+INV-00259,BX049-020,V0561,P.S. 308 Clara Cardwell,40064.18,202605,paid,2026-05-27,docs/invoices/INV-00259.pdf,none,false,false
+INV-00260,HWPLZ017K,V0447,Brooklyn Emerging Leaders Academy Charter School,228084.93,202605,pending,2026-05-15,docs/invoices/INV-00260.pdf,none,false,false
+INV-00261,P-312FWTC,V0248,Beginning with Children Charter School 2 K037,31163.73,202605,denied,2026-05-21,docs/invoices/INV-00261.pdf,none,false,false
+INV-00262,P-203JHPG,V0126,Public School 147 - Isaac Remsen School,49264.22,202605,paid,2026-05-26,docs/invoices/INV-00262.pdf,none,false,false
+INV-00263,PO79CWAC,V0006,"Brooklyn Academy of Music, Inc. (BAM)",647340.86,202605,denied,2026-05-21,docs/invoices/INV-00263.pdf,none,false,true
+INV-00264,LBC17CDOP,V0187,"DPR - Grand Street District Management Association, Inc.",75911.61,202605,paid,2026-05-26,docs/invoices/INV-00264.pdf,none,false,false
+INV-00265,11202104,V0333,Public School 180 - The SEEALL Academy,172387.8,202605,paid,2026-05-14,docs/invoices/INV-00265.pdf,none,false,false
+INV-00266,PV466QTP,V0620,P.S. 025 EUBIE BLAKE SCHOOL,254811.4,202605,paid,2026-05-25,docs/invoices/INV-00266.pdf,none,false,false
+INV-00267,P-3PIN181,V0172,Surf gardens development,31055.46,202605,paid,2026-05-04,docs/invoices/INV-00267.pdf,none,false,false
+INV-00268,P-2PPLHFR,V0045,Brooklyn Bridge Park Corporation,18837.84,202605,denied,2026-05-12,docs/invoices/INV-00268.pdf,none,false,false
+INV-00269,P-4FTTOTC,V0733,LYONS COMMUNITY SCHOOL,16009.5,202605,paid,2026-05-14,docs/invoices/INV-00269.pdf,none,false,false
+INV-00270,BED-768B,V0146,P.S. 335 Granville T. Woods,1355471.46,202605,paid,2026-05-05,docs/invoices/INV-00270.pdf,none,false,false
+INV-00271,EO26-0056,V0436,21K468 Kingsborough Early college Secondary School,11674.52,202605,paid,2026-05-11,docs/invoices/INV-00271.pdf,none,false,false
+INV-00272,ACEDCA215,V0370,Upper School @ P.S. 25 - Middle School 534,241046.47,202605,paid,2026-05-19,docs/invoices/INV-00272.pdf,none,false,false
+INV-00273,PO79BMAKZ,V0562,P.S. 380 John Wayne Elementary,6043.64,202605,paid,2026-05-09,docs/invoices/INV-00273.pdf,none,false,false
+INV-00274,LQNFP-ADA,V0247,BEDFORD ACADEMY HIGH SCHOOL,233335.6,202605,pending,2026-05-01,docs/invoices/INV-00274.pdf,po_id,false,false
+INV-00275,HWQ274F,V0563,"Kingsborough Community College, City University of New York",89959.22,202605,paid,2026-05-18,docs/invoices/INV-00275.pdf,none,false,false
+INV-00276,P-312JHRW,V0493,P369K@P5K,7138.7,202605,paid,2026-05-09,docs/invoices/INV-00276.pdf,none,false,false
+INV-00277,PW77CTCX4,V0174,Crown Gardens Housing Corporation,656279.41,202605,paid,2026-05-09,docs/invoices/INV-00277.pdf,none,false,false
+INV-00278,PW77CTCX4,V0174,Crown Gardens Housing Corp.,656279.41,202605,pending,2026-05-26,docs/invoices/INV-00278.pdf,none,true,false
+INV-00279,FD175W288,V0144,P.S. 321 WILLIAM PENN,5324.73,202605,denied,2026-05-15,docs/invoices/INV-00279.pdf,none,false,false
+INV-00280,QC070-018,V0443,ASPIRATIONS DIPLOMA PLUS HIGH SCHOOL,131903.83,202605,paid,2026-05-08,docs/invoices/INV-00280.pdf,period,false,false
+INV-00281,GI-CON-5B,V0426,17K547- Brooklyn Academy of Science and the Environment,286854.84,202605,paid,2026-05-17,docs/invoices/INV-00281.pdf,none,false,false
+INV-00282,48202206,V0475,MULTICULTURAL HIGH SCHOOL,1143311.63,202605,denied,2026-05-02,docs/invoices/INV-00282.pdf,none,false,false
+INV-00283,P-213KSRP,V0838,K609 Urban Assembly School For Criminal Justice 4200 16 Avenue,324622.8,202605,paid,2026-05-25,docs/invoices/INV-00283.pdf,none,false,false
+INV-00284,P-312JHFA,V0086,Cultural Academy for the Arts and Sciences,15130.66,202605,pending,2026-05-06,docs/invoices/INV-00284.pdf,none,false,false
+INV-00285,HWKMETWF2,V0474,"MS 266, Park Place Community Middle School",354393.13,202605,pending,2026-05-15,docs/invoices/INV-00285.pdf,none,false,false
+INV-00286,P-107HRSP,V0078,New Lab at Brooklyn Navy Yard,181417.29,202605,paid,2026-05-28,docs/invoices/INV-00286.pdf,none,false,false
+INV-00287,HH112KNUG,V0122,P.S. 040 George W. Carver,1168333.24,202605,paid,2026-05-26,docs/invoices/INV-00287.pdf,none,false,false
+INV-00288,S136-366D,V0351,Public School 59 William Floyd,627429.43,202605,paid,2026-05-28,docs/invoices/INV-00288.pdf,none,false,false
+INV-00289,P-206RHCF,V0245,Abraham Lincoln High School,54172.8,202605,pending,2026-05-09,docs/invoices/INV-00289.pdf,none,false,false
+INV-00290,S136-436A,V0183,"DPR -  Cadman Park Conservancy, Inc.",236656.1,202605,paid,2026-05-27,docs/invoices/INV-00290.pdf,none,false,false
+INV-00291,P-4FPKDRR,V0784,"The Bushwick Starr, Inc.",23360.31,202605,pending,2026-05-09,docs/invoices/INV-00291.pdf,none,false,false
+INV-00292,P-6PNYT23,V0150,Public School 44,110089.61,202605,pending,2026-05-18,docs/invoices/INV-00292.pdf,none,false,false
+INV-00293,NYCFROCKA,V0146,P.S. 335 Granville T. Woods,28868.52,202605,pending,2026-05-25,docs/invoices/INV-00293.pdf,none,false,false
+INV-00294,HWKAVEJ81,V0425,17K382,836246.47,202605,paid,2026-05-10,docs/invoices/INV-00294.pdf,none,false,false
+INV-00295,RS-PH1,V0817,K045 P.S./I.S. 045 Horace E. Greene 84 Schaefer Street,1740632.91,202605,paid,2026-05-04,docs/invoices/INV-00295.pdf,none,false,false
+INV-00296,GR001-026,V0360,Science Skills Center High School,63436.85,202605,paid,2026-05-20,docs/invoices/INV-00296.pdf,none,false,false
+INV-00297,P-5CLVCHL,V0163,Central Brooklyn Ascend Charter School,3231.29,202605,paid,2026-05-03,docs/invoices/INV-00297.pdf,period,false,true
+INV-00298,ID21WD299,V0009,"Gallim Dance Company, Inc.",4063.75,202605,paid,2026-05-08,docs/invoices/INV-00298.pdf,none,false,true
+INV-00299,HW2CR21C,V0760,K023 P.S. 023 CARTER G. WOODSON 545 WILLOUGHBY AVENUE,1069663.04,202605,paid,2026-05-25,docs/invoices/INV-00299.pdf,none,false,false
+INV-00300,BNYSTEAM2,V0144,P.S. 321 WILLIAM PENN,4569.51,202605,paid,2026-05-10,docs/invoices/INV-00300.pdf,none,false,false
+INV-00301,PV293-EXT,V0226,Good Shepherd Services,2243.17,202605,denied,2026-05-15,docs/invoices/INV-00301.pdf,none,false,false
+INV-00302,HUNTSAOU2,V0826,K753 P.S. K753 - School For Career Development 510 Clermont Avenue,295587.41,202605,paid,2026-05-19,docs/invoices/INV-00302.pdf,none,false,false
+INV-00303,26202201,V0652,K158 P.S. 158 Warwick 400 Ashford Street,590973.81,202605,paid,2026-05-17,docs/invoices/INV-00303.pdf,none,false,false
+INV-00304,P-503CHLP,V0364,The Brooklyn School for Global Studies 15K429,13445.91,202605,paid,2026-05-07,docs/invoices/INV-00304.pdf,none,false,false
+INV-00305,WATERST,V0056,"ISSUE Project Room, Inc.",718570.54,202605,pending,2026-05-28,docs/invoices/INV-00305.pdf,none,false,false
+INV-00306,MC024-008,V0056,"ISSUE Project Room, Inc.",82448.96,202605,paid,2026-05-05,docs/invoices/INV-00306.pdf,none,false,false
+INV-00307,HED-560,V0849,K673 East Brooklyn Community High School 9517 s Highway,242560.79,202605,denied,2026-05-02,docs/invoices/INV-00307.pdf,none,false,false
+INV-00308,HWQ724B,V0009,"Gallim Dance Company, Inc.",1138469.73,202605,denied,2026-05-19,docs/invoices/INV-00308.pdf,none,false,false
+INV-00309,FD175MC96,V0984,NYC Health+Hospitals / Coney Island,147787.76,202605,denied,2026-05-22,docs/invoices/INV-00309.pdf,none,false,false
+INV-00310,SANDG3BAT,V0591,New York-Presbyterian Brooklyn Methodist Hospital,604922.64,202605,paid,2026-05-14,docs/invoices/INV-00310.pdf,none,false,false
+INV-00311,P-501CLPR,V0910,PS 39 Henry Bristow,290686.75,202605,paid,2026-05-06,docs/invoices/INV-00311.pdf,none,false,false
+INV-00312,F175MCE33,V0117,Dr. Gladstone H. Atwell M.S. 62,101449.44,202605,denied,2026-05-20,docs/invoices/INV-00312.pdf,none,false,false
+INV-00313,BA001-026,V0490,P.S. 91 THE ALBANY AVENUE SCHOOL,25961.9,202605,pending,2026-05-05,docs/invoices/INV-00313.pdf,amount,false,false
+INV-00314,YC001-010,V0848,K209 P.S. 209 Margaret Mead 2609 East 7Th St,27043.11,202605,paid,2026-05-13,docs/invoices/INV-00314.pdf,none,false,false
+INV-00315,BUSHUTIL,V0183,"DPR -  Cadman Park Conservancy, Inc.",2896227.39,202605,paid,2026-05-19,docs/invoices/INV-00315.pdf,amount,false,false
+INV-00316,P-2COFEPK,V0009,Gallim Dance Company,71709.46,202605,paid,2026-05-11,docs/invoices/INV-00316.pdf,none,false,false
+INV-00317,QC002-024,V0176,Contello Towers No 2,101099.36,202605,denied,2026-05-15,docs/invoices/INV-00317.pdf,none,false,false
+INV-00318,P-6PNYR40,V0810,K394 M.S. K394 188 Rochester Avenue,17458.58,202605,denied,2026-05-24,docs/invoices/INV-00318.pdf,vendor_name,false,true
+INV-00319,HWD10311,V0562,P.S. 380 John Wayne Elementary,6442574.7,202605,paid,2026-05-14,docs/invoices/INV-00319.pdf,none,false,false
+INV-00320,HWD10311,V0562,P.S. 380 JOHN WAYNE ELEMENTARY,6442574.7,202605,pending,2026-05-19,docs/invoices/INV-00320.pdf,none,true,false
+INV-00321,P-501SLTL,V0865,DPR - Umma Playground,74717.73,202605,paid,2026-05-14,docs/invoices/INV-00321.pdf,none,false,false
+INV-00322,P-6SCACON,V0673,P.S. 224 HALE A. WOODRUFF,91885.87,202605,paid,2026-05-19,docs/invoices/INV-00322.pdf,none,false,false
+INV-00323,BATBIMPS,V0691,P.S. 298 DR. BETTY SHABAZZ,1350874.19,202605,pending,2026-05-19,docs/invoices/INV-00323.pdf,none,false,false
+INV-00324,HWRAP07,V0494,Pathways In Technology Early College High School (P-TECH),11438863.43,202605,paid,2026-05-18,docs/invoices/INV-00324.pdf,none,false,false
+INV-00325,P-210SHRS,V0174,Crown Gardens Housing Corp.,49897.13,202605,paid,2026-05-10,docs/invoices/INV-00325.pdf,period,false,false
+INV-00326,P-210SHRS,V0174,Crown Gardens Housing Corp.,49897.13,202605,pending,2026-05-04,docs/invoices/INV-00326.pdf,none,true,false
+INV-00327,HWP24MC3,V0144,P.S. 321 WILLIAM PENN,599761.79,202605,paid,2026-05-11,docs/invoices/INV-00327.pdf,none,false,false
+INV-00328,SEN002184,V0347,Public School 316 Elijah G. Stroud Elementary School,236722.57,202605,paid,2026-05-24,docs/invoices/INV-00328.pdf,none,false,false
+INV-00329,P-4PNYT27,V0243,22K425- James Madison High School,90040.85,202605,paid,2026-05-14,docs/invoices/INV-00329.pdf,none,false,false
+INV-00330,FASGTRHB,V0122,P.S. 040 George W. Carver,14590.48,202605,denied,2026-05-26,docs/invoices/INV-00330.pdf,none,false,false
+INV-00331,FAWHTSGTF,V0920,15K429 Digital Arts and Cinema Technology HS,65974.8,202605,paid,2026-05-06,docs/invoices/INV-00331.pdf,none,false,false
+INV-00332,P-402MPDR,V0006,Brooklyn Academy of Music (BAM),290270.14,202605,paid,2026-05-23,docs/invoices/INV-00332.pdf,none,false,false
+INV-00333,P-402MPDR,V0006,Brooklyn Academy of Music (BAM),290270.14,202605,pending,2026-05-11,docs/invoices/INV-00333.pdf,none,true,false
+INV-00334,HED-562,V0981,Department of Parks and Recreation - Marine Park,867089.71,202605,pending,2026-05-02,docs/invoices/INV-00334.pdf,none,false,false
+INV-00335,PW80ELEC,V0248,Beginning with Children Charter School 2 (K037),652967.78,202605,pending,2026-05-24,docs/invoices/INV-00335.pdf,none,false,false
+INV-00336,S136-251E,V0174,Crown Gardens Housing Corp.,90581.29,202605,paid,2026-05-28,docs/invoices/INV-00336.pdf,none,false,false
+INV-00337,SHEEPBULK,V0035,Ridgewood Bushwick Senior Citizens Council,598682.06,202605,pending,2026-05-17,docs/invoices/INV-00337.pdf,period,false,true
+INV-00338,SE-813,V0757,CUNY New York City College of Technology,2096359.08,202605,denied,2026-05-12,docs/invoices/INV-00338.pdf,none,false,true
+INV-00339,SANDHB2U,V0963,15K592 Khalil Gibran International Academy,3326428.34,202605,pending,2026-05-16,docs/invoices/INV-00339.pdf,none,false,false
+INV-00340,P-303BDCG,V0729,WILLIAMSBURG HIGH SCHOOL FOR ARCHITECTURE AND DESIGN,5784.02,202605,paid,2026-05-04,docs/invoices/INV-00340.pdf,none,false,false
+INV-00341,EO26-0056,V0436,21K468 Kingsborough Early college Secondary School,12859.02,202605,paid,2026-05-16,docs/invoices/INV-00341.pdf,none,false,false
+INV-00342,P-304PENN,V0490,P.S. 91 THE ALBANY AVENUE SCHOOL,199372.01,202605,paid,2026-05-13,docs/invoices/INV-00342.pdf,none,false,false
+INV-00343,CO272BLR,V0604,Hispanic Information & Telecommunication Network Inc.,283021.94,202605,paid,2026-05-08,docs/invoices/INV-00343.pdf,none,false,false
+INV-00344,QC001-027,V0915,k662 MS Liberty Avenue Middle School,30773.09,202605,denied,2026-05-22,docs/invoices/INV-00344.pdf,none,false,false
+INV-00345,CRO-AGS,V0006,Brooklyn Academy of Music (BAM),4108484.75,202605,paid,2026-05-15,docs/invoices/INV-00345.pdf,amount,false,false
+INV-00346,SEQ002715,V0411,Noel Pointer Foundation,432375.75,202605,paid,2026-05-05,docs/invoices/INV-00346.pdf,none,false,false
+INV-00347,HL82SIABE,V0189,DPR -  Prospect Park Alliance,613949.39,202605,paid,2026-05-02,docs/invoices/INV-00347.pdf,none,false,true
+INV-00348,P-5CPITRC,V0056,"ISSUE Project Room, Inc.",297271.32,202605,paid,2026-05-28,docs/invoices/INV-00348.pdf,none,false,false
+INV-00349,HS057-019,V0187,"DPR -  Grand Street District Management Association, Inc.",60204.34,202605,paid,2026-05-07,docs/invoices/INV-00349.pdf,none,false,false
+INV-00350,HBM246100,V0055,New York Aquarium,1655047.44,202605,denied,2026-05-20,docs/invoices/INV-00350.pdf,none,false,false
+INV-00351,13202201,V0269,"It Takes A Village Academy, 18K563",497179.38,202605,denied,2026-05-28,docs/invoices/INV-00351.pdf,none,false,false
+INV-00352,HBX644S,V0487,P.S. 397 FOSTER-LAURIE,4364985.95,202605,paid,2026-05-24,docs/invoices/INV-00352.pdf,none,false,true
+INV-00353,29202302,V0878,"NYC Health + Hospitals, Gotham Health, East New York",56620.4,202605,pending,2026-05-26,docs/invoices/INV-00353.pdf,none,false,false
+INV-00354,P-3CENHMP,V0749,P.S 748,143351.9,202605,paid,2026-05-16,docs/invoices/INV-00354.pdf,none,false,false
+INV-00355,PO79BMAKP,V0208,Institute for Community Living Inc,8819.18,202605,paid,2026-05-27,docs/invoices/INV-00355.pdf,none,false,false
+INV-00356,PW326C104,V0009,Gallim Dance Company,4388.99,202605,paid,2026-05-10,docs/invoices/INV-00356.pdf,none,false,true
+INV-00357,25202501,V0006,Brooklyn Academy of Music (BAM),53707.33,202605,paid,2026-05-06,docs/invoices/INV-00357.pdf,vendor_name,false,false
+INV-00358,ACEDOT602,V0174,Crown Gardens Housing Corp.,5658.95,202605,paid,2026-05-17,docs/invoices/INV-00358.pdf,amount,false,false
+INV-00359,P-2PPESIT,V0638,P.S. 114 RYDER ELEMENTARY,53437.47,202605,paid,2026-05-17,docs/invoices/INV-00359.pdf,none,false,false
+INV-00360,PW77501AD,V0826,K753 P.S. K753 - School For Career Development 510 Clermont Avenue,412456.25,202605,denied,2026-05-10,docs/invoices/INV-00360.pdf,none,false,false
+INV-00361,HW200IFA1,V0597,K151 P.S. 151 LYNDON B. JOHNSON 763 KNICKERBOCKER AVENUE,15275497.94,202605,paid,2026-05-04,docs/invoices/INV-00361.pdf,none,false,false
+INV-00362,P-4TRS27B,V0140,Public School 300,534704.91,202605,pending,2026-05-05,docs/invoices/INV-00362.pdf,amount,false,false
+INV-00363,HWPLZ006X,V0035,"Ridgewood Bushwick Senior Citizens Council, Inc.",1274445.92,202605,paid,2026-05-17,docs/invoices/INV-00363.pdf,none,false,false
+INV-00364,HWPLZ006X,V0035,Ridgewood Bushwick Senior Citizens Council,1274445.92,202605,pending,2026-05-13,docs/invoices/INV-00364.pdf,none,true,false
+INV-00365,E21-0005,V0196,DPR - Kolbert Park,25210.96,202605,paid,2026-05-28,docs/invoices/INV-00365.pdf,none,false,false
+INV-00366,P-3CPI3AB,V0877,NYC Health + Hospitals/ Kings County,68125.43,202605,denied,2026-05-15,docs/invoices/INV-00366.pdf,none,false,false
+INV-00367,APIDSSI02,V0652,K158 P.S. 158 Warwick 400 Ashford Street,675092.13,202605,pending,2026-05-12,docs/invoices/INV-00367.pdf,none,false,false
+INV-00368,PO79RNSA,V0189,DPR - Prospect Park Alliance,139473.33,202605,pending,2026-05-18,docs/invoices/INV-00368.pdf,none,false,true
+INV-00369,S136-383S,V0138,PS295,2049960.83,202605,paid,2026-05-08,docs/invoices/INV-00369.pdf,none,false,true
+INV-00370,PWQ077AT2,V0104,The Brooklyn International High School (13K439),1202005.68,202605,paid,2026-05-23,docs/invoices/INV-00370.pdf,none,false,true
+INV-00371,HR258AVBO,V0274,"Leaders High School, 21K572",325010.65,202605,paid,2026-05-05,docs/invoices/INV-00371.pdf,none,false,false
+INV-00372,HWQBCH6WF,V0198,DPR - MOFFAT STREET PARK,337955.02,202605,denied,2026-05-09,docs/invoices/INV-00372.pdf,none,false,false
+INV-00373,HBRA24925,V0419,CAMBA Inc-Bedford -Stuyvesant multi service center,53377.28,202605,paid,2026-05-04,docs/invoices/INV-00373.pdf,none,false,true
+INV-00374,HWK1153A,V0121,Progress High School,113204.47,202605,paid,2026-05-18,docs/invoices/INV-00374.pdf,vendor_name,false,true
+INV-00375,18202201,V0351,Public School 59 William Floyd,6700.98,202605,pending,2026-05-16,docs/invoices/INV-00375.pdf,none,false,false
+INV-00376,C75BULOVA,V0074,"Ohel Children's Home and Family Services, Inc.",39521.69,202605,paid,2026-05-11,docs/invoices/INV-00376.pdf,none,false,true
+INV-00377,PS-277,V0878,"NYC Health + Hospitals/ Gotham Health, East New York",1198420.87,202605,paid,2026-05-10,docs/invoices/INV-00377.pdf,none,false,false
+INV-00378,LM019-011,V0900,K088 JHS 088 Peter Rouget,30820.25,202605,paid,2026-05-01,docs/invoices/INV-00378.pdf,none,false,true
+INV-00379,P-2PDBRC2,V0451,Crispus Attucks Elementary School - PS21,1106782.06,202605,paid,2026-05-21,docs/invoices/INV-00379.pdf,none,false,false
+INV-00380,TFLUMP,V0490,P.S.91 The Albany Avenue School,3666537.58,202605,denied,2026-05-21,docs/invoices/INV-00380.pdf,none,false,false
+INV-00381,LBK16STRF,V0892,Cold Spring Harbor Laboratory,25531.1,202605,paid,2026-05-05,docs/invoices/INV-00381.pdf,none,false,false
+INV-00382,CO293GCON,V0189,DPR -  Prospect Park Alliance,916245.06,202605,paid,2026-05-06,docs/invoices/INV-00382.pdf,none,false,false
+INV-00383,PW326NYCC,V0122,P.S. 040 George W. Carver,609760.02,202605,paid,2026-05-21,docs/invoices/INV-00383.pdf,none,false,true
+INV-00384,SANDY4-53,V0208,Institute for Community Living Inc,24671.41,202605,denied,2026-05-22,docs/invoices/INV-00384.pdf,none,false,false
+INV-00385,PV502-SDW,V0286,"P.S. 10, Magnet School of Math, Science and Design Technology",228378.11,202605,paid,2026-05-14,docs/invoices/INV-00385.pdf,none,false,false
+INV-00386,SAND1113,V0411,The Noel Pointer Foundation,991594.44,202605,paid,2026-05-18,docs/invoices/INV-00386.pdf,none,false,true
+INV-00387,SANDHM246,V0155,"PS 770, The New American Academy",5046.04,202605,paid,2026-05-08,docs/invoices/INV-00387.pdf,none,false,true
+INV-00388,PW77501AD,V0318,PS/IS 41,142251.14,202605,paid,2026-05-20,docs/invoices/INV-00388.pdf,none,false,false
+INV-00389,NR-115-L,V0659,P.S. 178 SAINT CLAIR MCKELWAY,3499608.21,202605,pending,2026-05-09,docs/invoices/INV-00389.pdf,none,false,false
+INV-00390,GOVISLND2,V0122,P.S. 040 GEORGE W. CARVER,35740.64,202605,pending,2026-05-20,docs/invoices/INV-00390.pdf,none,false,false
+INV-00391,P-6RPZBKQ,V0351,Public School 59 William Floyd,37100.03,202605,paid,2026-05-22,docs/invoices/INV-00391.pdf,none,false,false
+INV-00392,HH112HSHP,V0587,Wyckoff Heights Medical Center,185862.04,202605,paid,2026-05-16,docs/invoices/INV-00392.pdf,none,false,false
+INV-00393,HH112SWTR,V0002,Wildlife Conservation Society - New York Aquarium,843.37,202605,paid,2026-05-20,docs/invoices/INV-00393.pdf,none,false,false
+INV-00394,HH112SWTR,V0002,Wildlife Conservation Society New York Aquarium,843.37,202605,pending,2026-05-15,docs/invoices/INV-00394.pdf,none,true,false
+INV-00395,EO26-0076,V0085,Brooklyn Urban Garden Charter School (BUGS),16404.76,202605,paid,2026-05-21,docs/invoices/INV-00395.pdf,vendor_name,false,true
+INV-00396,18202001,V0591,New York-Presbyterian Brooklyn Methodist Hospital,66228.23,202605,pending,2026-05-05,docs/invoices/INV-00396.pdf,none,false,false
+INV-00397,SANDR2BRG,V0245,Abraham Lincoln High School,1198019.05,202605,pending,2026-05-20,docs/invoices/INV-00397.pdf,none,false,false
+INV-00398,HBPK27K,V0596,"BEL Community Housing, LLC",1121938.4,202605,denied,2026-05-19,docs/invoices/INV-00398.pdf,none,false,false
+INV-00399,24202206,V0245,ABRAHAM LINCOLN HIGH SCHOOL,1127093.1,202605,pending,2026-05-26,docs/invoices/INV-00399.pdf,none,false,false
+INV-00400,PV050ELMO,V0621,P.S. 029 JOHN M. HARRIGAN,238537.14,202605,denied,2026-05-01,docs/invoices/INV-00400.pdf,none,false,true
+INV-00401,PV264FULT,V0248,Beginning with Children Charter School 2 K037,18294.57,202605,paid,2026-05-16,docs/invoices/INV-00401.pdf,none,false,false
+INV-00402,PV264FULT,V0248,Beginning with Children Charter School 2 K037,18294.57,202605,pending,2026-05-11,docs/invoices/INV-00402.pdf,none,true,false
+INV-00403,P-3HRPCWP,V0500,PS 186 Dr. Irving A. Gladstone,356587.4,202605,paid,2026-05-13,docs/invoices/INV-00403.pdf,amount,false,false
+INV-00404,SEQ200616,V0056,Issue Project Room,3527309.23,202605,paid,2026-05-04,docs/invoices/INV-00404.pdf,none,false,false
+INV-00405,SEQ200616,V0056,Issue Project Room,3527309.23,202605,pending,2026-05-28,docs/invoices/INV-00405.pdf,none,true,false
+INV-00406,P-6SITEIN,V0183,"DPR -  Cadman Park Conservancy, Inc.",94172.8,202605,paid,2026-05-08,docs/invoices/INV-00406.pdf,none,false,false
+INV-00407,RED-388,V0008,Ifetayo Cultural Arts Academy,321779.21,202605,denied,2026-05-05,docs/invoices/INV-00407.pdf,none,false,false
+INV-00408,P-307MPSP,V0619,P.S. 021 CRISPUS ATTUCKS,49471.4,202605,paid,2026-05-14,docs/invoices/INV-00408.pdf,amount,false,false
+INV-00409,ID21-PSLT,V0632,P.S. 092 ADRIAN HEGEMAN,16133010.23,202605,paid,2026-05-18,docs/invoices/INV-00409.pdf,none,false,false
+INV-00410,P-311RSTF,V0365,Brooklyn School of Inquiry,418344.94,202605,pending,2026-05-19,docs/invoices/INV-00410.pdf,none,false,false
+INV-00411,P-2JRCOUR,V0274,"Leaders High School, 21K572",329802.03,202605,pending,2026-05-19,docs/invoices/INV-00411.pdf,none,false,false
+INV-00412,HWXS211V2,V0683,J.H.S. 259 WILLIAM MCKINLEY,217540.24,202605,paid,2026-05-06,docs/invoices/INV-00412.pdf,none,false,true
+INV-00413,PW282253B,V0216,Bedford Stuyvesant Restoration Corp.,83765.67,202605,paid,2026-05-12,docs/invoices/INV-00413.pdf,none,false,false
+INV-00414,BUSHDEVSP,V0618,P.S. 15 PATRICK F. DALY,481877.22,202605,paid,2026-05-05,docs/invoices/INV-00414.pdf,none,false,false
+INV-00415,TI-182-L,V0365,THE BROOKLYN SCHOOL OF INQUIRY,120342.53,202605,paid,2026-05-20,docs/invoices/INV-00415.pdf,none,false,false
+INV-00416,02202403,V0122,P.S. 040 GEORGE W. CARVER,1048658.34,202605,pending,2026-05-12,docs/invoices/INV-00416.pdf,po_id,false,false
+INV-00417,P-413QCAF,V0315,PS 69 Vincent D. Grippo School,226512.04,202605,paid,2026-05-17,docs/invoices/INV-00417.pdf,none,false,false
+INV-00418,PO79LABB,V0216,Bedford Stuyvesant Restoration Corp.,4866.82,202605,denied,2026-05-23,docs/invoices/INV-00418.pdf,none,false,false
+INV-00419,P-4SHREDP,V0122,P.S. 040 GEORGE W. CARVER,2232.04,202605,paid,2026-05-21,docs/invoices/INV-00419.pdf,none,false,false
+INV-00420,YC062-020,V0289,P.S. 274 KOSCIUSKO,45367.29,202605,paid,2026-05-25,docs/invoices/INV-00420.pdf,none,false,false
+INV-00421,CS-GC-SFS,V0623,P.S. 048 MAPLETON,29189541.19,202605,paid,2026-05-07,docs/invoices/INV-00421.pdf,amount,false,false
+INV-00422,P-2PGRD11,V0822,K130 P.S. 130 The Parkside 70 Ocean Parkway,54818.68,202605,paid,2026-05-10,docs/invoices/INV-00422.pdf,none,false,false
+INV-00423,JA-GBT,V0170,New York University,678008.66,202605,paid,2026-05-01,docs/invoices/INV-00423.pdf,none,false,false
+INV-00424,P-414B9TH,V0248,Beginning with Children Charter School 2 (K037),10773.54,202605,pending,2026-05-16,docs/invoices/INV-00424.pdf,none,false,true
+INV-00425,HU035-016,V0080,Bed-Stuy Campaign Against Hunger,30295.96,202605,paid,2026-05-26,docs/invoices/INV-00425.pdf,none,false,false
+INV-00426,67202201,V0216,Bedford Stuyvesant Restoration Corp.,15158.04,202605,paid,2026-05-04,docs/invoices/INV-00426.pdf,none,false,false
+INV-00427,CO264CADA,V0843,N/A - Lamad Academy Charter School,889.98,202605,pending,2026-05-14,docs/invoices/INV-00427.pdf,none,false,false
+INV-00428,P-2CPIWLB,V0614,NORMA ADAMS CLEMONS ACADEMY,118771.1,202605,denied,2026-05-01,docs/invoices/INV-00428.pdf,none,false,false
+INV-00429,GI-TIBBET,V0351,Public School 59 William Floyd,5522760.76,202605,pending,2026-05-06,docs/invoices/INV-00429.pdf,none,false,false
+INV-00430,HBCR03B,V0475,MULTICULTURAL HIGH SCHOOL,1447923.23,202605,pending,2026-05-07,docs/invoices/INV-00430.pdf,none,false,false
+INV-00431,NC-179,V0304,PS 150 The Christopher School,1152702.43,202605,paid,2026-05-01,docs/invoices/INV-00431.pdf,none,false,false
+INV-00432,PW77207HV,V0074,Ohel Children's Home and Family Services,422932.68,202605,paid,2026-05-25,docs/invoices/INV-00432.pdf,none,false,false
+INV-00433,P-30420S2,V0702,I.S. 364 GATEWAY,83775.62,202605,pending,2026-05-04,docs/invoices/INV-00433.pdf,none,false,false
+INV-00434,PW357FIRE,V0589,NYC Health + Hospitals/Woodhull,629541.04,202605,pending,2026-05-16,docs/invoices/INV-00434.pdf,none,false,false
+INV-00435,CS-BX-LTP,V0312,PS 372 The Children's School,2773452.31,202605,pending,2026-05-03,docs/invoices/INV-00435.pdf,amount,false,false
+INV-00436,P-110FLAG,V0540,RIVERDALE AVENUE COMMUNITY SCHOOL,80930.16,202605,denied,2026-05-03,docs/invoices/INV-00436.pdf,none,false,false
+INV-00437,W125TRANS,V0248,Beginning with Children Charter School 2 K037,759637.08,202605,denied,2026-05-10,docs/invoices/INV-00437.pdf,amount,false,true
+INV-00438,HW2CR21E,V0476,Origins High School,859759.68,202605,paid,2026-05-24,docs/invoices/INV-00438.pdf,none,false,false
+INV-00439,HWQBULB1,V0500,PS 186 Dr. Irving A. Gladstone,1319576.61,202605,paid,2026-05-26,docs/invoices/INV-00439.pdf,none,false,false
+INV-00440,SEEDHWX01,V0035,"Ridgewood Bushwick Senior Citizens Council, Inc.",512604.02,202605,denied,2026-05-05,docs/invoices/INV-00440.pdf,amount,false,false
+INV-00441,P-307BLOC,V0026,23K363 - Brownsville Collaborative Middle School,28026.14,202605,paid,2026-05-12,docs/invoices/INV-00441.pdf,none,false,false
+INV-00442,P-6CNGEVC,V0503,"PS 222, Katherine R. Snyder Elementary School",56585.62,202605,denied,2026-05-14,docs/invoices/INV-00442.pdf,none,false,false
+INV-00443,WM-LC-17,V0118,Middle School 763 - Brooklyn Science and Engineering Academy,386636.07,202605,paid,2026-05-28,docs/invoices/INV-00443.pdf,none,false,false
+INV-00444,LBK16STRF,V0878,"NYC Health + Hospitals, Gotham Health, East New York",75099.66,202605,paid,2026-05-10,docs/invoices/INV-00444.pdf,none,false,false
+INV-00445,PW335A29,V0572,Habitat for Humanity NYC,200716.23,202605,paid,2026-05-26,docs/invoices/INV-00445.pdf,none,false,false
+INV-00446,P-4LIBTPL,V0486,Public School 32 – Samuel Mills Sprole School,49030.94,202605,pending,2026-05-19,docs/invoices/INV-00446.pdf,none,false,false
+INV-00447,FX175GE42,V0057,The Brooklyn Historical Society,58225.67,202605,denied,2026-05-24,docs/invoices/INV-00447.pdf,none,false,false
+INV-00448,P-6FACD21,V0485,P.S. 309 The George E. Wibecan Preparatory Academy,110809.82,202605,paid,2026-05-11,docs/invoices/INV-00448.pdf,none,false,false
+INV-00449,P-6PNYCST,V0453,EBC High School for Public Service Department of Education,108699.98,202605,pending,2026-05-18,docs/invoices/INV-00449.pdf,amount,false,false
+INV-00450,P-208BRSK,V0273,KAPPA V,89856.42,202605,paid,2026-05-07,docs/invoices/INV-00450.pdf,none,false,false
+INV-00451,SEQ200586,V0057,The Brooklyn Historical Society,1396637.55,202605,denied,2026-05-23,docs/invoices/INV-00451.pdf,none,false,false
+INV-00452,QC001-027,V0915,k662 MS Liberty Avenue Middle School,41398.7,202605,paid,2026-05-05,docs/invoices/INV-00452.pdf,none,false,false
+INV-00453,P-2GPWBPC,V0006,Brooklyn Academy of Music (BAM),10842.79,202605,paid,2026-05-23,docs/invoices/INV-00453.pdf,none,false,true
+INV-00454,BRC270D,V0321,Public School - IS98 the Bay Academy for the Arts & Sciences,14996376.89,202605,denied,2026-05-05,docs/invoices/INV-00454.pdf,none,false,false
+INV-00455,NC-167,V0209,"COMMUNITY HEALTHCARE NETWORK, INC",124390.57,202605,paid,2026-05-01,docs/invoices/INV-00455.pdf,none,false,false
+INV-00456,BED-778,V0151,"P53K @ SPRING CREEK, DISTRICT 75",397704.49,202605,pending,2026-05-21,docs/invoices/INV-00456.pdf,none,false,true
+INV-00457,PO79BMALA,V0146,P.S. 335 Granville T. Woods,37883.55,202605,paid,2026-05-14,docs/invoices/INV-00457.pdf,none,false,false
+INV-00458,BNYB62RFR,V0285,P. S. 146 The Brooklyn New School,228951.2,202605,paid,2026-05-27,docs/invoices/INV-00458.pdf,none,false,false
+INV-00459,ACEDOH212,V0736,BROOKLYN BROWNSTONE SCHOOL,21160.54,202605,paid,2026-05-01,docs/invoices/INV-00459.pdf,none,false,true
+INV-00460,CA004-021,V0208,Institute for Community Living Inc,126226.59,202605,denied,2026-05-10,docs/invoices/INV-00460.pdf,vendor_name,false,false
+INV-00461,HWS2025Q,V0582,DPR - Paerdegat Park - Cristo Rey Brooklyn High School,724728.93,202605,pending,2026-05-21,docs/invoices/INV-00461.pdf,none,false,false
+INV-00462,HWKAVEXWF,V0604,Hispanic Information and Telecommunication Network Inc.,34948.75,202605,paid,2026-05-17,docs/invoices/INV-00462.pdf,none,false,false
+INV-00463,RED-366,V0150,PUBLIC SCHOOL 44,1957323.04,202605,pending,2026-05-05,docs/invoices/INV-00463.pdf,none,false,false
+INV-00464,LM002-021,V0144,P.S. 321 William Penn,17489.46,202605,paid,2026-05-15,docs/invoices/INV-00464.pdf,none,false,false
+INV-00465,LM002-021,V0144,P.S. 321 WILLIAM PENN,17489.46,202605,pending,2026-05-11,docs/invoices/INV-00465.pdf,none,true,false
+INV-00466,PW77CHVAC,V0983,"L'Refuah Medical and Rehabilitation Center, Inc. DBA Ezra Medical Center, Inc.",507061.75,202605,paid,2026-05-08,docs/invoices/INV-00466.pdf,none,false,false
+INV-00467,PW326C104,V0009,Gallim Dance Company,3025.03,202605,paid,2026-05-05,docs/invoices/INV-00467.pdf,none,false,true
+INV-00468,P-2CPIPHP,V0796,K196 P.S. 196 Ten Eyck 207 Bushwick Avenue,450684.42,202605,pending,2026-05-04,docs/invoices/INV-00468.pdf,none,false,false
+INV-00469,F175-MP36,V0074,"Ohel Children's Home and Family Services, Inc.",19583.28,202605,paid,2026-05-28,docs/invoices/INV-00469.pdf,amount,false,false
+INV-00470,F175-MP36,V0074,Ohel Children's Home and Family Services,19583.28,202605,pending,2026-05-06,docs/invoices/INV-00470.pdf,none,true,false
+INV-00471,ACEDEP601,V0163,Central Brooklyn Ascend Charter School,39779.03,202605,paid,2026-05-09,docs/invoices/INV-00471.pdf,none,false,true
+INV-00472,HBCR24A,V0644,P.S. 147 ISAAC REMSEN,562517.44,202605,paid,2026-05-10,docs/invoices/INV-00472.pdf,none,false,false
+INV-00473,LNMA12TOT,V0581,DPR- Trees for Rogers Ave,11801.74,202605,denied,2026-05-10,docs/invoices/INV-00473.pdf,none,false,true
+INV-00474,HU004-021,V0485,P.S. 309 The George E. Wibecan Preparatory Academy,4801.99,202605,paid,2026-05-20,docs/invoices/INV-00474.pdf,none,false,false
+INV-00475,PO79BMAKI,V0757,CUNY New York City College of Technology,287564.53,202605,pending,2026-05-08,docs/invoices/INV-00475.pdf,vendor_name,false,false
+INV-00476,P-210JPPT,V0866,"K284 The Gregory Jocko Jackson School Of Sports, Art, And Technology 213 Osborn Street",88791.16,202605,pending,2026-05-15,docs/invoices/INV-00476.pdf,none,false,false
+INV-00477,P-200LFHH,V0274,Leaders High School 21K572,146526.69,202605,pending,2026-05-09,docs/invoices/INV-00477.pdf,po_id,false,false
+INV-00478,HWR705,V0155,"PS 770, The New American Academy",134928.46,202605,paid,2026-05-12,docs/invoices/INV-00478.pdf,none,false,true
+INV-00479,HWR705,V0155,PS 770 The New American Academy,134928.46,202605,pending,2026-05-12,docs/invoices/INV-00479.pdf,none,true,true
+INV-00480,SEK20067,V0964,New York City College of Technology (City Tech),983472.65,202605,pending,2026-05-11,docs/invoices/INV-00480.pdf,none,false,false
+INV-00481,HH115STEP,V0584,DPR - Fort Greene Park Conservancy,45044.29,202605,paid,2026-05-09,docs/invoices/INV-00481.pdf,none,false,false
+INV-00482,DEL-260,V0248,Beginning with Children Charter School 2 (K037),486828.24,202605,paid,2026-05-04,docs/invoices/INV-00482.pdf,none,false,false
+INV-00483,JAMAVE1,V0171,"Howard Houses Tenants Council, Inc",93657.16,202605,pending,2026-05-14,docs/invoices/INV-00483.pdf,none,false,true
+INV-00484,P-4HILNDP,V0498,PS 165 Ida Posner,168471.85,202605,denied,2026-05-08,docs/invoices/INV-00484.pdf,none,false,false
+INV-00485,P-5STFMHN,V0208,Institute for Community Living Inc,20142.15,202605,paid,2026-05-01,docs/invoices/INV-00485.pdf,none,false,false
+INV-00486,HBQA24066,V0530,Public School 250 George H. Lindsay Magnet School for Communications & Multimedia Arts,16210046.39,202605,paid,2026-05-14,docs/invoices/INV-00486.pdf,none,false,false
+INV-00487,ACEDCA501,V0786,"Council of People's Organizations, Inc.,",436251.39,202605,paid,2026-05-14,docs/invoices/INV-00487.pdf,none,false,false
+INV-00488,P-2PROSPK,V0485,P.S. 309 THE GEORGE E. WIBECAN PREPARATORY ACADEMY,10753.53,202605,paid,2026-05-07,docs/invoices/INV-00488.pdf,period,false,false
+INV-00489,LQLAHEXTR,V0487,"P.S. 397, Foster Laurie",20057.28,202605,pending,2026-05-20,docs/invoices/INV-00489.pdf,none,false,false
+INV-00490,P-6WATRF1,V0026,23K363 - Brownsville Collaborative Middle School,119266.69,202605,paid,2026-05-01,docs/invoices/INV-00490.pdf,none,false,false
+INV-00491,S136-432,V0150,PUBLIC SCHOOL 44,23856.48,202605,paid,2026-05-21,docs/invoices/INV-00491.pdf,none,false,false
+INV-00492,P-303CRES,V0035,Ridgewood Bushwick Senior Citizens Council,6847.69,202605,paid,2026-05-04,docs/invoices/INV-00492.pdf,none,false,false
+INV-00493,P-303CRES,V0035,Ridgewood Bushwick Senior Citizens Council,6847.69,202605,pending,2026-05-03,docs/invoices/INV-00493.pdf,none,true,false
+INV-00494,P-3CPINSP,V0411,The Noel Pointer Foundation,155980.72,202605,paid,2026-05-03,docs/invoices/INV-00494.pdf,none,false,false
+INV-00495,C75STEAM,V0789,NYCEDC - Moore Street Market,6071.07,202605,denied,2026-05-21,docs/invoices/INV-00495.pdf,none,false,true
+INV-00496,PO79BMALK,V0736,BROOKLYN BROWNSTONE SCHOOL,160604.4,202605,paid,2026-05-23,docs/invoices/INV-00496.pdf,none,false,false
+INV-00497,P-411OKPG,V0902,k561 Williamsburg Preparatory School,5248.4,202605,paid,2026-05-08,docs/invoices/INV-00497.pdf,none,false,false
+INV-00498,P-308RPCS,V0476,ORIGINS HIGH SCHOOL,295224.22,202605,paid,2026-05-19,docs/invoices/INV-00498.pdf,none,false,false
+INV-00499,GOVISWTR2,V0262,IS 96 Seth Low,970275.23,202605,paid,2026-05-01,docs/invoices/INV-00499.pdf,none,false,false
+INV-00500,SOLARPQL1,V0312,PS 372 The Children's School,44417.5,202605,paid,2026-05-15,docs/invoices/INV-00500.pdf,none,false,false
+INV-00501,P-210SPTC,V0225,Brooklyn Conservatory of Music,143773.72,202605,paid,2026-05-23,docs/invoices/INV-00501.pdf,none,false,false
+INV-00502,P-218CPMC,V0611,JUAN MOREL CAMPOS SECONDARY SCHOOL,74742.27,202605,paid,2026-05-02,docs/invoices/INV-00502.pdf,none,false,false
+INV-00503,P-208SJRC,V0175,Cypress Hills Local Development Corporation,20477.88,202605,pending,2026-05-05,docs/invoices/INV-00503.pdf,none,false,false
+INV-00504,HBMA24613,V0877,NYC Health + Hospitals/ Kings County,230533.21,202605,paid,2026-05-17,docs/invoices/INV-00504.pdf,po_id,false,true
+INV-00505,RH-94-L,V0493,P369K@P5K,25116.16,202605,paid,2026-05-17,docs/invoices/INV-00505.pdf,none,false,false
+INV-00506,TF18JE190,V0248,Beginning with Children Charter School 2 (K037),21443.88,202605,paid,2026-05-22,docs/invoices/INV-00506.pdf,none,false,false
+INV-00507,TF18JE190,V0248,Beginning with Children Charter School 2 K037,21443.88,202605,pending,2026-05-17,docs/invoices/INV-00507.pdf,none,true,false
+INV-00508,F175WE291,V0002,Wildlife Conservation Society - New York Aquarium,43642.84,202605,paid,2026-05-21,docs/invoices/INV-00508.pdf,amount,false,false
+INV-00509,F175WE291,V0002,Wildlife Conservation Society New York Aquarium,43642.84,202605,pending,2026-05-25,docs/invoices/INV-00509.pdf,none,true,false
+INV-00510,P-312MJCR,V0143,PS 316 - Elijah G. Stroud,103415.37,202605,pending,2026-05-07,docs/invoices/INV-00510.pdf,none,false,false
+INV-00511,HOMEPORT2,V0877,NYC Health + Hospitals/ Kings County,2267424.18,202605,paid,2026-05-26,docs/invoices/INV-00511.pdf,none,false,false
+INV-00512,SANDMAN3C,V0636,P.S. 108 SAL ABBRACCIAMENTO,1790.24,202605,paid,2026-05-27,docs/invoices/INV-00512.pdf,none,false,false
+INV-00513,PW80ELEC,V0366,The Green School,592339.81,202605,paid,2026-05-03,docs/invoices/INV-00513.pdf,none,false,false
+INV-00514,HWD10330,V0183,"DPR -  Cadman Park Conservancy, Inc.",144058.86,202605,paid,2026-05-11,docs/invoices/INV-00514.pdf,none,false,false
+INV-00515,HWD10330,V0183,"DPR - Cadman Park Conservancy, Inc.",144058.86,202605,pending,2026-05-12,docs/invoices/INV-00515.pdf,none,true,false
+INV-00516,SEQ200341,V0176,Contello Towers No 2,217131.33,202605,pending,2026-05-22,docs/invoices/INV-00516.pdf,none,false,true
+INV-00517,P-4WATECS,V0312,PS 372 The Children's School,23747.58,202605,paid,2026-05-09,docs/invoices/INV-00517.pdf,none,false,true
+INV-00518,PV050ELMO,V0665,P.S. 197 - THE KINGS HIGHWAY ACADEMY,142663.79,202605,pending,2026-05-26,docs/invoices/INV-00518.pdf,none,false,true
+INV-00519,P-4DELGRP,V0150,PUBLIC SCHOOL 44,501816.1,202605,paid,2026-05-23,docs/invoices/INV-00519.pdf,none,false,false
+INV-00520,QC001-025,V0210,"SUNY Downstate Medical Center / Downstate Technology Center, Inc.",22896.55,202605,paid,2026-05-27,docs/invoices/INV-00520.pdf,none,false,false
+INV-00521,PW324MAIN,V0540,RIVERDALE AVENUE COMMUNITY SCHOOL,351817.2,202605,paid,2026-05-13,docs/invoices/INV-00521.pdf,none,false,false
+INV-00522,SEN002182,V0846,K212 P.S. 212 Lady Deborah Moody 87 Bay 49 Street,200145.22,202605,denied,2026-05-18,docs/invoices/INV-00522.pdf,po_id,false,false
+INV-00523,P-6TREEP1,V0689,P.S. 290 JUAN MOREL CAMPOS,1578371.48,202605,denied,2026-05-27,docs/invoices/INV-00523.pdf,none,false,false
+INV-00524,CRO-M&A,V0189,DPR - Prospect Park Alliance,1005959.83,202605,pending,2026-05-14,docs/invoices/INV-00524.pdf,none,false,false
+INV-00525,P-4ALYPND,V0187,"DPR -  Grand Street District Management Association, Inc.",34037.52,202605,paid,2026-05-06,docs/invoices/INV-00525.pdf,period,false,false
+INV-00526,PW77115CH,V0365,THE BROOKLYN SCHOOL OF INQUIRY,51120.5,202605,paid,2026-05-25,docs/invoices/INV-00526.pdf,none,false,false
+INV-00527,BNYB92MBE,V0855,Bedford Courts LDC,17099.01,202605,paid,2026-05-03,docs/invoices/INV-00527.pdf,period,false,false
+INV-00528,P-1CPITIF,V0572,Habitat for Humanity NYC,1667154.46,202605,denied,2026-05-28,docs/invoices/INV-00528.pdf,period,false,false
+INV-00529,24201920,V0183,"DPR -  Cadman Park Conservancy, Inc.",10670.53,202605,paid,2026-05-25,docs/invoices/INV-00529.pdf,none,false,false
+INV-00530,24201920,V0183,"DPR - Cadman Park Conservancy, Inc.",10670.53,202605,pending,2026-05-05,docs/invoices/INV-00530.pdf,none,true,false
+INV-00531,AG01NELS,V0877,NYC Health + Hospitals/ Kings County,31008.86,202605,paid,2026-05-27,docs/invoices/INV-00531.pdf,none,false,false
+INV-00532,48202040,V0026,23K363 - Brownsville Collaborative Middle School,5185.87,202605,paid,2026-05-05,docs/invoices/INV-00532.pdf,amount,false,false
+INV-00533,HWQ789,V0157,P.S./I.S. 45K,487842.68,202605,pending,2026-05-14,docs/invoices/INV-00533.pdf,none,false,false
+INV-00534,P-302HGLR,V0449,Brooklyn Technical High School,367643.37,202605,paid,2026-05-25,docs/invoices/INV-00534.pdf,none,false,false
+INV-00535,P-303SDRP,V0241,21K525 - Edward R. Murrow H.S.,240250.59,202605,denied,2026-05-13,docs/invoices/INV-00535.pdf,none,false,false
+INV-00536,HWS2021X,V0878,"NYC Health + Hospitals/ Gotham Health, East New York",151576.04,202605,paid,2026-05-26,docs/invoices/INV-00536.pdf,none,false,true
+INV-00537,HWS2021X,V0878,"NYC Health + Hospitals, Gotham Health, East New York",151576.04,202605,pending,2026-05-25,docs/invoices/INV-00537.pdf,none,true,true
+INV-00538,P-107WOIF,V0433,18K276,605584.18,202605,paid,2026-05-25,docs/invoices/INV-00538.pdf,amount,false,false
+INV-00539,QED-1055,V0123,PS 110 The Monitor School,748098.82,202605,paid,2026-05-01,docs/invoices/INV-00539.pdf,none,false,false
+INV-00540,SER002324,V0155,PS 770-The New American Academy,161792.18,202605,denied,2026-05-09,docs/invoices/INV-00540.pdf,none,false,false
+INV-00541,HED580,V0218,"Discalced, Inc. (dba Mark Morris Dance Group)",689857.23,202605,denied,2026-05-28,docs/invoices/INV-00541.pdf,none,false,true
+INV-00542,48202402,V0504,PS 315K,44541.64,202605,pending,2026-05-01,docs/invoices/INV-00542.pdf,none,false,false
+INV-00543,NC-167,V0209,"COMMUNITY HEALTHCARE NETWORK, INC",756995.47,202605,denied,2026-05-26,docs/invoices/INV-00543.pdf,none,false,false
+INV-00544,P-2RHBALL,V0066,Opportunities for a Better Tomorrow,1044578.55,202605,denied,2026-05-07,docs/invoices/INV-00544.pdf,none,false,false
+INV-00545,LQSARENOV,V0169,Midwood High School 22K405,567789.86,202605,paid,2026-05-08,docs/invoices/INV-00545.pdf,none,false,false
+INV-00546,HWPR23K1,V0741,RED HOOK NEIGHBORHOOD SCHOOL,911524.11,202605,paid,2026-05-13,docs/invoices/INV-00546.pdf,none,false,false
+INV-00547,BKCRUISE,V0174,Crown Gardens Housing Corporation,37755.47,202605,paid,2026-05-11,docs/invoices/INV-00547.pdf,none,false,false
+INV-00548,HWS2024K1,V0351,Public School 59 William Floyd,207177.28,202605,paid,2026-05-22,docs/invoices/INV-00548.pdf,none,false,false
+INV-00549,EO26-0084,V0041,"GallopNYC (Giving Alternative Learners Uplifting Opportunities, Inc.",3405.02,202605,paid,2026-05-27,docs/invoices/INV-00549.pdf,none,false,true
+INV-00550,PW7722R,V0155,"PS 770, The New American Academy",2008637.48,202605,paid,2026-05-22,docs/invoices/INV-00550.pdf,none,false,true
+INV-00551,HW200IFA2,V0203,"New York Blood Center, Inc.",11784285.62,202605,paid,2026-05-27,docs/invoices/INV-00551.pdf,none,false,false
+INV-00552,HW200IFA2,V0203,New York Blood Center,11784285.62,202605,pending,2026-05-15,docs/invoices/INV-00552.pdf,none,true,false
+INV-00553,PW77417TU,V0006,"Brooklyn Academy of Music, Inc. (BAM)",287378.01,202605,paid,2026-05-07,docs/invoices/INV-00553.pdf,none,false,false
+INV-00554,P-210SRPF,V0289,P.S. 274 KOSCIUSKO,99188.83,202605,denied,2026-05-12,docs/invoices/INV-00554.pdf,none,false,false
+INV-00555,HWX006-01,V0443,Aspirations Diploma Plus High School,1043682.77,202605,pending,2026-05-24,docs/invoices/INV-00555.pdf,none,false,false
+INV-00556,P-313CPSW,V0540,Riverdale Avenue Community School,218140.88,202605,paid,2026-05-23,docs/invoices/INV-00556.pdf,none,false,false
+INV-00557,P-313CPSW,V0540,RIVERDALE AVENUE COMMUNITY SCHOOL,218140.88,202605,pending,2026-05-14,docs/invoices/INV-00557.pdf,none,true,false
+INV-00558,MED-670,V0118,Middle School 763 - Brooklyn Science and Engineering Academy,152643.98,202605,paid,2026-05-09,docs/invoices/INV-00558.pdf,none,false,false
+INV-00559,21202108,V0247,BEDFORD ACADEMY HIGH SCHOOL,389058.8,202605,paid,2026-05-24,docs/invoices/INV-00559.pdf,none,false,false
+INV-00560,21202108,V0247,Bedford Academy High School,389058.8,202605,pending,2026-05-05,docs/invoices/INV-00560.pdf,none,true,false
+INV-00561,NSCC,V0207,The Brookdale Hospital Medical Center,1032623.72,202605,pending,2026-05-18,docs/invoices/INV-00561.pdf,none,false,false
+INV-00562,P-4CPIGRS,V0325,Public School 133 - William A. Butler,231975.24,202605,paid,2026-05-15,docs/invoices/INV-00562.pdf,none,false,false
+INV-00563,73202401,V0312,PS 372 - The Children's School,2409.05,202605,paid,2026-05-10,docs/invoices/INV-00563.pdf,none,false,false
+INV-00564,TFD503M30,V0203,"New York Blood Center, Inc.",17254.28,202605,denied,2026-05-10,docs/invoices/INV-00564.pdf,none,false,false
+INV-00565,HW349LUM,V0125,Public School 132K - The Conselyea School,68847047.45,202605,paid,2026-05-11,docs/invoices/INV-00565.pdf,none,false,false
+INV-00566,HU036-017,V0640,P.S. 116 ELIZABETH L FARRELL,17499.6,202605,paid,2026-05-02,docs/invoices/INV-00566.pdf,none,false,false
+INV-00567,P-200PERG,V0122,P.S. 040 GEORGE W. CARVER,22193.71,202605,paid,2026-05-26,docs/invoices/INV-00567.pdf,none,false,false
+INV-00568,P-200PERG,V0122,P.S. 040 GEORGE W. CARVER,22193.71,202605,pending,2026-05-18,docs/invoices/INV-00568.pdf,none,true,false
+INV-00569,HWP25MXC,V0691,P.S. 298 DR. BETTY SHABAZZ,3349588.1,202605,paid,2026-05-09,docs/invoices/INV-00569.pdf,none,false,false
+INV-00570,BY031-017,V0562,P.S. 380 JOHN WAYNE ELEMENTARY,13906.76,202605,paid,2026-05-16,docs/invoices/INV-00570.pdf,none,false,false
+INV-00571,P-108SDPW,V0352,Public School 599- Brooklyn landmark Elementary School,40381.19,202605,paid,2026-05-27,docs/invoices/INV-00571.pdf,vendor_name,false,false
+INV-00572,CO264MN60,V0377,JOAN SNOW PRE-K CENTER 22K853,10642738.94,202605,pending,2026-05-28,docs/invoices/INV-00572.pdf,none,false,false
+INV-00573,P-218CPBF,V0174,Crown Gardens Housing Corporation,688611.27,202605,paid,2026-05-25,docs/invoices/INV-00573.pdf,none,false,false
+INV-00574,37202102,V0267,IS 136 Charles O Dewey Middle School,138021.25,202605,paid,2026-05-05,docs/invoices/INV-00574.pdf,none,false,false
+INV-00575,HWMW216WF,V0411,The Noel Pointer Foundation,40908.31,202605,pending,2026-05-17,docs/invoices/INV-00575.pdf,vendor_name,false,false
+INV-00576,HBM224624,V0312,PS 372 - The Children's School,969329.53,202605,pending,2026-05-06,docs/invoices/INV-00576.pdf,none,false,false
+INV-00577,P-2TRE24C,V0975,"PRATT AREA COMMUNITY COUNCIL, INC. (DBA IMPACCT BROOKLYN)",45866.56,202605,paid,2026-05-14,docs/invoices/INV-00577.pdf,none,false,false
+INV-00578,HWQBULB1,V0500,PS 186 Dr. Irving A. Gladstone,1780705.98,202605,paid,2026-05-17,docs/invoices/INV-00578.pdf,none,false,false
+INV-00579,GR017-014,V0438,"22K535, Goldstein High School for the Sciences",97631.95,202605,denied,2026-05-26,docs/invoices/INV-00579.pdf,none,false,true
+INV-00580,SEN002183,V0365,THE BROOKLYN SCHOOL OF INQUIRY,388747.39,202605,denied,2026-05-20,docs/invoices/INV-00580.pdf,none,false,false
+INV-00581,HBCD013A,V0487,P.S. 397 FOSTER-LAURIE,1043211.64,202605,paid,2026-05-17,docs/invoices/INV-00581.pdf,amount,false,false
+INV-00582,GOVISNYCX,V0339,Public School 254 The Dag Hammarskjold School,8678907.23,202605,paid,2026-05-14,docs/invoices/INV-00582.pdf,po_id,false,false
+INV-00583,HBCD019B,V0152,Public School 551 - Urban Assembly New York Harbor School,595537.49,202605,denied,2026-05-20,docs/invoices/INV-00583.pdf,amount,false,false
+INV-00584,HH112BLFS,V0043,BRIC,693754.19,202605,pending,2026-05-25,docs/invoices/INV-00584.pdf,none,false,true
+INV-00585,C75NBOIL,V0485,P.S. 309 THE GEORGE E. WIBECAN PREPARATORY ACADEMY,368579.16,202605,paid,2026-05-07,docs/invoices/INV-00585.pdf,none,false,false
+INV-00586,SANDY2-33,V0086,Cultural Academy for the Arts and Sciences,231429.6,202605,paid,2026-05-12,docs/invoices/INV-00586.pdf,none,false,false
+INV-00587,SANDY2-33,V0086,Cultural Academy for the Arts & Sciences,231429.6,202605,pending,2026-05-15,docs/invoices/INV-00587.pdf,none,true,false
+INV-00588,PW29310R,V0130,P.S. 023 Carter G. Woodson,670262.58,202605,pending,2026-05-19,docs/invoices/INV-00588.pdf,none,false,false
+INV-00589,PV525STU2,V0912,k246 Walt Whitman,232727.06,202605,pending,2026-05-14,docs/invoices/INV-00589.pdf,none,false,false
+INV-00590,EO26-0091,V0248,Beginning with Children Charter School 2 K037,5784.32,202605,pending,2026-05-19,docs/invoices/INV-00590.pdf,none,false,true
+INV-00591,34201901,V0562,P.S. 380 John Wayne Elementary,49673.52,202605,paid,2026-05-21,docs/invoices/INV-00591.pdf,none,false,false
+INV-00592,34201901,V0562,P.S. 380 JOHN WAYNE ELEMENTARY,49673.52,202605,pending,2026-05-05,docs/invoices/INV-00592.pdf,none,true,false
+INV-00593,JOC-FMC4,V0723,INTERNATIONAL HIGH SCHOOL AT PROSPECT HEIGHTS,389224.53,202605,paid,2026-05-08,docs/invoices/INV-00593.pdf,none,false,false
+INV-00594,CA001QB25,V0562,P.S. 380 John Wayne Elementary,82244.84,202605,denied,2026-05-11,docs/invoices/INV-00594.pdf,none,false,true
+INV-00595,LQFH-ADA,V0006,Brooklyn Academy of Music (BAM),130515.43,202605,pending,2026-05-13,docs/invoices/INV-00595.pdf,none,false,false
+INV-00596,MOLHYBRID,V0604,Hispanic Information and Telecommunication Network Inc.,488225.71,202605,paid,2026-05-08,docs/invoices/INV-00596.pdf,none,false,false
+INV-00597,MOLHYBRID,V0604,Hispanic Information & Telecommunication Network Inc.,488225.71,202605,pending,2026-05-10,docs/invoices/INV-00597.pdf,none,true,false
+INV-00598,HWMM100,V0356,Public School 95 The Gravesend School,400847.15,202605,paid,2026-05-15,docs/invoices/INV-00598.pdf,none,false,false
+INV-00599,ACEDPR408,V0112,K643 Brooklyn Democracy Academy,25852.22,202605,paid,2026-05-25,docs/invoices/INV-00599.pdf,none,false,false
+INV-00600,MED-670,V0118,Middle School 763- Brooklyn Science and Engineering Academy,60514.22,202605,pending,2026-05-20,docs/invoices/INV-00600.pdf,none,false,false

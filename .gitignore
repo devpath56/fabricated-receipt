@@ -1,6 +1,12 @@
 node_modules/
 data/*.json
 data/*.csv
+# the four model tables ARE the deliverable and are committed: three are mostly real
+# published rows, and the generated one must be byte-identical for everyone.
+!data/invoices.csv
+!data/contracts.csv
+!data/erp.csv
+!data/vendors.csv
 !data/.gitkeep
 .env
 *.pem

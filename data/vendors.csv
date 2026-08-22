@@ -1,0 +1,993 @@
+vendor_id,canonical_name,alias_count,aliases
+V0001,Brooklyn Public Library,1,Brooklyn Public Library
+V0002,Wildlife Conservation Society - New York Aquarium,2,Wildlife Conservation Society - New York Aquarium | Wildlife Conservation Society New York Aquarium
+V0003,Brooklyn Museum,1,Brooklyn Museum
+V0004,Brooklyn Botanic Garden,1,Brooklyn Botanic Garden
+V0005,Brooklyn Children's Museum,1,Brooklyn Children's Museum
+V0006,"Brooklyn Academy of Music, Inc. (BAM)",2,"Brooklyn Academy of Music, Inc. (BAM) | Brooklyn Academy of Music (BAM)"
+V0007,St. Ann's Warehouse,1,St. Ann's Warehouse
+V0008,Ifetayo Cultural Arts Academy,1,Ifetayo Cultural Arts Academy
+V0009,"Gallim Dance Company, Inc.",2,"Gallim Dance Company, Inc. | Gallim Dance Company"
+V0010,Office of the Brooklyn Borough President,1,Office of the Brooklyn Borough President
+V0011,Bedford Union Armory,1,Bedford Union Armory
+V0012,Sanitation/Community Board 14/Cushman Haulster,1,Sanitation/Community Board 14/Cushman Haulster
+V0013,Conselyea Street Block Association,1,Conselyea Street Block Association
+V0014,Brooklyn Kindergarten Society,1,Brooklyn Kindergarten Society
+V0015,East Williamsburg Valley Industrial Development Corporation,1,East Williamsburg Valley Industrial Development Corporation
+V0016,Greenpoint Manufacturing and Design Center Local Development Corporation,1,Greenpoint Manufacturing and Design Center Local Development Corporation
+V0017,Pratt Institute,1,Pratt Institute
+V0018,James Madison High School - 22k425,1,James Madison High School - 22k425
+V0019,"Sheepshead Bay High School Campus (22K495 -Sheepshead Bay High School, Professional Pathways High School (22K630) Origins High School (22K611)",1,"Sheepshead Bay High School Campus (22K495 -Sheepshead Bay High School, Professional Pathways High School (22K630) Origins High School (22K611)"
+V0020,K188,1,K188
+V0021,Public School 249-The Caton School,1,Public School 249-The Caton School
+V0022,Wingate Campus,1,Wingate Campus
+V0023,New York City College of Technology,1,New York City College of Technology
+V0024,I.S. 281 Joseph B Cavallaro,1,I.S. 281 Joseph B Cavallaro
+V0025,PS73,1,PS73
+V0026,23K363 - Brownsville Collaborative Middle School,2,23K363 - Brownsville Collaborative Middle School | 23K363 Brownsville Collaborative Middle School
+V0027,Public School 315K,1,Public School 315K
+V0028,The Fresh Creek School,1,The Fresh Creek School
+V0029,PS 84 Magnet School for Visual Arts and Sciences,1,PS 84 Magnet School for Visual Arts and Sciences
+V0030,Sunset Park School,1,Sunset Park School
+V0031,Hebrew Educational Society,1,Hebrew Educational Society
+V0032,St. Francis College,1,St. Francis College
+V0033,"Fifth Avenue Committee, Inc.",1,"Fifth Avenue Committee, Inc."
+V0034,Crown Gardens,1,Crown Gardens
+V0035,"Ridgewood Bushwick Senior Citizens Council, Inc.",2,"Ridgewood Bushwick Senior Citizens Council, Inc. | Ridgewood Bushwick Senior Citizens Council"
+V0036,Pratt Area Community Council,1,Pratt Area Community Council
+V0037,Hudson Gateway III LLC,1,Hudson Gateway III LLC
+V0038,YWCA of Brooklyn,1,YWCA of Brooklyn
+V0039,"Rogers Avenue HDFC c/o The Doe Fund, Inc.",1,"Rogers Avenue HDFC c/o The Doe Fund, Inc."
+V0040,Northeast Brooklyn Housing Development Corp.,1,Northeast Brooklyn Housing Development Corp.
+V0041,"GallopNYC (Giving Alternative Learners Uplifting Opportunities, Inc.",1,"GallopNYC (Giving Alternative Learners Uplifting Opportunities, Inc."
+V0042,Prospect Park Alliance,1,Prospect Park Alliance
+V0043,BRIC,1,BRIC
+V0044,Christian Cultural Center,1,Christian Cultural Center
+V0045,Brooklyn Bridge Park Corporation,2,Brooklyn Bridge Park Corporation | Brooklyn Bridge Park
+V0046,BBH Blue Stone Restoration,1,BBH Blue Stone Restoration
+V0047,Heckscher Playground,1,Heckscher Playground
+V0048,McGolrick Playground,1,McGolrick Playground
+V0049,BROWER PARK,1,BROWER PARK
+V0050,Maimonides Medical Center,1,Maimonides Medical Center
+V0051,START Treatment & Recovery Centers,1,START Treatment & Recovery Centers
+V0052,Coney Island Hospital,1,Coney Island Hospital
+V0053,DOT BQE Decking,1,DOT BQE Decking
+V0054,NYC DOT,1,NYC DOT
+V0055,New York Aquarium,1,New York Aquarium
+V0056,"ISSUE Project Room, Inc.",2,"ISSUE Project Room, Inc. | Issue Project Room"
+V0057,The Brooklyn Historical Society,2,The Brooklyn Historical Society | Brooklyn Historical Society
+V0058,"Dancewave, Inc.",1,"Dancewave, Inc."
+V0059,STREB Inc.,1,STREB Inc.
+V0060,Museum of Contemporary African Diasporan Arts,1,Museum of Contemporary African Diasporan Arts
+V0061,Eyebeam Atelier,1,Eyebeam Atelier
+V0062,"Proteus Gowanus Interdisciplinary Gallery, Inc.",1,"Proteus Gowanus Interdisciplinary Gallery, Inc."
+V0063,Brooklyn Public Library - Ulmer Park Branch,1,Brooklyn Public Library - Ulmer Park Branch
+V0064,Weeksville Heritage Center,1,Weeksville Heritage Center
+V0065,Brooklyn Arts Council,1,Brooklyn Arts Council
+V0066,Opportunities for a Better Tomorrow,1,Opportunities for a Better Tomorrow
+V0067,Agudath Israel of America Community Services,1,Agudath Israel of America Community Services
+V0068,"Common Ground Communities, Inc. d/b/a Community Solutions",1,"Common Ground Communities, Inc. d/b/a Community Solutions"
+V0069,School Settlement Association,1,School Settlement Association
+V0070,Green-Wood Historic Fund,1,Green-Wood Historic Fund
+V0071,Brooklyn Borough Hall,1,Brooklyn Borough Hall
+V0072,Brooklyn Legal Services Corp. A,1,Brooklyn Legal Services Corp. A
+V0073,"Brooklyn Bureau of Community Service, d/b/a Brooklyn Community Services",1,"Brooklyn Bureau of Community Service, d/b/a Brooklyn Community Services"
+V0074,"Ohel Children's Home and Family Services, Inc.",2,"Ohel Children's Home and Family Services, Inc. | Ohel Children's Home and Family Services"
+V0075,Medgar Evers College,1,Medgar Evers College
+V0076,Kingsborough Community College,1,Kingsborough Community College
+V0077,Brooklyn Navy Yard Development Corporation,1,Brooklyn Navy Yard Development Corporation
+V0078,New Lab at Brooklyn Navy Yard,1,New Lab at Brooklyn Navy Yard
+V0079,Brooklyn Cruise Terminal,1,Brooklyn Cruise Terminal
+V0080,Bed-Stuy Campaign Against Hunger,1,Bed-Stuy Campaign Against Hunger
+V0081,"Caribbean American Chamber of Commerce and Industry, Inc. (CACCI)",1,"Caribbean American Chamber of Commerce and Industry, Inc. (CACCI)"
+V0082,Mott Hall Intermediate School,1,Mott Hall Intermediate School
+V0083,Abraham Lincoln HS,1,Abraham Lincoln HS
+V0084,Boys and Girls High School,1,Boys and Girls High School
+V0085,Brooklyn Urban Garden Charter School (BUGS),1,Brooklyn Urban Garden Charter School (BUGS)
+V0086,Cultural Academy for the Arts and Sciences,2,Cultural Academy for the Arts and Sciences | Cultural Academy for the Arts & Sciences
+V0087,The High School for Global Citizenship at Prospect Heights Campus,1,The High School for Global Citizenship at Prospect Heights Campus
+V0088,The HS of Sports Management,1,The HS of Sports Management
+V0089,Intermediate School 96,1,Intermediate School 96
+V0090,International Arts Business School,1,International Arts Business School
+V0091,IS 201 Dyker Heights Intermediate School,1,IS 201 Dyker Heights Intermediate School
+V0092,I.S. 211 John Wilson,1,I.S. 211 John Wilson
+V0093,IS349,1,IS349
+V0094,Philippa Schuyler,1,Philippa Schuyler
+V0095,IS 392,1,IS 392
+V0096,J.H.S. 050 John D. Wells & Success Academy Williamsburg,1,J.H.S. 050 John D. Wells & Success Academy Williamsburg
+V0097,J.H.S. 234 Arthur W. Cunningham,1,J.H.S. 234 Arthur W. Cunningham
+V0098,J.H.S. 292 Margaret S. Douglas,1,J.H.S. 292 Margaret S. Douglas
+V0099,Rachel Carson High School 21k345,1,Rachel Carson High School 21k345
+V0100,32K377,1,32K377
+V0101,32k403 Academy for Environmental Leadership & 32k552 Academy of Urban Planning,1,32k403 Academy for Environmental Leadership & 32k552 Academy of Urban Planning
+V0102,19K409 - East New York Family Academy,1,19K409 - East New York Family Academy
+V0103,13K419 Science Skills Center High School,1,13K419 Science Skills Center High School
+V0104,The Brooklyn International High School (13K439),1,The Brooklyn International High School (13K439)
+V0105,15K448 Brooklyn School for Collaborative Studies,1,15K448 Brooklyn School for Collaborative Studies
+V0106,KAPPA V (23K518),1,KAPPA V (23K518)
+V0107,17K539 HS for Service and Learning,1,17K539 HS for Service and Learning
+V0108,K 583 Multicultural High School,1,K 583 Multicultural High School
+V0109,William E. Grady HS (21K620),1,William E. Grady HS (21K620)
+V0110,K633 High School for Medical Professions,1,K633 High School for Medical Professions
+V0111,K639 Brooklyn Lab School,1,K639 Brooklyn Lab School
+V0112,K643 Brooklyn Democracy Academy,1,K643 Brooklyn Democracy Academy
+V0113,"Highland Park Community School, 19K761",1,"Highland Park Community School, 19K761"
+V0114,Kurt Hahn Expeditionary Learning School,1,Kurt Hahn Expeditionary Learning School
+V0115,Stephen Decatur Middle School 36,1,Stephen Decatur Middle School 36
+V0116,M.S. 443-New Voices Middle School of Academics & Creative Arts,1,M.S. 443-New Voices Middle School of Academics & Creative Arts
+V0117,Dr. Gladstone H. Atwell M.S. 62,1,Dr. Gladstone H. Atwell M.S. 62
+V0118,Middle School 763 - Brooklyn Science and Engineering Academy,2,Middle School 763 - Brooklyn Science and Engineering Academy | Middle School 763- Brooklyn Science and Engineering Academy
+V0119,New York WEB Center (NYWC),1,New York WEB Center (NYWC)
+V0120,Passages Academy--Belmont,1,Passages Academy--Belmont
+V0121,Progress High School,1,Progress High School
+V0122,P.S. 040 George W. Carver,2,P.S. 040 George W. Carver | P.S. 040 GEORGE W. CARVER
+V0123,PS 110 The Monitor School,1,PS 110 The Monitor School
+V0124,Public School 123 -The Suydam School,1,Public School 123 -The Suydam School
+V0125,Public School 132K - The Conselyea School,1,Public School 132K - The Conselyea School
+V0126,Public School 147 - Isaac Remsen School,1,Public School 147 - Isaac Remsen School
+V0127,PS 151K Lyndon Baines Johnson Elementary School,1,PS 151K Lyndon Baines Johnson Elementary School
+V0128,P.S. 193 - The Gil Hodges School,1,P.S. 193 - The Gil Hodges School
+V0129,Public School 21,1,Public School 21
+V0130,P.S. 023 Carter G. Woodson,2,P.S. 023 Carter G. Woodson | P.S. 023 CARTER G. WOODSON
+V0131,P.S. 247,1,P.S. 247
+V0132,PS 249 The Caton School,1,PS 249 The Caton School
+V0133,Public School 256,1,Public School 256
+V0134,P.S 26 Jesse Owens School,1,P.S 26 Jesse Owens School
+V0135,Public School 270 - Johann DeKalb School,1,Public School 270 - Johann DeKalb School
+V0136,P.S. 279 Herman Schreiber School,1,P.S. 279 Herman Schreiber School
+V0137,PS 29-John M. Harrigan Elementary School,1,PS 29-John M. Harrigan Elementary School
+V0138,PS295,1,PS295
+V0139,PS 297 The Richard Stockton School,1,PS 297 The Richard Stockton School
+V0140,Public School 300,1,Public School 300
+V0141,Ethan Allen School PS 307,1,Ethan Allen School PS 307
+V0142,PS 307,1,PS 307
+V0143,PS 316 - Elijah G. Stroud,1,PS 316 - Elijah G. Stroud
+V0144,P.S. 321 William Penn,2,P.S. 321 William Penn | P.S. 321 WILLIAM PENN
+V0145,PS/IS 323,1,PS/IS 323
+V0146,P.S. 335 Granville T. Woods,2,P.S. 335 Granville T. Woods | P.S. 335 GRANVILLE T. WOODS
+V0147,Public School 373 - Brooklyn Transition Center,1,Public School 373 - Brooklyn Transition Center
+V0148,PS376,1,PS376
+V0149,PS 38,1,PS 38
+V0150,Public School 44,2,Public School 44 | PUBLIC SCHOOL 44
+V0151,"P53K @ SPRING CREEK, DISTRICT 75",1,"P53K @ SPRING CREEK, DISTRICT 75"
+V0152,Public School 551 - Urban Assembly New York Harbor School,1,Public School 551 - Urban Assembly New York Harbor School
+V0153,PS 75-Mayda Cotriella,1,PS 75-Mayda Cotriella
+V0154,P77K,1,P77K
+V0155,"PS 770, The New American Academy",3,"PS 770, The New American Academy | PS 770 The New American Academy | PS 770-The New American Academy"
+V0156,Public School 92 - Adrian Hegeman,1,Public School 92 - Adrian Hegeman
+V0157,P.S./I.S. 45K,1,P.S./I.S. 45K
+V0158,PS/IS 686 Brooklyn School of Inquiry,1,PS/IS 686 Brooklyn School of Inquiry
+V0159,"PS/MS 282, The Park Slope School",1,"PS/MS 282, The Park Slope School"
+V0160,Ronald Edmonds Learning Center II,1,Ronald Edmonds Learning Center II
+V0161,School for Democracy and Leadership,1,School for Democracy and Leadership
+V0162,Sunset Park High School (15K667),1,Sunset Park High School (15K667)
+V0163,Central Brooklyn Ascend Charter School,1,Central Brooklyn Ascend Charter School
+V0164,17K745 Brooklyn Institute for Liberal Arts High School,1,17K745 Brooklyn Institute for Liberal Arts High School
+V0165,17K537- The High School for Youth and Community Development,1,17K537- The High School for Youth and Community Development
+V0166,Public School 31-Samuel F. Dupont,1,Public School 31-Samuel F. Dupont
+V0167,PS241 Emma Johnson School,1,PS241 Emma Johnson School
+V0168,PS 10 - Magnet School Of Math Science & Design Tech,1,PS 10 - Magnet School Of Math Science & Design Tech
+V0169,Midwood High School (22K405),2,Midwood High School (22K405) | Midwood High School 22K405
+V0170,New York University,1,New York University
+V0171,"Howard Houses Tenants Council, Inc",1,"Howard Houses Tenants Council, Inc"
+V0172,Surf gardens development,1,Surf gardens development
+V0173,"Fifth Avenue Committee, Inc. (FAC)",1,"Fifth Avenue Committee, Inc. (FAC)"
+V0174,Crown Gardens Housing Corporation,2,Crown Gardens Housing Corporation | Crown Gardens Housing Corp.
+V0175,Cypress Hills Local Development Corporation,1,Cypress Hills Local Development Corporation
+V0176,Contello Towers No 2,1,Contello Towers No 2
+V0177,Local Development Corporation of East New York,1,Local Development Corporation of East New York
+V0178,NYCHA MARLBOROUGH HOUSES,1,NYCHA MARLBOROUGH HOUSES
+V0179,MHANY Management INC,1,MHANY Management INC
+V0180,Highlawn Terrace,1,Highlawn Terrace
+V0181,"DPR -  Alliance for Coney Island, Inc.",1,"DPR -  Alliance for Coney Island, Inc."
+V0182,DPR -  Bildersee Playground,1,DPR -  Bildersee Playground
+V0183,"DPR -  Cadman Park Conservancy, Inc.",2,"DPR -  Cadman Park Conservancy, Inc. | DPR - Cadman Park Conservancy, Inc."
+V0184,DPR -  Cypress Hills Playground,1,DPR -  Cypress Hills Playground
+V0185,DPR -  Fort Greene Park,1,DPR -  Fort Greene Park
+V0186,DPR -  20/K490 Fort Hamilton High School,1,DPR -  20/K490 Fort Hamilton High School
+V0187,"DPR -  Grand Street District Management Association, Inc.",2,"DPR -  Grand Street District Management Association, Inc. | DPR - Grand Street District Management Association, Inc."
+V0188,DPR -  Msgr. McGolrick Park,1,DPR -  Msgr. McGolrick Park
+V0189,DPR -  Prospect Park Alliance,2,DPR -  Prospect Park Alliance | DPR - Prospect Park Alliance
+V0190,DPR -  Prospect Park Zoo - Wildlife Conservation Society,1,DPR -  Prospect Park Zoo - Wildlife Conservation Society
+V0191,DPR - St. Mary's Playground,1,DPR - St. Mary's Playground
+V0192,DPR - Ennis Playground,1,DPR - Ennis Playground
+V0193,DPR - BROOKLYN STRAND PROJECT,1,DPR - BROOKLYN STRAND PROJECT
+V0194,DPR - BENCHES ON PATH AT SUNSET PARK,1,DPR - BENCHES ON PATH AT SUNSET PARK
+V0195,DPR - Butterfly Gardens,1,DPR - Butterfly Gardens
+V0196,DPR - Kolbert Park,1,DPR - Kolbert Park
+V0197,DPR - Friend's Field,1,DPR - Friend's Field
+V0198,DPR - MOFFAT STREET PARK,1,DPR - MOFFAT STREET PARK
+V0199,"DPR - Brooklyn Greenway Initiative, Inc.",1,"DPR - Brooklyn Greenway Initiative, Inc."
+V0200,DPR - McGlorick Park,1,DPR - McGlorick Park
+V0201,DPR - Fort Hamilton,1,DPR - Fort Hamilton
+V0202,Animal Care & Control of NYC,1,Animal Care & Control of NYC
+V0203,"New York Blood Center, Inc.",2,"New York Blood Center, Inc. | New York Blood Center"
+V0204,Kingsbrook Jewish Medical Center,1,Kingsbrook Jewish Medical Center
+V0205,"The Family Center, Inc.",1,"The Family Center, Inc."
+V0206,HHC/Woodhull Medical and Mental Health Center,1,HHC/Woodhull Medical and Mental Health Center
+V0207,The Brookdale Hospital Medical Center,1,The Brookdale Hospital Medical Center
+V0208,Institute for Community Living Inc,2,Institute for Community Living Inc | INSTITUTE FOR COMMUNITY LIVING
+V0209,"COMMUNITY HEALTHCARE NETWORK, INC",2,"COMMUNITY HEALTHCARE NETWORK, INC | Community Healthcare Network Inc."
+V0210,"SUNY Downstate Medical Center / Downstate Technology Center, Inc.",1,"SUNY Downstate Medical Center / Downstate Technology Center, Inc."
+V0211,FDNY Foundation,1,FDNY Foundation
+V0212,"Atlantic Avenue District Management Association, Inc.",1,"Atlantic Avenue District Management Association, Inc."
+V0213,DOT,1,DOT
+V0214,Brooklyn Public Library - Bookmobile,1,Brooklyn Public Library - Bookmobile
+V0215,WCS- New York Aquarium,1,WCS- New York Aquarium
+V0216,Bedford Stuyvesant Restoration Corporation,2,Bedford Stuyvesant Restoration Corporation | Bedford Stuyvesant Restoration Corp.
+V0217,"BRIC Arts | Media | Bklyn, Inc.",1,"BRIC Arts | Media | Bklyn, Inc."
+V0218,"Discalced, Inc. (dba Mark Morris Dance Group)",1,"Discalced, Inc. (dba Mark Morris Dance Group)"
+V0219,Theatre for a New Audience,1,Theatre for a New Audience
+V0220,Society for the Preservation of Weeksville and Bedford Stuyvesant History,1,Society for the Preservation of Weeksville and Bedford Stuyvesant History
+V0221,International Studio & Curatorial Program,1,International Studio & Curatorial Program
+V0222,"Rooftop Films, Inc.",1,"Rooftop Films, Inc."
+V0223,Original Music Workshop (dba National Sawdust),1,Original Music Workshop (dba National Sawdust)
+V0224,"Spoke the Hub Dancing, Inc.",1,"Spoke the Hub Dancing, Inc."
+V0225,Brooklyn Conservatory of Music,1,Brooklyn Conservatory of Music
+V0226,Good Shepherd Services,1,Good Shepherd Services
+V0227,Brooklyn Bureau of Community Service,1,Brooklyn Bureau of Community Service
+V0228,Per Scholas,1,Per Scholas
+V0229,Sephardic Community Center,1,Sephardic Community Center
+V0230,Red Hook Initiative,1,Red Hook Initiative
+V0231,JCC of Marine Park/DBA NY United Jewish Ass.,1,JCC of Marine Park/DBA NY United Jewish Ass.
+V0232,"Federation of Italian-American Organizations of Brooklyn, Ltd.",1,"Federation of Italian-American Organizations of Brooklyn, Ltd."
+V0233,"Sunset Park District Management Association, Inc",1,"Sunset Park District Management Association, Inc"
+V0234,Moore Street Market,1,Moore Street Market
+V0235,FLATBUSH CATON DEVELOPMENT PROJECT,1,FLATBUSH CATON DEVELOPMENT PROJECT
+V0236,"BioBAT, Inc.",1,"BioBAT, Inc."
+V0237,"14K478-High School for Enterprise, Business and Technology",1,"14K478-High School for Enterprise, Business and Technology"
+V0238,18K589 - Arts & Media Preparatory Academy,1,18K589 - Arts & Media Preparatory Academy
+V0239,19K618 - The Academy of Innovative Technology,1,19K618 - The Academy of Innovative Technology
+V0240,20K505 – Franklin Delano Roosevelt High School,1,20K505 – Franklin Delano Roosevelt High School
+V0241,21K525 - Edward R. Murrow H.S.,1,21K525 - Edward R. Murrow H.S.
+V0242,22K405 Midwood High School,1,22K405 Midwood High School
+V0243,22K425- James Madison High School,1,22K425- James Madison High School
+V0244,22K611 - Origins High School,1,22K611 - Origins High School
+V0245,Abraham Lincoln High School,2,Abraham Lincoln High School | ABRAHAM LINCOLN HIGH SCHOOL
+V0246,Academy of Arts & Letters,1,Academy of Arts & Letters
+V0247,BEDFORD ACADEMY HIGH SCHOOL,2,BEDFORD ACADEMY HIGH SCHOOL | Bedford Academy High School
+V0248,Beginning with Children Charter School 2 (K037),2,Beginning with Children Charter School 2 (K037) | Beginning with Children Charter School 2 K037
+V0249,Brooklyn Studio Secondary School,1,Brooklyn Studio Secondary School
+V0250,Carroll Gardens School for Innovation (MS442),1,Carroll Gardens School for Innovation (MS442)
+V0251,City Polytechnic High School,1,City Polytechnic High School
+V0252,Clara Barton High School,1,Clara Barton High School
+V0253,Community Partnership Charter School K702,1,Community Partnership Charter School K702
+V0254,Community Partnership Charter School,1,Community Partnership Charter School
+V0255,Cunningham Junior High School IS 234,1,Cunningham Junior High School IS 234
+V0256,District 20 Early Childhood Centers (20K768),1,District 20 Early Childhood Centers (20K768)
+V0257,Dr. Gladstone H. Atwell M.S. 61,1,Dr. Gladstone H. Atwell M.S. 61
+V0258,Edward R. Murrow High School,1,Edward R. Murrow High School
+V0259,Elsa Ebeling- Public School 208,1,Elsa Ebeling- Public School 208
+V0260,Gateway Intermediate School I.S. 364,1,Gateway Intermediate School I.S. 364
+V0261,I.S. 259K -William McKinley,1,I.S. 259K -William McKinley
+V0262,IS 96 Seth Low,1,IS 96 Seth Low
+V0263,Intermediate School 187 - The Christa McAuliffe School,1,Intermediate School 187 - The Christa McAuliffe School
+V0264,Intermediate School 288 - David A. Body,1,Intermediate School 288 - David A. Body
+V0265,Intermediate School 318,1,Intermediate School 318
+V0266,Invictus Preparatory Charter School (Located within IS 218),1,Invictus Preparatory Charter School (Located within IS 218)
+V0267,IS 136 Charles O Dewey Middle School,1,IS 136 Charles O Dewey Middle School
+V0268,IS 228 - David A. Body School of Magnet Studies,1,IS 228 - David A. Body School of Magnet Studies
+V0269,"It Takes A Village Academy, 18K563",1,"It Takes A Village Academy, 18K563"
+V0270,John Wilson Intermediate School 211,1,John Wilson Intermediate School 211
+V0271,Joseph B. Cavallaro I.S. 281,1,Joseph B. Cavallaro I.S. 281
+V0272,"K811, The Connie Lekas School",1,"K811, The Connie Lekas School"
+V0273,KAPPA V,1,KAPPA V
+V0274,"Leaders High School, 21K572",2,"Leaders High School, 21K572 | Leaders High School 21K572"
+V0275,Marine Park Intermediate School 278,1,Marine Park Intermediate School 278
+V0276,Mark Twain IS 239,1,Mark Twain IS 239
+V0277,MIDDLE SCHOOL 113 - RONALD EDMONDS LEARNING CENTER,1,MIDDLE SCHOOL 113 - RONALD EDMONDS LEARNING CENTER
+V0278,Middle School 577,1,Middle School 577
+V0279,Middle School 88,1,Middle School 88
+V0280,Monitor School -- 14K110,1,Monitor School -- 14K110
+V0281,MS 447 - The Math and Science Exploratory School,1,MS 447 - The Math and Science Exploratory School
+V0282,MS 484 Ronald Edmonds Learning Center II,1,MS 484 Ronald Edmonds Learning Center II
+V0283,MS582-The Upper Academy,1,MS582-The Upper Academy
+V0284,Nelson Mandela High School for Social Justice,1,Nelson Mandela High School for Social Justice
+V0285,P. S. 146 The Brooklyn New School,1,P. S. 146 The Brooklyn New School
+V0286,"P.S. 10, Magnet School of Math, Science and Design Technology",1,"P.S. 10, Magnet School of Math, Science and Design Technology"
+V0287,P.S. 12 - Dr. Jacqueline Peek Davis Elementary School,1,P.S. 12 - Dr. Jacqueline Peek Davis Elementary School
+V0288,P.S. 188 Michael E. Berdy,1,P.S. 188 Michael E. Berdy
+V0289,"P.S. 274, Kosciusko",3,"P.S. 274, Kosciusko | P.S. 274 Kosciusko | P.S. 274 KOSCIUSKO"
+V0290,P.S. 289K George V. Brower,1,P.S. 289K George V. Brower
+V0291,K594-Gotham Professional Arts Academy/P.S. 40K,1,K594-Gotham Professional Arts Academy/P.S. 40K
+V0292,P.S. 506 The School of Journalism & Technology,1,P.S. 506 The School of Journalism & Technology
+V0293,P.S. 599 K Brooklyn Landmark Elementary School,1,P.S. 599 K Brooklyn Landmark Elementary School
+V0294,P.S. 748 The Brooklyn School for Global Scholars,1,P.S. 748 The Brooklyn School for Global Scholars
+V0295,P.S./I.S. 104,1,P.S./I.S. 104
+V0296,P.S./I.S. 184K The Newport Street School,1,P.S./I.S. 184K The Newport Street School
+V0297,P.S.229,1,P.S.229
+V0298,P53K District 75,1,P53K District 75
+V0299,P753K- Brooklyn School for Career Development,1,P753K- Brooklyn School for Career Development
+V0300,Park Slope 282 (PS/MS 282),1,Park Slope 282 (PS/MS 282)
+V0301,PASSAGES ACADEMY,1,PASSAGES ACADEMY
+V0302,Prospect Heights Campus Library - 17K528 - High School for Global Citizenship,1,Prospect Heights Campus Library - 17K528 - High School for Global Citizenship
+V0303,PS 145 - The Andrew Jackson Elementary School,1,PS 145 - The Andrew Jackson Elementary School
+V0304,PS 150 The Christopher School,1,PS 150 The Christopher School
+V0305,PS 181 - John Steptoe School,1,PS 181 - John Steptoe School
+V0306,PS 189K The Bilingual Center,1,PS 189K The Bilingual Center
+V0307,PS 193 Gil Hodges School,1,PS 193 Gil Hodges School
+V0308,PS 203 Floyd Bennett School,1,PS 203 Floyd Bennett School
+V0309,PS 251 The Paerdegat School,1,PS 251 The Paerdegat School
+V0310,PS 264 - Bay Ridge Elementary School for the Arts,1,PS 264 - Bay Ridge Elementary School for the Arts
+V0311,PS 297,1,PS 297
+V0312,PS 372 - The Children's School,2,PS 372 - The Children's School | PS 372 The Children's School
+V0313,PS 376,1,PS 376
+V0314,PS 398K- The Walter Weaver School,1,PS 398K- The Walter Weaver School
+V0315,PS 69 Vincent D. Grippo School,1,PS 69 Vincent D. Grippo School
+V0316,PS/IS 192 The Magnet School for Math and Science Inquiry,1,PS/IS 192 The Magnet School for Math and Science Inquiry
+V0317,PS/IS 206,1,PS/IS 206
+V0318,PS/IS 41,1,PS/IS 41
+V0319,PS/IS 66K,1,PS/IS 66K
+V0320,PS007K Abraham Lincoln School,1,PS007K Abraham Lincoln School
+V0321,Public School - IS98 the Bay Academy for the Arts & Sciences,1,Public School - IS98 the Bay Academy for the Arts & Sciences
+V0322,Public School - The Eubie Blake School,1,Public School - The Eubie Blake School
+V0323,Public School 105 - The Blythebourne,1,Public School 105 - The Blythebourne
+V0324,Public School 11 - Purvis Behan School,1,Public School 11 - Purvis Behan School
+V0325,Public School 133 - William A. Butler,1,Public School 133 - William A. Butler
+V0326,Public School 138K,1,Public School 138K
+V0327,Public School 139K,1,Public School 139K
+V0328,Public School 147 - Isaac Remsen,1,Public School 147 - Isaac Remsen
+V0329,Public School 152- School of Science and Technology,1,Public School 152- School of Science and Technology
+V0330,Public School 157-K,1,Public School 157-K
+V0331,Public School 158K - Warwick,1,Public School 158K - Warwick
+V0332,Public School 18 Edward Bush,1,Public School 18 Edward Bush
+V0333,Public School 180 - The SEEALL Academy,1,Public School 180 - The SEEALL Academy
+V0334,Public School 195- The Manhattan Beach School,1,Public School 195- The Manhattan Beach School
+V0335,Public School 216 Arturo Toscanini,1,Public School 216 Arturo Toscanini
+V0336,Public School 23,1,Public School 23
+V0337,Public School 235 The Janice Marie Knight School,1,Public School 235 The Janice Marie Knight School
+V0338,"Public School 243K, The Weeksville School",1,"Public School 243K, The Weeksville School"
+V0339,Public School 254 The Dag Hammarskjold School,1,Public School 254 The Dag Hammarskjold School
+V0340,Public School 257 John F. Hylan,1,Public School 257 John F. Hylan
+V0341,Public School 269 - The Nostrand School,1,Public School 269 - The Nostrand School
+V0342,Public School 273-The Wortman School,1,Public School 273-The Wortman School
+V0343,Public School 276 Louis Marshall District 18,1,Public School 276 Louis Marshall District 18
+V0344,Public School 287 13K287,1,Public School 287 13K287
+V0345,Public School 290,1,Public School 290
+V0346,Public School 305,1,Public School 305
+V0347,Public School 316 Elijah G. Stroud Elementary School,1,Public School 316 Elijah G. Stroud Elementary School
+V0348,Public School 325-Fresh Creek School,1,Public School 325-Fresh Creek School
+V0349,Public School 380,1,Public School 380
+V0350,"Public School 54 The Magnet School for Environmental Science, Technology and Community Wellness.",1,"Public School 54 The Magnet School for Environmental Science, Technology and Community Wellness."
+V0351,Public School 59- William Floyd,2,Public School 59- William Floyd | Public School 59 William Floyd
+V0352,Public School 599- Brooklyn landmark Elementary School,1,Public School 599- Brooklyn landmark Elementary School
+V0353,Public School 705 - Brooklyn Arts and Science Elementary School (BASES),1,Public School 705 - Brooklyn Arts and Science Elementary School (BASES)
+V0354,Public School 84 Jose de Diego,1,Public School 84 Jose de Diego
+V0355,Public School 9 - Teunis G. Bergen Elementary School,1,Public School 9 - Teunis G. Bergen Elementary School
+V0356,Public School 95 The Gravesend School,1,Public School 95 The Gravesend School
+V0357,Public School 97 - The Highlawn,1,Public School 97 - The Highlawn
+V0358,Public School K566 - Brooklyn Generation,1,Public School K566 - Brooklyn Generation
+V0359,Rachel Carson High School,1,Rachel Carson High School
+V0360,Science Skills Center High School,1,Science Skills Center High School
+V0361,Shell Bank I.S 14,1,Shell Bank I.S 14
+V0362,South Brooklyn Community High School,1,South Brooklyn Community High School
+V0363,Teachers Preparatory School (23k697),1,Teachers Preparatory School (23k697)
+V0364,The Brooklyn School for Global Studies 15K429,1,The Brooklyn School for Global Studies 15K429
+V0365,THE BROOKLYN SCHOOL OF INQUIRY,2,THE BROOKLYN SCHOOL OF INQUIRY | Brooklyn School of Inquiry
+V0366,The Green School,1,The Green School
+V0367,The International HS @ Prospect Hts,1,The International HS @ Prospect Hts
+V0368,The Willoughby school I.S. 162,1,The Willoughby school I.S. 162
+V0369,Transit Tech CTE High School,1,Transit Tech CTE High School
+V0370,Upper School @ P.S. 25 - Middle School 534,1,Upper School @ P.S. 25 - Middle School 534
+V0371,West Brooklyn Community High School,1,West Brooklyn Community High School
+V0372,Williamsburg HS for Architecture & Design,1,Williamsburg HS for Architecture & Design
+V0373,PS 551 Urban Assembly New York Harbor School,1,PS 551 Urban Assembly New York Harbor School
+V0374,Department of Physical Sciences - Kingsborough Community College - City University of New York,1,Department of Physical Sciences - Kingsborough Community College - City University of New York
+V0375,Brooklyn College,1,Brooklyn College
+V0376,EAGLE ACADEMY FOR YOUNG MEN AT OCEAN HILL,1,EAGLE ACADEMY FOR YOUNG MEN AT OCEAN HILL
+V0377,JOAN SNOW PRE-K CENTER 22K853,1,JOAN SNOW PRE-K CENTER 22K853
+V0378,LITTLE BROOKLYN PRE-K CENTER 15KP15-15K767,1,LITTLE BROOKLYN PRE-K CENTER 15KP15-15K767
+V0379,PS 261,1,PS 261
+V0380,HPD - MOBILE UNIT CITYWIDE,1,HPD - MOBILE UNIT CITYWIDE
+V0381,"FIFTH AVE COMMITTEE, INC",1,"FIFTH AVE COMMITTEE, INC"
+V0382,"Selfhelp Community Services, Inc.",1,"Selfhelp Community Services, Inc."
+V0383,Brownsville Linden Plaza LLC,1,Brownsville Linden Plaza LLC
+V0384,Southside United HDFC,1,Southside United HDFC
+V0385,NYCHA - Howard Houses,1,NYCHA - Howard Houses
+V0386,NYCHA - WILLOUGHBY SENIOR CENTER,1,NYCHA - WILLOUGHBY SENIOR CENTER
+V0387,DPR - Homecrest Playground,1,DPR - Homecrest Playground
+V0388,DPR - Maple Street Garden,1,DPR - Maple Street Garden
+V0389,DPR - Jacob Joffee,1,DPR - Jacob Joffee
+V0390,"DPR - Kensington Dog Run Association, Inc.",1,"DPR - Kensington Dog Run Association, Inc."
+V0391,DPR - BROWER PARK,1,DPR - BROWER PARK
+V0392,DPR - SUNSET PARK,1,DPR - SUNSET PARK
+V0393,DPR - McDonald Playground,1,DPR - McDonald Playground
+V0394,The New York Methodist Hospital,1,The New York Methodist Hospital
+V0395,Bridging Access to Care,1,Bridging Access to Care
+V0396,"Center for the Elimination of Violence in the Family, Inc. d/b/a Center Against Domestic Violence",1,"Center for the Elimination of Violence in the Family, Inc. d/b/a Center Against Domestic Violence"
+V0397,"New York City Police Foundation, Inc.",1,"New York City Police Foundation, Inc."
+V0398,United Jewish Organizations of Williamsburg (UJO),1,United Jewish Organizations of Williamsburg (UJO)
+V0399,SECURITY CAMERAS - BENSONHURST,1,SECURITY CAMERAS - BENSONHURST
+V0400,DOT - Atlantic Ave Safe Street,1,DOT - Atlantic Ave Safe Street
+V0401,DOT - Washington Ave Safe Street,1,DOT - Washington Ave Safe Street
+V0402,DOT - Wykoff Safe Street,1,DOT - Wykoff Safe Street
+V0403,DOT - Vanderbilt Avenue Merchants District/PHNDC,1,DOT - Vanderbilt Avenue Merchants District/PHNDC
+V0404,"DOT - STREET REPAIR - AVE K, AVE J, NOSTRAND AND
+ OCEAN AVENUES",1,"DOT - STREET REPAIR - AVE K, AVE J, NOSTRAND AND
+ OCEAN AVENUES"
+V0405,"DOT - INDUSTRY CITY SAFETY AND STREESCAPE
+ IMPROVEMENTS",1,"DOT - INDUSTRY CITY SAFETY AND STREESCAPE
+ IMPROVEMENTS"
+V0406,"DOT - THE LITTLE RED RIDING HOOD PRE-K SIDEWALK
+ EXTENSION",1,"DOT - THE LITTLE RED RIDING HOOD PRE-K SIDEWALK
+ EXTENSION"
+V0407,Urban Resource Institute,1,Urban Resource Institute
+V0408,"Brooklyn Academy of Music, Inc.",1,"Brooklyn Academy of Music, Inc."
+V0409,Brooklyn Music School,1,Brooklyn Music School
+V0410,New Art Publications Inc. dba BOMB Magazine,1,New Art Publications Inc. dba BOMB Magazine
+V0411,The Noel Pointer Foundation,2,The Noel Pointer Foundation | Noel Pointer Foundation
+V0412,Jewish Children's Museum,1,Jewish Children's Museum
+V0413,"Roulette Intermedium, Inc.",1,"Roulette Intermedium, Inc."
+V0414,"City Harvest, Inc.",1,"City Harvest, Inc."
+V0415,God's Love We Deliver,1,God's Love We Deliver
+V0416,Man Up Inc,1,Man Up Inc
+V0417,"The Jewish Board of Families and Children's Services, Inc.",1,"The Jewish Board of Families and Children's Services, Inc."
+V0418,"Catholic Charities Neighborhood Services, Inc.",1,"Catholic Charities Neighborhood Services, Inc."
+V0419,CAMBA Inc-Bedford -Stuyvesant multi service center,1,CAMBA Inc-Bedford -Stuyvesant multi service center
+V0420,Grand Street Settlement Inc.,1,Grand Street Settlement Inc.
+V0421,"Turning Point Brooklyn, Inc.",1,"Turning Point Brooklyn, Inc."
+V0422,Pratt Institute Brooklyn Fashion + Design Accelerator,1,Pratt Institute Brooklyn Fashion + Design Accelerator
+V0423,15K429 Digital Arts and Cinema Technology High School,1,15K429 Digital Arts and Cinema Technology High School
+V0424,15K519,1,15K519
+V0425,17K382,1,17K382
+V0426,17K547- Brooklyn Academy of Science and the Environment,1,17K547- Brooklyn Academy of Science and the Environment
+V0427,18K135,1,18K135
+V0428,18K208,1,18K208
+V0429,18K233,1,18K233
+V0430,18K235,1,18K235
+V0431,The Canarsie- East Flatbush Engineering Pipeline,1,The Canarsie- East Flatbush Engineering Pipeline
+V0432,18K272,1,18K272
+V0433,18K276,1,18K276
+V0434,19K452-Frederick Douglass Academy VII,1,19K452-Frederick Douglass Academy VII
+V0435,19K507-Performing Arts and Technology High School,1,19K507-Performing Arts and Technology High School
+V0436,21K468 Kingsborough Early college Secondary School,1,21K468 Kingsborough Early college Secondary School
+V0437,"22K240, Andries Hudde JHS",1,"22K240, Andries Hudde JHS"
+V0438,"22K535, Goldstein High School for the Sciences",1,"22K535, Goldstein High School for the Sciences"
+V0439,23K493 - Brooklyn Collegiate HS,1,23K493 - Brooklyn Collegiate HS
+V0440,84K730 - Summit Academy,1,84K730 - Summit Academy
+V0441,Academy for Environmental Leadership,1,Academy for Environmental Leadership
+V0442,ACORN Community High School,1,ACORN Community High School
+V0443,Aspirations Diploma Plus High School,2,Aspirations Diploma Plus High School | ASPIRATIONS DIPLOMA PLUS HIGH SCHOOL
+V0444,Benjamin Banneker Academy for Community Development,1,Benjamin Banneker Academy for Community Development
+V0445,Benjamin Banneker Academy,1,Benjamin Banneker Academy
+V0446,Brooklyn College Academy,1,Brooklyn College Academy
+V0447,Brooklyn Emerging Leaders Academy Charter School,1,Brooklyn Emerging Leaders Academy Charter School
+V0448,Brooklyn New School PS 146,1,Brooklyn New School PS 146
+V0449,Brooklyn Technical High School,1,Brooklyn Technical High School
+V0450,Brownsville Collaborative Middle School,1,Brownsville Collaborative Middle School
+V0451,Crispus Attucks Elementary School - PS21,1,Crispus Attucks Elementary School - PS21
+V0452,District 13's Pre-K Center at Dock Street,1,District 13's Pre-K Center at Dock Street
+V0453,EBC High School for Public Service Department of Education,1,EBC High School for Public Service Department of Education
+V0454,Edward B. Shallow,1,Edward B. Shallow
+V0455,STAR Early College School at Erasmus Hall (17K543),1,STAR Early College School at Erasmus Hall (17K543)
+V0456,Fort Hamilton High School,1,Fort Hamilton High School
+V0457,Grand Street Campus High Schools,1,Grand Street Campus High Schools
+V0458,Hebrew Language Academy,1,Hebrew Language Academy
+V0459,I.S. 162 The Willoughby School,1,I.S. 162 The Willoughby School
+V0460,I.S. 187 - The Christa McAuliffe School,1,I.S. 187 - The Christa McAuliffe School
+V0461,I.S. 78 - Roy H. Mann,1,I.S. 78 - Roy H. Mann
+V0462,Intermediate School 392,1,Intermediate School 392
+V0463,IS 171,1,IS 171
+V0464,Jackie Robinson School PS 375,1,Jackie Robinson School PS 375
+V0465,John Dewey High School,1,John Dewey High School
+V0466,Gotham Professional Arts Academy,1,Gotham Professional Arts Academy
+V0467,Liberty Avenue Middle School,1,Liberty Avenue Middle School
+V0468,LIFE Academy High School for Film and Music,1,LIFE Academy High School for Film and Music
+V0469,MESA Charter High School,1,MESA Charter High School
+V0470,Middle School 126 John Ericsson Middle School,1,Middle School 126 John Ericsson Middle School
+V0471,Middle School 681 - Madiba Prep Middle School,1,Middle School 681 - Madiba Prep Middle School
+V0472,Middle School 722 New Heights Middle School,1,Middle School 722 New Heights Middle School
+V0473,Middle School of Marketing and Legal Studies-18K598,1,Middle School of Marketing and Legal Studies-18K598
+V0474,"MS 266, Park Place Community Middle School",1,"MS 266, Park Place Community Middle School"
+V0475,Multicultural High School,2,Multicultural High School | MULTICULTURAL HIGH SCHOOL
+V0476,Origins High School,2,Origins High School | ORIGINS HIGH SCHOOL
+V0477,P 53 K @ Spring Creek,1,P 53 K @ Spring Creek
+V0478,"P.S. 003, The Bedford Village",1,"P.S. 003, The Bedford Village"
+V0479,P.S. 100- The Coney Island School-The Magnet School of Media Arts and Communication,1,P.S. 100- The Coney Island School-The Magnet School of Media Arts and Communication
+V0480,P.S. 119,1,P.S. 119
+V0481,"P.S. 177, The Marlboro School",1,"P.S. 177, The Marlboro School"
+V0482,Public School 191,1,Public School 191
+V0483,P.S. 196 Ten Eyck School,1,P.S. 196 Ten Eyck School
+V0484,P.S. 207,1,P.S. 207
+V0485,P.S. 309 The George E. Wibecan Preparatory Academy,2,P.S. 309 The George E. Wibecan Preparatory Academy | P.S. 309 THE GEORGE E. WIBECAN PREPARATORY ACADEMY
+V0486,Public School 32 – Samuel Mills Sprole School,1,Public School 32 – Samuel Mills Sprole School
+V0487,"P.S. 397, Foster Laurie",2,"P.S. 397, Foster Laurie | P.S. 397 FOSTER-LAURIE"
+V0488,P.S. I.S. 155 Nicholas Herkimer School,1,P.S. I.S. 155 Nicholas Herkimer School
+V0489,P.S./I.S. 109- Glenwood Academy for Science and Technology,1,P.S./I.S. 109- Glenwood Academy for Science and Technology
+V0490,P.S. 91 THE ALBANY AVENUE SCHOOL,2,P.S. 91 THE ALBANY AVENUE SCHOOL | P.S.91 The Albany Avenue School
+V0491,P231K @ 54,1,P231K @ 54
+V0492,P368K,1,P368K
+V0493,P369K@P5K,1,P369K@P5K
+V0494,Pathways In Technology Early College High School (P-TECH),1,Pathways In Technology Early College High School (P-TECH)
+V0495,PS 007K,1,PS 007K
+V0496,PS 101 The Verrazano School,1,PS 101 The Verrazano School
+V0497,PS 124K Silas B. Dutcher Elementary School,1,PS 124K Silas B. Dutcher Elementary School
+V0498,PS 165 Ida Posner,1,PS 165 Ida Posner
+V0499,"PS 185, Walter Kassenbrock",1,"PS 185, Walter Kassenbrock"
+V0500,PS 186 Dr. Irving A. Gladstone,1,PS 186 Dr. Irving A. Gladstone
+V0501,"PS 194 Raoul Wallenberg, 22K194",1,"PS 194 Raoul Wallenberg, 22K194"
+V0502,PS 197 Kings Highway Academy,1,PS 197 Kings Highway Academy
+V0503,"PS 222, Katherine R. Snyder Elementary School",1,"PS 222, Katherine R. Snyder Elementary School"
+V0504,PS 315K,1,PS 315K
+V0505,PS 503 School of Discovery & Exploration,1,PS 503 School of Discovery & Exploration
+V0506,PS 52 Sheepshead Bay School,1,PS 52 Sheepshead Bay School
+V0507,PS 59 William Floyd,1,PS 59 William Floyd
+V0508,PS 8 The Robert Fulton School,1,PS 8 The Robert Fulton School
+V0509,"PS 971 School of Math, Science and Healthy Living",1,"PS 971 School of Math, Science and Healthy Living"
+V0510,PS/IS 226Alfred De B. Mason,1,PS/IS 226Alfred De B. Mason
+V0511,"PS/IS 284 Gregory ""Jocko"" Jackson School of Sports, Arts & Technology",1,"PS/IS 284 Gregory ""Jocko"" Jackson School of Sports, Arts & Technology"
+V0512,PS112 - Lefferts Park,1,PS112 - Lefferts Park
+V0513,Public School 108K,1,Public School 108K
+V0514,Public School 119 Amersfort,1,Public School 119 Amersfort
+V0515,Public School 121 Nelson A. Rockefeller,1,Public School 121 Nelson A. Rockefeller
+V0516,PUBLIC SCHOOL 13,1,PUBLIC SCHOOL 13
+V0517,Public School 137 - The Rachel Jean Mitchell School,1,Public School 137 - The Rachel Jean Mitchell School
+V0518,Public School 13K351 - Urban Assembly Unison School,1,Public School 13K351 - Urban Assembly Unison School
+V0519,Public School 159- Isaac Pitkin School,1,Public School 159- Isaac Pitkin School
+V0520,Public School 161 The Crown,1,Public School 161 The Crown
+V0521,Public School 164,1,Public School 164
+V0522,Public School 170 - Ralph A. Fabrizio,1,Public School 170 - Ralph A. Fabrizio
+V0523,Public School 176 District 20 Brooklyn,1,Public School 176 District 20 Brooklyn
+V0524,Public School 191 - Paul Robeson - 17K191,1,Public School 191 - Paul Robeson - 17K191
+V0525,Public School 191 17K191,1,Public School 191 17K191
+V0526,Public School 217 Col. David Marcus School International School of Arts and Letters,1,Public School 217 Col. David Marcus School International School of Arts and Letters
+V0527,Public School 23- The Carter G. Woodson Elementary School,1,Public School 23- The Carter G. Woodson Elementary School
+V0528,Public School 230- Doris L. Cohen,1,Public School 230- Doris L. Cohen
+V0529,Public School 247,1,Public School 247
+V0530,Public School 250 George H. Lindsay Magnet School for Communications & Multimedia Arts,1,Public School 250 George H. Lindsay Magnet School for Communications & Multimedia Arts
+V0531,"Public School 268, Emma Lazarus",1,"Public School 268, Emma Lazarus"
+V0532,Public School 277 The Gerritsen Beach School,1,Public School 277 The Gerritsen Beach School
+V0533,Public School 449- The Brooklyn Latin School,1,Public School 449- The Brooklyn Latin School
+V0534,Public School 48-Mapleton,1,Public School 48-Mapleton
+V0535,Public School 516 - Sunset Park Avenues Elementary School,1,Public School 516 - Sunset Park Avenues Elementary School
+V0536,Public School 65,1,Public School 65
+V0537,Public School 677- East New York Elementary School of Excellence,1,Public School 677- East New York Elementary School of Excellence
+V0538,Public School MS 51 William Alexander Middle School,1,Public School MS 51 William Alexander Middle School
+V0539,Rashan Hoke,1,Rashan Hoke
+V0540,Riverdale Avenue Community School,2,Riverdale Avenue Community School | RIVERDALE AVENUE COMMUNITY SCHOOL
+V0541,"Ronald E. McNair Elementary School, PS 5",1,"Ronald E. McNair Elementary School, PS 5"
+V0542,School Building K096- I.S.096 Seth Low & Success Academy Bensonhurst,1,School Building K096- I.S.096 Seth Low & Success Academy Bensonhurst
+V0543,School of the Future Brooklyn 19K663,1,School of the Future Brooklyn 19K663
+V0544,"13K419- Science Skills Center High School for Science, Technology and the Creative Artsy",1,"13K419- Science Skills Center High School for Science, Technology and the Creative Artsy"
+V0545,The School for Human Rights,1,The School for Human Rights
+V0546,The Science and Medicine MS 366,1,The Science and Medicine MS 366
+V0547,The Secondary School For Journalism,1,The Secondary School For Journalism
+V0548,Victory Collegiate High School 18K576,1,Victory Collegiate High School 18K576
+V0549,Walt Whitman Middle School 246,1,Walt Whitman Middle School 246
+V0550,P.S. 191,1,P.S. 191
+V0551,PS 195K The Manhattan Beach School,1,PS 195K The Manhattan Beach School
+V0552,P.S. 12--Jacqueline Peek-Davis Elementary School,1,P.S. 12--Jacqueline Peek-Davis Elementary School
+V0553,Public School 644- Eagle Academy II,1,Public School 644- Eagle Academy II
+V0554,Mott Hall IV k522,1,Mott Hall IV k522
+V0555,I.S. 201,1,I.S. 201
+V0556,"PS/IS 229, Dyker School",1,"PS/IS 229, Dyker School"
+V0557,Liberation Diploma Plus High,1,Liberation Diploma Plus High
+V0558,Nelson Mandela High School,1,Nelson Mandela High School
+V0559,Brooklyn Arts and Science Elementary School,1,Brooklyn Arts and Science Elementary School
+V0560,Brighter Choice Community School,1,Brighter Choice Community School
+V0561,P.S. 308 Clara Cardwell,1,P.S. 308 Clara Cardwell
+V0562,P.S. 380 John Wayne Elementary,2,P.S. 380 John Wayne Elementary | P.S. 380 JOHN WAYNE ELEMENTARY
+V0563,"Kingsborough Community College, City University of New York",1,"Kingsborough Community College, City University of New York"
+V0564,Brevoort Resident Association,1,Brevoort Resident Association
+V0565,Marcy Community Center,1,Marcy Community Center
+V0566,NYCHA Hope Gardens Community Center,1,NYCHA Hope Gardens Community Center
+V0567,Marlboro Houses,1,Marlboro Houses
+V0568,"Howard Houses Tenant Council, Inc.",1,"Howard Houses Tenant Council, Inc."
+V0569,Kings Bay Houses,1,Kings Bay Houses
+V0570,HPD - Radson/Linden,1,HPD - Radson/Linden
+V0571,Caton Flats HDFC (A to-be-formed HDFC),1,Caton Flats HDFC (A to-be-formed HDFC)
+V0572,Habitat for Humanity NYC Inc,2,Habitat for Humanity NYC Inc | Habitat for Humanity NYC
+V0573,HPD - Dummont Commons,1,HPD - Dummont Commons
+V0574,HPD - Ebenezer Plaza,1,HPD - Ebenezer Plaza
+V0575,HPD - Dumont Commons,1,HPD - Dumont Commons
+V0576,HPD - Radson/BPHM Senior Residence,1,HPD - Radson/BPHM Senior Residence
+V0577,Shirley Chisholm/Tilden Community Center,1,Shirley Chisholm/Tilden Community Center
+V0578,"Friends of Wingate Park, Inc.",1,"Friends of Wingate Park, Inc."
+V0579,New York Restoration Project,1,New York Restoration Project
+V0580,DPR - Froggy Park,1,DPR - Froggy Park
+V0581,DPR- Trees for Rogers Ave,1,DPR- Trees for Rogers Ave
+V0582,DPR - Paerdegat Park - Cristo Rey Brooklyn High School,1,DPR - Paerdegat Park - Cristo Rey Brooklyn High School
+V0583,DPR - Bildersee,1,DPR - Bildersee
+V0584,DPR - Fort Greene Park Conservancy,1,DPR - Fort Greene Park Conservancy
+V0585,DPR - Harold Ickes Playground,1,DPR - Harold Ickes Playground
+V0586,The American National Red Cross dba American Red Cross. Local Chapter: American Red Cross in Greater New York,1,The American National Red Cross dba American Red Cross. Local Chapter: American Red Cross in Greater New York
+V0587,Wyckoff Heights Medical Center,1,Wyckoff Heights Medical Center
+V0588,"The Floating Hospital, Inc.",1,"The Floating Hospital, Inc."
+V0589,NYC Health + Hospitals/Woodhull,1,NYC Health + Hospitals/Woodhull
+V0590,Brownsville Community Development Corporation,1,Brownsville Community Development Corporation
+V0591,New York-Presbyterian Brooklyn Methodist Hospital,1,New York-Presbyterian Brooklyn Methodist Hospital
+V0592,New York City Health + Hospitals/ Kings County,1,New York City Health + Hospitals/ Kings County
+V0593,FDNY,1,FDNY
+V0594,NYPD,1,NYPD
+V0595,Myrtle Avenue Revitalization Project LDC (MARP),1,Myrtle Avenue Revitalization Project LDC (MARP)
+V0596,"BEL Community Housing, LLC",1,"BEL Community Housing, LLC"
+V0597,K151 P.S. 151 LYNDON B. JOHNSON 763 KNICKERBOCKER AVENUE,1,K151 P.S. 151 LYNDON B. JOHNSON 763 KNICKERBOCKER AVENUE
+V0598,Shore Front Council Housing Development Fund Corporation,1,Shore Front Council Housing Development Fund Corporation
+V0599,Target Margin Theater,1,Target Margin Theater
+V0600,Catholic Charities Progress of Peoples Development Corporation,1,Catholic Charities Progress of Peoples Development Corporation
+V0601,"Brooklyn Bureau of Community Service, d/b/a Brooklyn Community Services (BCS)",1,"Brooklyn Bureau of Community Service, d/b/a Brooklyn Community Services (BCS)"
+V0602,Shema Kolainu,1,Shema Kolainu
+V0603,DPR - Albemarle Playground,1,DPR - Albemarle Playground
+V0604,Hispanic Information and Telecommunication Network Inc.,2,Hispanic Information and Telecommunication Network Inc. | Hispanic Information & Telecommunication Network Inc.
+V0605,PS 295/MS 443K,1,PS 295/MS 443K
+V0606,PS 146 Brooklyn New School,1,PS 146 Brooklyn New School
+V0607,Brooklyn Urban Garden Charter School,1,Brooklyn Urban Garden Charter School
+V0608,Hebrew Language Academy Charter School-2 (HLA2),1,Hebrew Language Academy Charter School-2 (HLA2)
+V0609,JHS 218,1,JHS 218
+V0610,Margaret S. Douglas Middle School,1,Margaret S. Douglas Middle School
+V0611,JUAN MOREL CAMPOS SECONDARY SCHOOL,1,JUAN MOREL CAMPOS SECONDARY SCHOOL
+V0612,PARKSIDE PREPARATORY ACADEMY,1,PARKSIDE PREPARATORY ACADEMY
+V0613,P.S. 005 DR. RONALD MCNAIR,1,P.S. 005 DR. RONALD MCNAIR
+V0614,NORMA ADAMS CLEMONS ACADEMY,1,NORMA ADAMS CLEMONS ACADEMY
+V0615,P.S. 009 TEUNIS G. BERGEN,1,P.S. 009 TEUNIS G. BERGEN
+V0616,DR. JACQUELINE PEEK-DAVIS SCHOOL,1,DR. JACQUELINE PEEK-DAVIS SCHOOL
+V0617,P.S. 13 ROBERTO CLEMENTE,1,P.S. 13 ROBERTO CLEMENTE
+V0618,P.S. 15 PATRICK F. DALY,1,P.S. 15 PATRICK F. DALY
+V0619,P.S. 021 CRISPUS ATTUCKS,1,P.S. 021 CRISPUS ATTUCKS
+V0620,P.S. 025 EUBIE BLAKE SCHOOL,1,P.S. 025 EUBIE BLAKE SCHOOL
+V0621,P.S. 029 JOHN M. HARRIGAN,1,P.S. 029 JOHN M. HARRIGAN
+V0622,P.S. 44 MARCUS GARVEY,1,P.S. 44 MARCUS GARVEY
+V0623,P.S. 048 MAPLETON,1,P.S. 048 MAPLETON
+V0624,M.S. 51 WILLIAM ALEXANDER,1,M.S. 51 WILLIAM ALEXANDER
+V0625,P.S. 056 LEWIS H. LATIMER,1,P.S. 056 LEWIS H. LATIMER
+V0626,P.S. 66,1,P.S. 66
+V0627,P.S. 67 CHARLES A. DORSEY,1,P.S. 67 CHARLES A. DORSEY
+V0628,P.S. 69 VINCENT D. GRIPPO SCHOOL 6,1,P.S. 69 VINCENT D. GRIPPO SCHOOL 6
+V0629,P.S. 081 THADDEUS STEVENS,1,P.S. 081 THADDEUS STEVENS
+V0630,P.S. 084 JOSE DE DIEGO,1,P.S. 084 JOSE DE DIEGO
+V0631,P.S. 90 EDNA COHEN SCHOOL,1,P.S. 90 EDNA COHEN SCHOOL
+V0632,P.S. 092 ADRIAN HEGEMAN,1,P.S. 092 ADRIAN HEGEMAN
+V0633,P.S. 093 WILLIAM H. PRESCOTT,1,P.S. 093 WILLIAM H. PRESCOTT
+V0634,P.S. 105 THE BLYTHEBOURNE,1,P.S. 105 THE BLYTHEBOURNE
+V0635,P.S. 106 EDWARD EVERETT HALE,1,P.S. 106 EDWARD EVERETT HALE
+V0636,P.S. 108 SAL ABBRACCIAMENTO,1,P.S. 108 SAL ABBRACCIAMENTO
+V0637,M.S. 113 RONALD EDMONDS LEARNING CENTER,1,M.S. 113 RONALD EDMONDS LEARNING CENTER
+V0638,P.S. 114 RYDER ELEMENTARY,1,P.S. 114 RYDER ELEMENTARY
+V0639,P.S. 115 DANIEL MUCATEL SCHOOL,1,P.S. 115 DANIEL MUCATEL SCHOOL
+V0640,P.S. 116 ELIZABETH L FARRELL,1,P.S. 116 ELIZABETH L FARRELL
+V0641,P.S. 131 BROOKLYN,1,P.S. 131 BROOKLYN
+V0642,P.S./I.S. 137 RACHEL JEAN MITCHELL,1,P.S./I.S. 137 RACHEL JEAN MITCHELL
+V0643,P.S. 145 ANDREW JACKSON,1,P.S. 145 ANDREW JACKSON
+V0644,P.S. 147 ISAAC REMSEN,1,P.S. 147 ISAAC REMSEN
+V0645,P.S. 150 CHRISTOPHER,1,P.S. 150 CHRISTOPHER
+V0646,SCHOOL OF SCIENCE & TECHNOLOGY,1,SCHOOL OF SCIENCE & TECHNOLOGY
+V0647,THE WINDSOR TERRACE SCHOOL,1,THE WINDSOR TERRACE SCHOOL
+V0648,P.S./ I.S. 155 NICHOLAS HERKIMER,1,P.S./ I.S. 155 NICHOLAS HERKIMER
+V0649,P.S. 156 Waverly. School,1,P.S. 156 Waverly. School
+V0650,K157 P.S./I.S. 157 THE BENJAMIN FRANKLIN HEALTH & SCIENCE ACADEMY 850 KENT AVENUE,1,K157 P.S./I.S. 157 THE BENJAMIN FRANKLIN HEALTH & SCIENCE ACADEMY 850 KENT AVENUE
+V0651,P.S. 158 WARWICK,1,P.S. 158 WARWICK
+V0652,K158 P.S. 158 WARWICK 400 ASHFORD STREET,2,K158 P.S. 158 WARWICK 400 ASHFORD STREET | K158 P.S. 158 Warwick 400 Ashford Street
+V0653,P.S. 159 ISAAC PITKIN,1,P.S. 159 ISAAC PITKIN
+V0654,THE BROOKLYN SCHOOL FOR MATH AND RESEARCH,1,THE BROOKLYN SCHOOL FOR MATH AND RESEARCH
+V0655,P.S. 169 SUNSET PARK,1,P.S. 169 SUNSET PARK
+V0656,I.S. 171 ABRAHAM LINCOLN,1,I.S. 171 ABRAHAM LINCOLN
+V0657,P.S. 176 OVINGTON,1,P.S. 176 OVINGTON
+V0658,P.S. 177 THE MARLBORO,1,P.S. 177 THE MARLBORO
+V0659,P.S. 178 SAINT CLAIR MCKELWAY,1,P.S. 178 SAINT CLAIR MCKELWAY
+V0660,P.S. 184 NEWPORT,1,P.S. 184 NEWPORT
+V0661,P.S. 185 WALTER KASSENBROCK,1,P.S. 185 WALTER KASSENBROCK
+V0662,THE CHRISTA MCAULIFFE SCHOOL,1,THE CHRISTA MCAULIFFE SCHOOL
+V0663,P.S. 189 THE BILINGUAL CENTER,1,P.S. 189 THE BILINGUAL CENTER
+V0664,P.S. 195 MANHATTAN BEACH,1,P.S. 195 MANHATTAN BEACH
+V0665,P.S. 197 - THE KINGS HIGHWAY ACADEMY,1,P.S. 197 - THE KINGS HIGHWAY ACADEMY
+V0666,P.S. 202 ERNEST S. JENKYNS,1,P.S. 202 ERNEST S. JENKYNS
+V0667,P.S. 206 JOSEPH F LAMB,1,P.S. 206 JOSEPH F LAMB
+V0668,P.S. 208 ELSA EBELING,1,P.S. 208 ELSA EBELING
+V0669,P.S. 213 NEW LOTS,1,P.S. 213 NEW LOTS
+V0670,JAMES P. SINNOTT,1,JAMES P. SINNOTT
+V0671,P.S. 219 KENNEDY-KING,1,P.S. 219 KENNEDY-KING
+V0672,P.S. 221 TOUSSAINT L'OUVERTURE,1,P.S. 221 TOUSSAINT L'OUVERTURE
+V0673,P.S. 224 HALE A. WOODRUFF,1,P.S. 224 HALE A. WOODRUFF
+V0674,P.S. 231,1,P.S. 231
+V0675,P.S. 233 LANGSTON HUGHES,1,P.S. 233 LANGSTON HUGHES
+V0676,P.S. 235 JANICE MARIE KNIGHT SCHOOL,1,P.S. 235 JANICE MARIE KNIGHT SCHOOL
+V0677,P.S. 241 EMMA L. JOHNSTON 976 PRESIDENT STREET,1,P.S. 241 EMMA L. JOHNSTON 976 PRESIDENT STREET
+V0678,P.S. 245,1,P.S. 245
+V0679,P.S. 249 THE CATON,1,P.S. 249 THE CATON
+V0680,P.S. 250 GEORGE H. LINDSAY,1,P.S. 250 GEORGE H. LINDSAY
+V0681,K254 P.S. 254 DAG HAMMARSKJOLD 1801 AVENUE Y,1,K254 P.S. 254 DAG HAMMARSKJOLD 1801 AVENUE Y
+V0682,P.S. 256 BENJAMIN BANNEKER,1,P.S. 256 BENJAMIN BANNEKER
+V0683,J.H.S. 259 WILLIAM MCKINLEY,1,J.H.S. 259 WILLIAM MCKINLEY
+V0684,P.S. 261 PHILIP LIVINGSTON,1,P.S. 261 PHILIP LIVINGSTON
+V0685,P.S. 264 BAY RIDGE ELEMENTARY SCHOOL FOR THE ARTS,1,P.S. 264 BAY RIDGE ELEMENTARY SCHOOL FOR THE ARTS
+V0686,P.S. 273 WORTMAN,1,P.S. 273 WORTMAN
+V0687,P.S. 279 HERMAN SCHREIBER,1,P.S. 279 HERMAN SCHREIBER
+V0688,P.S. 282 PARK SLOPE,1,P.S. 282 PARK SLOPE
+V0689,P.S. 290 JUAN MOREL CAMPOS,1,P.S. 290 JUAN MOREL CAMPOS
+V0690,P.S. 297 ABRAHAM STOCKTON,1,P.S. 297 ABRAHAM STOCKTON
+V0691,P.S. 298 DR. BETTY SHABAZZ,1,P.S. 298 DR. BETTY SHABAZZ
+V0692,P.S. 306 ETHAN ALLEN,1,P.S. 306 ETHAN ALLEN
+V0693,P.S. 312 BERGEN BEACH,1,P.S. 312 BERGEN BEACH
+V0694,DOCK STREET SCHOOL,1,DOCK STREET SCHOOL
+V0695,P.S. 316 ELIJAH STROUD,1,P.S. 316 ELIJAH STROUD
+V0696,P.S./I.S. 323,1,P.S./I.S. 323
+V0697,P.S. 327 DR. ROSE B. ENGLISH,1,P.S. 327 DR. ROSE B. ENGLISH
+V0698,K328 P.S. 328 PHYLLIS WHEATLEY 330 ALABAMA AVENUE,1,K328 P.S. 328 PHYLLIS WHEATLEY 330 ALABAMA AVENUE
+V0699,I.S. 340,1,I.S. 340
+V0700,P.S. 345 PATROLMAN ROBERT BOLDEN,1,P.S. 345 PATROLMAN ROBERT BOLDEN
+V0701,THE SCHOOL OF INTEGRATED LEARNING,1,THE SCHOOL OF INTEGRATED LEARNING
+V0702,I.S. 364 GATEWAY,1,I.S. 364 GATEWAY
+V0703,P.S. 371 - LILLIAN L. RASHKIS,1,P.S. 371 - LILLIAN L. RASHKIS
+V0704,P.S. 373 - BROOKLYN TRANSITION CENTER,1,P.S. 373 - BROOKLYN TRANSITION CENTER
+V0705,P.S. 376,1,P.S. 376
+V0706,K377,1,K377
+V0707,I.S. 381,1,I.S. 381
+V0708,J.H.S. 383 PHILIPPA SCHUYLER,1,J.H.S. 383 PHILIPPA SCHUYLER
+V0709,P.S. /I.S. 384 FRANCES E. CARTER,1,P.S. /I.S. 384 FRANCES E. CARTER
+V0710,I.S. 392,1,I.S. 392
+V0711,ACADEMY FOR YOUNG WRITERS,1,ACADEMY FOR YOUNG WRITERS
+V0712,EAST NEW YORK FAMILY ACADEMY,1,EAST NEW YORK FAMILY ACADEMY
+V0713,"SCIENCE SKILLS CENTER HIGH SCHOOL FOR SCIENCE, TECHNOLOGY AND THE CREATIVE ARTS",1,"SCIENCE SKILLS CENTER HIGH SCHOOL FOR SCIENCE, TECHNOLOGY AND THE CREATIVE ARTS"
+V0714,BROOKLYN SECONDARY SCHOOL FOR COLLABORATIVE STUDIES,1,BROOKLYN SECONDARY SCHOOL FOR COLLABORATIVE STUDIES
+V0715,FREDERICK DOUGLASS ACADEMY VIII MIDDLE SCHOOL,1,FREDERICK DOUGLASS ACADEMY VIII MIDDLE SCHOOL
+V0716,JOHN JAY SCHOOL FOR LAW,1,JOHN JAY SCHOOL FOR LAW
+V0717,EAST WILLIAMSBURG SCHOLARS ACADEMY,1,EAST WILLIAMSBURG SCHOLARS ACADEMY
+V0718,SCHOOL FOR INTERNATIONAL STUDIES,1,SCHOOL FOR INTERNATIONAL STUDIES
+V0719,Brooklyn High School for Law and Technology,1,Brooklyn High School for Law and Technology
+V0720,K504 HIGH SCHOOL FOR CIVIL RIGHTS 400 PENNSYLVANIA AVENUE,1,K504 HIGH SCHOOL FOR CIVIL RIGHTS 400 PENNSYLVANIA AVENUE
+V0721,FRANKLIN DELANO ROOSEVELT HIGH SCHOOL 5,1,FRANKLIN DELANO ROOSEVELT HIGH SCHOOL 5
+V0722,KAPPA V (KNOWLEDGE AND POWER PREPARATORY ACADEMY),1,KAPPA V (KNOWLEDGE AND POWER PREPARATORY ACADEMY)
+V0723,INTERNATIONAL HIGH SCHOOL AT PROSPECT HEIGHTS,1,INTERNATIONAL HIGH SCHOOL AT PROSPECT HEIGHTS
+V0724,HIGH SCHOOL FOR YOUTH AND COMMUNITY DEVELOPMENT AT ERASMUS,1,HIGH SCHOOL FOR YOUTH AND COMMUNITY DEVELOPMENT AT ERASMUS
+V0725,HIGH SCHOOL FOR SERVICE & LEARNING AT ERASMUS,1,HIGH SCHOOL FOR SERVICE & LEARNING AT ERASMUS
+V0726,"SCIENCE, TECHNOLOGY AND RESEARCH EARLY COLLEGE HIGH SCHOOL AT ERASMUS",1,"SCIENCE, TECHNOLOGY AND RESEARCH EARLY COLLEGE HIGH SCHOOL AT ERASMUS"
+V0727,THE ACADEMY OF URBAN PLANNING AND ENGINEERING,1,THE ACADEMY OF URBAN PLANNING AND ENGINEERING
+V0728,BROOKLYN GARDENS ELEMENTARY SCHOOL,1,BROOKLYN GARDENS ELEMENTARY SCHOOL
+V0729,WILLIAMSBURG HIGH SCHOOL FOR ARCHITECTURE AND DESIGN,1,WILLIAMSBURG HIGH SCHOOL FOR ARCHITECTURE AND DESIGN
+V0730,IT TAKES A VILLAGE ACADEMY,1,IT TAKES A VILLAGE ACADEMY
+V0731,EXPEDITIONARY LEARNING SCHOOL FOR COMMUNITY LEADERS,1,EXPEDITIONARY LEARNING SCHOOL FOR COMMUNITY LEADERS
+V0732,CONSELYEA PREPARATORY SCHOOL,1,CONSELYEA PREPARATORY SCHOOL
+V0733,LYONS COMMUNITY SCHOOL,1,LYONS COMMUNITY SCHOOL
+V0734,YOUNG WOMEN'S LEADERSHIP SCHOOL OF BROOKLYN,1,YOUNG WOMEN'S LEADERSHIP SCHOOL OF BROOKLYN
+V0735,ACADEMY OF INNOVATIVE TECHNOLOGY,1,ACADEMY OF INNOVATIVE TECHNOLOGY
+V0736,BROOKLYN BROWNSTONE SCHOOL,1,BROOKLYN BROWNSTONE SCHOOL
+V0737,EAGLE ACADEMY FOR YOUNG MEN II,1,EAGLE ACADEMY FOR YOUNG MEN II
+V0738,VISTA ACADEMY,1,VISTA ACADEMY
+V0739,SCHOOL OF THE FUTURE BROOKLYN,1,SCHOOL OF THE FUTURE BROOKLYN
+V0740,BROOKLYN ENVIRONMENTAL EXPLORATION SCHOOL (BEES),1,BROOKLYN ENVIRONMENTAL EXPLORATION SCHOOL (BEES)
+V0741,RED HOOK NEIGHBORHOOD SCHOOL,1,RED HOOK NEIGHBORHOOD SCHOOL
+V0742,"THE SCHOOL FOR CLASSICS: AN ACADEMY OF THINKERS, WRITERS AND PERFORMERS",1,"THE SCHOOL FOR CLASSICS: AN ACADEMY OF THINKERS, WRITERS AND PERFORMERS"
+V0743,THE BROOKLYN ACADEMY OF GLOBAL FINANCE,1,THE BROOKLYN ACADEMY OF GLOBAL FINANCE
+V0744,NORTHSIDE CHARTER HIGH SCHOOL,1,NORTHSIDE CHARTER HIGH SCHOOL
+V0745,NEW HEIGHTS MIDDLE SCHOOL,1,NEW HEIGHTS MIDDLE SCHOOL
+V0746,BROOKLYN INSTITUTE FOR LIBERAL ARTS,1,BROOKLYN INSTITUTE FOR LIBERAL ARTS
+V0747,Key Collegiate Charter School,1,Key Collegiate Charter School
+V0748,Middle School 890,1,Middle School 890
+V0749,P.S 748,1,P.S 748
+V0750,P.S. K811 CONNIE LEKAS SCHOOL,1,P.S. K811 CONNIE LEKAS SCHOOL
+V0751,PS 262 EL HAJJ MALIK EL SHABAZZ,1,PS 262 EL HAJJ MALIK EL SHABAZZ
+V0752,P.S. 315,1,P.S. 315
+V0753,Summit Academy Charter Middle School,1,Summit Academy Charter Middle School
+V0754,TRANSIT TECH CAREER AND TECHNICAL EDUCATION HIGH SCHOOL,1,TRANSIT TECH CAREER AND TECHNICAL EDUCATION HIGH SCHOOL
+V0755,Trey Whitfield School,1,Trey Whitfield School
+V0756,NYC DOE Brooklyn STEAM Center,1,NYC DOE Brooklyn STEAM Center
+V0757,CUNY New York City College of Technology,1,CUNY New York City College of Technology
+V0758,PS299,1,PS299
+V0759,K009 P.S. 009 TEUNIS G. BERGEN 80 UNDERHILL AVENUE,1,K009 P.S. 009 TEUNIS G. BERGEN 80 UNDERHILL AVENUE
+V0760,K023 P.S. 023 CARTER G. WOODSON 545 WILLOUGHBY AVENUE,1,K023 P.S. 023 CARTER G. WOODSON 545 WILLOUGHBY AVENUE
+V0761,PS94,1,PS94
+V0762,MS 2,1,MS 2
+V0763,PS 193,1,PS 193
+V0764,IS 281,1,IS 281
+V0765,"NYCHA - Howard Houses Tenant Council, Inc .",1,"NYCHA - Howard Houses Tenant Council, Inc ."
+V0766,Hanson Place Church Support Corporation,1,Hanson Place Church Support Corporation
+V0767,Love Fellowship Tabernacle,1,Love Fellowship Tabernacle
+V0768,Surfgate Housing Development Fund Corporation,1,Surfgate Housing Development Fund Corporation
+V0769,DPR - Bushwick Inlet Park,1,DPR - Bushwick Inlet Park
+V0770,DPR - Commodore Barry Park,1,DPR - Commodore Barry Park
+V0771,DPR - Kelly Playground,1,DPR - Kelly Playground
+V0772,DPR - Ocean Pkwy Bike Path,1,DPR - Ocean Pkwy Bike Path
+V0773,DPR - Shore Pkwy Bike Path,1,DPR - Shore Pkwy Bike Path
+V0774,DPR - Scarangella Playground,1,DPR - Scarangella Playground
+V0775,DPR - Schenck Playground,1,DPR - Schenck Playground
+V0776,DPR - UMMA Park Brooklyn Community Board 14,1,DPR - UMMA Park Brooklyn Community Board 14
+V0777,Animal Care Centers of NYC,1,Animal Care Centers of NYC
+V0778,The American National Red Cross dba American Red Cross in Greater New York,1,The American National Red Cross dba American Red Cross in Greater New York
+V0779,Hatzoloh Incorporated,1,Hatzoloh Incorporated
+V0780,DOT - Greenway Columbia Street,1,DOT - Greenway Columbia Street
+V0781,DOT - Greenway Atlantic Ave,1,DOT - Greenway Atlantic Ave
+V0782,DOT - Sidewalk extensions PS 134,1,DOT - Sidewalk extensions PS 134
+V0783,DOT - 16th Avenue Trench Restoration,1,DOT - 16th Avenue Trench Restoration
+V0784,"The Bushwick Starr, Inc.",1,"The Bushwick Starr, Inc."
+V0785,The Jewish Board of Family & Children's Services,1,The Jewish Board of Family & Children's Services
+V0786,"Council of People's Organizations, Inc.,",1,"Council of People's Organizations, Inc.,"
+V0787,Brooklyn Grange LLC,1,Brooklyn Grange LLC
+V0788,The Brooklyn Navy Yard,1,The Brooklyn Navy Yard
+V0789,NYCEDC - Moore Street Market,1,NYCEDC - Moore Street Market
+V0790,"Brooklyn Youth Chorus Academy, Inc.",1,"Brooklyn Youth Chorus Academy, Inc."
+V0791,K656 Brooklyn High School Of The Arts 500 Pacific Street,1,K656 Brooklyn High School Of The Arts 500 Pacific Street
+V0792,Automotive Hight School,1,Automotive Hight School
+V0793,K423 Brooklyn Frontiers High School 112 Schermerhorn Street,1,K423 Brooklyn Frontiers High School 112 Schermerhorn Street
+V0794,K605 George Westinghouse Career And Technical Education High School 105 Johnson Street,1,K605 George Westinghouse Career And Technical Education High School 105 Johnson Street
+V0795,K527 Urban Assembly Institute Of Math And Science For Young Women 283 Adams Street,1,K527 Urban Assembly Institute Of Math And Science For Young Women 283 Adams Street
+V0796,K196 P.S. 196 Ten Eyck 207 Bushwick Avenue,1,K196 P.S. 196 Ten Eyck 207 Bushwick Avenue
+V0797,K347 I.S. 347 School Of Humanities 35 Starr Street,1,K347 I.S. 347 School Of Humanities 35 Starr Street
+V0798,K075 P.S. 075 Mayda Cortiella 95 Grove Street,1,K075 P.S. 075 Mayda Cortiella 95 Grove Street
+V0799,K241 EMMA L JOHNSTON,1,K241 EMMA L JOHNSTON
+V0800,K009 Teunis G. Bergen 80 Underhill Avenue,1,K009 Teunis G. Bergen 80 Underhill Avenue
+V0801,K375 Jackie Robinson School,1,K375 Jackie Robinson School
+V0802,K590 Medgar Evers College Preparatory School 1186 Carroll Street,1,K590 Medgar Evers College Preparatory School 1186 Carroll Street
+V0803,K161 P.S. 161 The Crown 330 Crown Street,1,K161 P.S. 161 The Crown 330 Crown Street
+V0804,K046 P.S. 046 Edward C. Blum 100 Clermont Avenue,1,K046 P.S. 046 Edward C. Blum 100 Clermont Avenue
+V0805,K270 P.S. 270 Johann Dekalb 241 Emerson Place,1,K270 P.S. 270 Johann Dekalb 241 Emerson Place
+V0806,"Medgar Evers College, CUNY",1,"Medgar Evers College, CUNY"
+V0807,K742 Explore Empower Charter School 188 Rochester Avenue,1,K742 Explore Empower Charter School 188 Rochester Avenue
+V0808,K455 Boys And Girls High School 1700 Fulton Street,1,K455 Boys And Girls High School 1700 Fulton Street
+V0809,K782 Bedford Stuyvesant New Beginnings Charter School,1,K782 Bedford Stuyvesant New Beginnings Charter School
+V0810,K394 M.S. K394 188 Rochester Avenue,1,K394 M.S. K394 188 Rochester Avenue
+V0811,K498 Brooklyn High School For Law And Technology 1396 Broadway,1,K498 Brooklyn High School For Law And Technology 1396 Broadway
+V0812,"K267 M.S. 267 Math, Science & Technology 800 Gates Avenue",1,"K267 M.S. 267 Math, Science & Technology 800 Gates Avenue"
+V0813,K057 J.H.S. 057 Whitelaw Reid 125 Stuyvesant Avenue,1,K057 J.H.S. 057 Whitelaw Reid 125 Stuyvesant Avenue
+V0814,K764 The Urban Assembly School For Collaborative Healthcare 999 Jamaica Avenue,1,K764 The Urban Assembly School For Collaborative Healthcare 999 Jamaica Avenue
+V0815,K549 The Brooklyn School For Social Justice 400 Irving Avenue,1,K549 The Brooklyn School For Social Justice 400 Irving Avenue
+V0816,K291 J.H.S. 291 Roland Hayes 231 Palmetto Street,1,K291 J.H.S. 291 Roland Hayes 231 Palmetto Street
+V0817,K045 P.S./I.S. 045 Horace E. Greene 84 Schaefer Street,1,K045 P.S./I.S. 045 Horace E. Greene 84 Schaefer Street
+V0818,K001 P.S. 001 The Bergen 309 47 Street,1,K001 P.S. 001 The Bergen 309 47 Street
+V0819,Millennium (John Jay Campus),1,Millennium (John Jay Campus)
+V0820,K058 P.S. 058 The Carroll 330 Smith Street,1,K058 P.S. 058 The Carroll 330 Smith Street
+V0821,K464 Park Slope Collegiate 237 7Th Avenue,1,K464 Park Slope Collegiate 237 7Th Avenue
+V0822,K130 P.S. 130 The Parkside 70 Ocean Parkway,1,K130 P.S. 130 The Parkside 70 Ocean Parkway
+V0823,K092 P.S. 092 Adrian Hegeman 601 Parkside Avenue,1,K092 P.S. 092 Adrian Hegeman 601 Parkside Avenue
+V0824,K408 Academy Of Hospitality And Tourism 911 Flatbush Avenue,1,K408 Academy Of Hospitality And Tourism 911 Flatbush Avenue
+V0825,K514 Frederick Douglass Academy Vii High School 226 Bristol Street,1,K514 Frederick Douglass Academy Vii High School 226 Bristol Street
+V0826,K753 P.S. K753 - School For Career Development 510 Clermont Avenue,1,K753 P.S. K753 - School For Career Development 510 Clermont Avenue
+V0827,K174 The Dumont School,1,K174 The Dumont School
+V0828,K446 Riverdale Avenue Community School 76 Riverdale Avenue,1,K446 Riverdale Avenue Community School 76 Riverdale Avenue
+V0829,K224 P.S. 224 Hale A. Woodruff 757 Wortman Avenue,1,K224 P.S. 224 Hale A. Woodruff 757 Wortman Avenue
+V0830,K678 East New York Middle School Of Excellence 605 Shepherd Avenue,1,K678 East New York Middle School Of Excellence 605 Shepherd Avenue
+V0831,P.S 190 Sheffield,1,P.S 190 Sheffield
+V0832,K359 The Uft Charter School 800 Van Siclen Avenue,1,K359 The Uft Charter School 800 Van Siclen Avenue
+V0833,K654 Van Siclen Community Middle School 800 Van Siclen Avenue,1,K654 Van Siclen Community Middle School 800 Van Siclen Avenue
+V0834,K176 P.S. 176 Ovington 1225 69 Street,1,K176 P.S. 176 Ovington 1225 69 Street
+V0835,K030 P.S./I.S. 30 Mary White Ovington 415 Ovington Ave,1,K030 P.S./I.S. 30 Mary White Ovington 415 Ovington Ave
+V0836,K259 J.H.S. 259 William Mckinley 7305 Ft Hamilton Pkwy,1,K259 J.H.S. 259 William Mckinley 7305 Ft Hamilton Pkwy
+V0837,K102 P.S. 102 The Bayview 211 72 Street,1,K102 P.S. 102 The Bayview 211 72 Street
+V0838,K609 Urban Assembly School For Criminal Justice 4200 16 Avenue,1,K609 Urban Assembly School For Criminal Justice 4200 16 Avenue
+V0839,K682 The Academy Of Talented Scholars 50 Avenue P,1,K682 The Academy Of Talented Scholars 50 Avenue P
+V0840,K160 P.S. 160 William T. Sampson 5105 Fort Hamilton Parkway,1,K160 P.S. 160 William T. Sampson 5105 Fort Hamilton Parkway
+V0841,K181 P.S. 181 Brooklyn 1023 New York Avenue,1,K181 P.S. 181 Brooklyn 1023 New York Avenue
+V0842,K566 Brooklyn Generation School 6565 Flatlands Avenue,1,K566 Brooklyn Generation School 6565 Flatlands Avenue
+V0843,N/A - Lamad Academy Charter School,1,N/A - Lamad Academy Charter School
+V0844,K642 Urban Action Academy 1600 Rockaway Pkwy,1,K642 Urban Action Academy 1600 Rockaway Pkwy
+V0845,K637 Academy For Conservation And The Environment 6565 Flatlands Avenue,1,K637 Academy For Conservation And The Environment 6565 Flatlands Avenue
+V0846,K212 P.S. 212 Lady Deborah Moody 87 Bay 49 Street,1,K212 P.S. 212 Lady Deborah Moody 87 Bay 49 Street
+V0847,K811 P.S. K811 Connie Lekas School 2525 Haring Street,1,K811 P.S. K811 Connie Lekas School 2525 Haring Street
+V0848,K209 P.S. 209 Margaret Mead 2609 East 7Th St,1,K209 P.S. 209 Margaret Mead 2609 East 7Th St
+V0849,K673 East Brooklyn Community High School 9517 s Highway,1,K673 East Brooklyn Community High School 9517 s Highway
+V0850,K594 Gotham Professional Arts Academy 265 Ralph Avenue,1,K594 Gotham Professional Arts Academy 265 Ralph Avenue
+V0851,"Cadman Towers, Inc.",1,"Cadman Towers, Inc."
+V0852,"The Doe Fund, Inc.",1,"The Doe Fund, Inc."
+V0853,"SAGE, Advocacy & Services for LGBT Elders",1,"SAGE, Advocacy & Services for LGBT Elders"
+V0854,First Atlantic Terminal Housing Corp.,1,First Atlantic Terminal Housing Corp.
+V0855,Bedford Courts LDC,1,Bedford Courts LDC
+V0856,"Pratt Area Community Council, Inc. d/b/a IMPACCT Brooklyn",1,"Pratt Area Community Council, Inc. d/b/a IMPACCT Brooklyn"
+V0857,Washington Temple Church in God of Christ,1,Washington Temple Church in God of Christ
+V0858,"African American Planning Commission, Inc.",1,"African American Planning Commission, Inc."
+V0859,"Brighton House, Inc.",1,"Brighton House, Inc."
+V0860,DPR - Grove Street,1,DPR - Grove Street
+V0861,DPR - Harmony Park,1,DPR - Harmony Park
+V0862,DPR - Isabahlia Park,1,DPR - Isabahlia Park
+V0863,DPR - Prospect Expressway Sitting Area,1,DPR - Prospect Expressway Sitting Area
+V0864,Power Playground,1,Power Playground
+V0865,DPR - Umma Playground,1,DPR - Umma Playground
+V0866,"K284 The Gregory Jocko Jackson School Of Sports, Art, And Technology 213 Osborn Street",1,"K284 The Gregory Jocko Jackson School Of Sports, Art, And Technology 213 Osborn Street"
+V0867,DPR - Tree Guards,1,DPR - Tree Guards
+V0868,DPR - Red Hook Community Farm,1,DPR - Red Hook Community Farm
+V0869,DPR -K058 The Carroll,1,DPR -K058 The Carroll
+V0870,NYCHA/Marcus Garvey Senior Center,1,NYCHA/Marcus Garvey Senior Center
+V0871,NYCHA Tompkins Houses,1,NYCHA Tompkins Houses
+V0872,NYPD - seccurity cameras at wingate park,1,NYPD - seccurity cameras at wingate park
+V0873,NYC H+H/Woodhull,1,NYC H+H/Woodhull
+V0874,Interfaith Medical Center,1,Interfaith Medical Center
+V0875,NYC Health + Hospitals / McKinney,1,NYC Health + Hospitals / McKinney
+V0876,SUNY Health Science Center at Brooklyn,1,SUNY Health Science Center at Brooklyn
+V0877,NYC Health + Hospitals/ Kings County,2,NYC Health + Hospitals/ Kings County | NYC Health + Hospitals/Kings County
+V0878,"NYC Health + Hospitals/ Gotham Health, East New York",2,"NYC Health + Hospitals/ Gotham Health, East New York | NYC Health + Hospitals, Gotham Health, East New York"
+V0879,"SBH Community Service Network, Inc.",1,"SBH Community Service Network, Inc."
+V0880,NYCDOT - Tillary Street,1,NYCDOT - Tillary Street
+V0881,NYC DOT - Bedford Historic Lighting,1,NYC DOT - Bedford Historic Lighting
+V0882,DOT - CD 45,1,DOT - CD 45
+V0883,DOT - CD 47,1,DOT - CD 47
+V0884,The Yaldeinu School,1,The Yaldeinu School
+V0885,Council of Peoples Organization,1,Council of Peoples Organization
+V0886,Women's League Community Residences dba Makor Disability Services,1,Women's League Community Residences dba Makor Disability Services
+V0887,"Jack Arts, Inc",1,"Jack Arts, Inc"
+V0888,Northside Town Hall Community and Cultural Center,1,Northside Town Hall Community and Cultural Center
+V0889,Voices of Community Activists and Leaders - New York (VOCAL-NY),1,Voices of Community Activists and Leaders - New York (VOCAL-NY)
+V0890,"Digital Girl, Inc.",1,"Digital Girl, Inc."
+V0891,"BioBAT, Inc. d/b/a SUNY Research Foundation",1,"BioBAT, Inc. d/b/a SUNY Research Foundation"
+V0892,Cold Spring Harbor Laboratory,1,Cold Spring Harbor Laboratory
+V0893,Brooklyn Community Arts & Media High School,1,Brooklyn Community Arts & Media High School
+V0894,84K649 La Cima Charter School,1,84K649 La Cima Charter School
+V0895,18K563 It Takes a Village Acedemy,1,18K563 It Takes a Village Acedemy
+V0896,Brooklyn High School for Leadership and Community Service,1,Brooklyn High School for Leadership and Community Service
+V0897,Ebbets Field Middle School 17K352,1,Ebbets Field Middle School 17K352
+V0898,K203 PS 203 Floyd Bennett School,1,K203 PS 203 Floyd Bennett School
+V0899,K318 IS 318 Eugenio Maria De Hostos,1,K318 IS 318 Eugenio Maria De Hostos
+V0900,K088 JHS 088 Peter Rouget,1,K088 JHS 088 Peter Rouget
+V0901,K253 The Magnet School of Multicultural Humanities,1,K253 The Magnet School of Multicultural Humanities
+V0902,k561 Williamsburg Preparatory School,1,k561 Williamsburg Preparatory School
+V0903,75K753 Brooklyn School For Career Development,1,75K753 Brooklyn School For Career Development
+V0904,P771K,1,P771K
+V0905,K036 The Nathanael Greene School,1,K036 The Nathanael Greene School
+V0906,15k038 THE PACIFIC SCHOOL,1,15k038 THE PACIFIC SCHOOL
+V0907,K031 Samule F. DuPont,1,K031 Samule F. DuPont
+V0908,K016 PS 21 Crispus Attucks Elementary School,1,K016 PS 21 Crispus Attucks Elementary School
+V0909,K798 PS 065,1,K798 PS 065
+V0910,PS 39 Henry Bristow,1,PS 39 Henry Bristow
+V0911,Pathways to Graduation - Bed-Stuy Referral Center,1,Pathways to Graduation - Bed-Stuy Referral Center
+V0912,k246 Walt Whitman,1,k246 Walt Whitman
+V0913,19K502 FDNY Captain Vernon A. Richard High School,1,19K502 FDNY Captain Vernon A. Richard High School
+V0914,K667 PS938 Elementary School,1,K667 PS938 Elementary School
+V0915,k662 MS Liberty Avenue Middle School,1,k662 MS Liberty Avenue Middle School
+V0916,K149 PS 149 Danny Kaye Elementary School,1,K149 PS 149 Danny Kaye Elementary School
+V0917,19K661 Vista Academy Brooklyn,1,19K661 Vista Academy Brooklyn
+V0918,17K532 New Bridgees Elementary,1,17K532 New Bridgees Elementary
+V0919,K077,1,K077
+V0920,15K429 Digital Arts and Cinema Technology HS,1,15K429 Digital Arts and Cinema Technology HS
+V0921,PS 221 TOSSAINT L'OUVERTURE,1,PS 221 TOSSAINT L'OUVERTURE
+V0922,K169 PS 169 Sunset Park School,1,K169 PS 169 Sunset Park School
+V0923,16K455 Boys and Girls High School,1,16K455 Boys and Girls High School
+V0924,75K004,1,75K004
+V0925,20K160 P.S. 160 William T. Sampson,1,20K160 P.S. 160 William T. Sampson
+V0926,14K414 PS 414 Brooklyn Arbor Elementary School,1,14K414 PS 414 Brooklyn Arbor Elementary School
+V0927,84K362 Hellenic Classical Charter School,1,84K362 Hellenic Classical Charter School
+V0928,PS 20 The Clinton Hill School,1,PS 20 The Clinton Hill School
+V0929,K051 MS 51 William Alexander Middle School,1,K051 MS 51 William Alexander Middle School
+V0930,The Dyker Heights Intermediate School,1,The Dyker Heights Intermediate School
+V0931,K328 Phillis Wheatley,1,K328 Phillis Wheatley
+V0932,P.S. 214 The Micheal Friedsam School,1,P.S. 214 The Micheal Friedsam School
+V0933,I.S. 382,1,I.S. 382
+V0934,K935 M.S. 935,1,K935 M.S. 935
+V0935,19K507,1,19K507
+V0936,P.S. 40 The George Washington Carver School,1,P.S. 40 The George Washington Carver School
+V0937,P.S. 599 Brooklyn Landmark Elementary School,1,P.S. 599 Brooklyn Landmark Elementary School
+V0938,17k138,1,17k138
+V0939,23K401,1,23K401
+V0940,K183 PS 446 Riverdale Avenue Community School,1,K183 PS 446 Riverdale Avenue Community School
+V0941,K811 PS 811K Connie Lekas School,1,K811 PS 811K Connie Lekas School
+V0942,K765 HS 765 Nelson Mandela School for Social Justice,1,K765 HS 765 Nelson Mandela School for Social Justice
+V0943,K 307 PS 307 Daniel Hale Williams,1,K 307 PS 307 Daniel Hale Williams
+V0944,The Collegiate Academy for Mathematics and Personal Awareness Charter School,1,The Collegiate Academy for Mathematics and Personal Awareness Charter School
+V0945,84K730 Summit Academy Charter School,1,84K730 Summit Academy Charter School
+V0946,K373-75 The Brooklyn Transition Center,1,K373-75 The Brooklyn Transition Center
+V0947,K572 Leaders High School,1,K572 Leaders High School
+V0948,K040 - PS 40 - The George Washington Carver School,1,K040 - PS 40 - The George Washington Carver School
+V0949,K059 - P.S. 59 - The William Floyd Elementary School,1,K059 - P.S. 59 - The William Floyd Elementary School
+V0950,K492 Academy of Arts & Letters and K305,1,K492 Academy of Arts & Letters and K305
+V0951,K383 IS 383 Philippa Schulyer Middle School For The Gifted And Talented,1,K383 IS 383 Philippa Schulyer Middle School For The Gifted And Talented
+V0952,K050,1,K050
+V0953,21k303,1,21k303
+V0954,K392,1,K392
+V0955,84K486 New Dawn Charter High School,1,84K486 New Dawn Charter High School
+V0956,K278 Marine Park JHS 278,1,K278 Marine Park JHS 278
+V0957,"BELA Charter School, 84K892",1,"BELA Charter School, 84K892"
+V0958,19k510 World Academy for Total Community Health H.S,1,19k510 World Academy for Total Community Health H.S
+V0959,P.S.24,1,P.S.24
+V0960,K020PS310 The School for Future Leaders,1,K020PS310 The School for Future Leaders
+V0961,Key Collegiate Charter School (84K912),1,Key Collegiate Charter School (84K912)
+V0962,K123 THE SUYDAM MAGNET SCHOOL FOR STEAM,1,K123 THE SUYDAM MAGNET SCHOOL FOR STEAM
+V0963,15K592 Khalil Gibran International Academy,1,15K592 Khalil Gibran International Academy
+V0964,New York City College of Technology (City Tech),1,New York City College of Technology (City Tech)
+V0965,K497 The Boerum Hill School For International Studies,1,K497 The Boerum Hill School For International Studies
+V0966,K736 The New American Academy Charter School,1,K736 The New American Academy Charter School
+V0967,K056 PS56 Lewis Latimer and MS351Urban Assembly Unison,1,K056 PS56 Lewis Latimer and MS351Urban Assembly Unison
+V0968,PS 134K,1,PS 134K
+V0969,19K660 William H. Maxwell CTE High School,1,19K660 William H. Maxwell CTE High School
+V0970,21K090,1,21K090
+V0971,13K020 Clinton Elementary School,1,13K020 Clinton Elementary School
+V0972,K891 - The Brooklyn STEAM Center at the Navy Yard,1,K891 - The Brooklyn STEAM Center at the Navy Yard
+V0973,"Settlement Housing Fund, Inc.",1,"Settlement Housing Fund, Inc."
+V0974,St. Nicks Alliance,1,St. Nicks Alliance
+V0975,"PRATT AREA COMMUNITY COUNCIL, INC. (DBA IMPACCT BROOKLYN)",1,"PRATT AREA COMMUNITY COUNCIL, INC. (DBA IMPACCT BROOKLYN)"
+V0976,Mercy Procida Owner LLC,1,Mercy Procida Owner LLC
+V0977,"Comunilife, Inc.",1,"Comunilife, Inc."
+V0978,"Unified Neighborhood Partners (RiseBoro Community Partnership, Los Sures, United Jewish Organizations of Williamsburg, St Nicks Alliance)",1,"Unified Neighborhood Partners (RiseBoro Community Partnership, Los Sures, United Jewish Organizations of Williamsburg, St Nicks Alliance)"
+V0979,Williams and Georgia Towers HDFC,1,Williams and Georgia Towers HDFC
+V0980,"Kings Bay Housing Co, Inc.",1,"Kings Bay Housing Co, Inc."
+V0981,Department of Parks and Recreation - Marine Park,1,Department of Parks and Recreation - Marine Park
+V0982,Department of Parks and Recreation - Powell Park,1,Department of Parks and Recreation - Powell Park
+V0983,"L'Refuah Medical and Rehabilitation Center, Inc. DBA Ezra Medical Center, Inc.",1,"L'Refuah Medical and Rehabilitation Center, Inc. DBA Ezra Medical Center, Inc."
+V0984,NYC Health+Hospitals / Coney Island,1,NYC Health+Hospitals / Coney Island
+V0985,"Community Health Initiatives, Inc.,",1,"Community Health Initiatives, Inc.,"
+V0986,King Highway Beautification Association,1,King Highway Beautification Association
