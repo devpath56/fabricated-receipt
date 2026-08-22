@@ -38,7 +38,9 @@ export function checkDeck(s) {
   // 1b. every class an animation or state rule names must exist in the markup
   const allClasses = new Set();
   for (const m of s.matchAll(/class="([^"]+)"/g)) m[1].split(/\s+/).forEach(c => allClasses.add(c));
-  for (const m of s.matchAll(/#(wf|pz)(?:\.run)?\s+\.([\w]+)/g))
+  const svgIds = svgs.map(v => v[1]);
+  const cssRule = new RegExp(`#(${svgIds.join('|')})(?:\\.run)?\\s+\\.([\\w]+)`, 'g');
+  for (const m of s.matchAll(cssRule))
     if (!allClasses.has(m[2])) bad.push(`css targets #${m[1]} .${m[2]}, absent from the markup`);
 
   // 2. every class the step machine names must exist in the markup
@@ -90,8 +92,8 @@ if (process.argv.includes('--selftest')) {
     ['a marker definition is dropped', s => s.replace(/<marker id="ah-deny"[\s\S]*?<\/marker>/, '')],
     ['the N key binding is removed', s => s.replace("e.key === 'n'", "e.key === 'Q'")],
     ['the script is broken', s => s.replace('function wfGo(d){', 'function wfGo(d){ {{')],
-    ['a shape leaves the persona diagram viewBox', s => s.replace('<rect x="200" y="470" width="136"', '<rect x="200" y="1470" width="136"')],
-    ['a class the persona animation drives is renamed', s => s.replace('class="pz2"', 'class="pzXX"')],
+    ['a shape leaves the persona diagram viewBox', s => s.replace('<rect x="344" y="196" width="104"', '<rect x="344" y="1196" width="104"')],
+    ['a class the persona animation drives is renamed', s => s.replace('class="wave"', 'class="waveXX"')],
   ];
   let ok = true;
   for (const [name, mutate] of cases) {
