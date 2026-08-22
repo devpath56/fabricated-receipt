@@ -1,0 +1,98 @@
+<meta charset="utf-8">
+<title>Check 4 — Job status</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="shell.css">
+
+<main class="app">
+  <header class="bar">
+    <div>
+      <span class="bar__k">Check 4 of 4</span>
+      <h1 class="bar__t">Job status</h1>
+    </div>
+    <p class="bar__q">Is the job behind this PO still live?</p>
+  </header>
+
+  <section data-state="loading" class="st">
+    <div class="sk sk--lg" aria-hidden="true"></div>
+    <div class="sk" aria-hidden="true"></div>
+    <div class="sk sk--sm" aria-hidden="true"></div>
+    <p class="st__say" role="status">Looking up the PO's phase in the ERP…</p>
+  </section>
+
+  <section data-state="empty" class="st">
+    <h2 class="st__h">This PO is in no project</h2>
+    <p class="st__p">The purchase order returns no row in the ERP. The money exists with no
+      sanctioned job behind it — that is a question for the owner, not a verdict here.</p>
+    <p class="mono st__hint">2,356 rows in the period carry no project at all · $64,836,845,710</p>
+  </section>
+
+  <section data-state="error" class="st">
+    <h2 class="st__h st__h--bad">The ERP could not be read</h2>
+    <p class="st__p">No phase was resolved. <strong>Absence of a status is not a live job</strong> —
+      the invoice is not approvable on a lookup that did not run.</p>
+    <p class="st__p mono dim">expected: data/erp.csv</p>
+    <button class="btn" type="button">Retry</button>
+  </section>
+
+  <section data-state="success" class="st">
+    <div class="verdict verdict--ok">
+      <span class="verdict__k">Approve</span>
+      <span class="verdict__n">job open for charges</span>
+    </div>
+    <div class="tw">
+      <table class="tbl">
+        <caption class="tbl__cap">PO <span class="mono">P-3RV105L</span> · one phase returned</caption>
+        <thead><tr><th scope="col">Phase, as published</th><th scope="col">Normalised</th><th scope="col">Charges</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Construction</th><td class="mono">construction</td><td><span class="pill pill--ok">open</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Compared on the <strong>normalised</strong> phase. The published enum writes the
+      same phase more than one way — <span class="mono">Design</span> and <span class="mono">(Design)</span>
+      are one job, and a literal comparison would read them as two.</p>
+  </section>
+
+  <section data-state="partial" class="st">
+    <div class="verdict verdict--ask">
+      <span class="verdict__k">Comment</span>
+      <span class="verdict__n">one key, two answers</span>
+    </div>
+    <div class="tw">
+      <table class="tbl">
+        <caption class="tbl__cap">PO <span class="mono">OFFSHRWND</span> · <strong>2 phases returned</strong></caption>
+        <thead><tr><th scope="col">Phase, as published</th><th scope="col">Normalised</th><th scope="col">Charges</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">(Pending)</th><td class="mono">pending</td><td><span class="pill pill--ask">unknown</span></td></tr>
+          <tr><th scope="row">Pre-Design</th><td class="mono">pre-design</td><td><span class="pill pill--ask">unknown</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note note--ask"><strong>The system will not pick one.</strong> "What is the status of
+      this PO" has no single answer here, and choosing would manufacture certainty the data does not
+      carry. It comments and names both.</p>
+    <p class="mono st__hint">96 of 5,608 keys return more than one phase · $60,366,832,689 across them</p>
+  </section>
+
+  <section data-state="dead" class="st">
+    <div class="verdict verdict--bad">
+      <span class="verdict__k">Deny</span>
+      <span class="verdict__n">confidence 1.00 — job closed</span>
+    </div>
+    <div class="tw">
+      <table class="tbl">
+        <caption class="tbl__cap">PO <span class="mono">CA202HS04</span> · one phase returned</caption>
+        <thead><tr><th scope="col">Phase, as published</th><th scope="col">Normalised</th><th scope="col">Charges</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">(Completed)</th><td class="mono">completed</td><td><span class="pill pill--bad">closed</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note note--bad">The ERP closed this job. A payment approved against it lands on a
+      budget line that no longer accepts charges — the $10,000,000 mis-coding, in one row.</p>
+    <p class="mono st__hint">502 rows in the period are Completed or Cancelled · $11,616,084,685</p>
+  </section>
+</main>
+<script src="shell.js"></script>

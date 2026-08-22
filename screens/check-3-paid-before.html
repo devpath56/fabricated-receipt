@@ -1,0 +1,77 @@
+<meta charset="utf-8">
+<title>Check 3 — Paid before</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="shell.css">
+
+<main class="app">
+  <header class="bar">
+    <div>
+      <span class="bar__k">Check 3 of 4</span>
+      <h1 class="bar__t">Paid before</h1>
+    </div>
+    <p class="bar__q">Has this vendor already been paid for this?</p>
+  </header>
+
+  <section data-state="loading" class="st">
+    <div class="sk sk--lg" aria-hidden="true"></div>
+    <div class="sk" aria-hidden="true"></div>
+    <div class="sk sk--sm" aria-hidden="true"></div>
+    <p class="st__say" role="status">Searching every resolved spelling against PO, amount and period…</p>
+  </section>
+
+  <section data-state="empty" class="st">
+    <h2 class="st__h">Vendor not resolved yet</h2>
+    <p class="st__p">This check runs against <em>every</em> spelling check 2 collapses into one
+      vendor. Until that resolves, a search here would read one string and report clean.</p>
+    <p class="mono st__hint">That is exactly how the $68,000 duplicate was paid</p>
+  </section>
+
+  <section data-state="error" class="st">
+    <h2 class="st__h st__h--bad">The invoice ledger could not be read</h2>
+    <p class="st__p">No payment history was searched. <strong>This is not "no duplicate found"</strong>
+      — nothing was checked, and the difference is the whole product.</p>
+    <p class="st__p mono dim">expected: data/invoices.csv</p>
+    <button class="btn" type="button">Retry</button>
+  </section>
+
+  <section data-state="success" class="st">
+    <div class="verdict verdict--ok">
+      <span class="verdict__k">Approve</span>
+      <span class="verdict__n">confidence 1.00 — 0 prior payments</span>
+    </div>
+    <div class="tw">
+      <table class="tbl">
+        <caption class="tbl__cap">Searched <span class="mono">V0560</span> — all 1 spelling — on PO <span class="mono">P-3RV105L</span></caption>
+        <thead><tr><th scope="col">Spelling searched</th><th scope="col">Period</th><th scope="col">Matches</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Brighter Choice Community School</th><td class="mono">202605</td><td><span class="pill pill--ok">none</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">No prior <span class="mono">paid</span> row on this PO, amount and period,
+      across every spelling on file.</p>
+  </section>
+
+  <section data-state="partial" class="st">
+    <div class="verdict verdict--bad">
+      <span class="verdict__k">Deny</span>
+      <span class="verdict__n">confidence 1.00 — already paid</span>
+    </div>
+    <div class="tw">
+      <table class="tbl">
+        <caption class="tbl__cap">Searched <span class="mono">V0150</span> — <strong>both</strong> spellings — on PO <span class="mono">BED-807</span></caption>
+        <thead><tr><th scope="col">Invoice</th><th scope="col">Spelling</th><th scope="col">Amount</th><th scope="col">Status</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">INV-00012</th><td>Public School 44</td><td class="mono num">130,899.15</td><td><span class="pill pill--bad">paid</span></td></tr>
+          <tr><th scope="row">INV-00013</th><td>PUBLIC SCHOOL 44</td><td class="mono num">130,899.15</td><td><span class="pill pill--ask">pending</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note note--bad"><strong>Same PO, same amount, same period — two spellings.</strong>
+      A literal name match finds nothing here and reports clean. This was found only because check 2
+      resolved both records into <span class="mono">V0150</span> first.</p>
+  </section>
+</main>
+<script src="shell.js"></script>
