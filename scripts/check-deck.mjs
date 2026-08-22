@@ -53,11 +53,24 @@ export function checkDeck(s) {
       if (!classes.has(m[1])) bad.push(`step machine references .${m[1]}, absent from svg`);
   }
 
+  // The spine is read once, here, and reused by the two clauses below.
+  const spine = /<g class="spine">([\s\S]*?)<\/g>\s*\n\s*<g stroke/.exec(b);
+
+  // 2b. EVERY phase in the spine must be reached by some step. The class check only
+  //     proved that referenced classes exist -- it could not see a phase drawn on the
+  //     figure and never lit, which reads to a viewer as the walkthrough being stuck.
+  if (wf) {
+    const drawn = new Set();
+    if (spine) for (const m of spine[1].matchAll(/class="ph (ph\d)"/g)) drawn.add(m[1]);
+    const reached = new Set([...wf[1].matchAll(/'(ph\d)'/g)].map(m => m[1]));
+    for (const d of drawn) if (!reached.has(d))
+      bad.push(`phase .${d} is drawn in #wf but no step ever activates it`);
+  }
+
   // 3. the token stops on the spine must land on real phase centres
   // Derive the spine's geometry from the markup, never from constants that go stale
   // when the figure is redrawn. An empty centre set is itself a failure.
   const centres = new Set();
-  const spine = /<g class="spine">([\s\S]*?)<\/g>\s*\n\s*<g stroke/.exec(b);
   if (!spine) bad.push('spine group not found in #wf');
   else for (const m of spine[1].matchAll(/<rect x="[\d.]+" y="([\d.]+)" width="[\d.]+" height="([\d.]+)"/g))
     centres.add(Number(m[1]) + Number(m[2]) / 2);
@@ -103,6 +116,8 @@ if (process.argv.includes('--selftest')) {
     ['the N key binding is removed', s => s.replace("e.key === 'n'", "e.key === 'Q'")],
     ['the script is broken', s => s.replace('function wfGo(d){', 'function wfGo(d){ {{')],
     ['a shape leaves the persona diagram viewBox', s => s.replace('<rect x="344" y="196" width="104"', '<rect x="344" y="1196" width="104"')],
+    ['a drawn phase is never reached by any step',
+     s => s.replace(/\{on:\['ph4'\][^}]*\},\n/, '')],
     ['a class the persona animation drives is renamed', s => s.replace('class="wave"', 'class="waveXX"')],
   ];
   // A control whose replace() matches nothing is a NO-OP, and a no-op is

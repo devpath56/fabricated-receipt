@@ -1093,12 +1093,13 @@ table.tight td,table.tight th{padding:7px 12px;font-size:12.4px}
   // which claim is on screen. B goes back -- a timed reveal cannot.
   var WF = [
     {t:'An invoice arrives, already carrying its purchase order. Nothing has been checked yet.'},
-    {on:['ph1'], tok:50, t:'<b>Check 1 &middot; intake</b> The document is readable and every required field is present. It is safe to check.'},
+    {on:['ph1'], tok:50, t:'<b>Check 1 &middot; intake</b> The document is readable and every required field is present. Safe to check.'},
     {on:['ph2'], tok:150, halo:'haloB', t:'<u>Check 2 &middot; vendor</u> Two vendor records match this name. <u>Resolve first</u> &mdash; check 3 is only as good as this.'},
     {on:['ph2'], tok:150, t:'<b>Check 2 &middot; vendor</b> Resolved to one entity. Both spellings were the same company.'},
-    {on:['ph3'], tok:250, halo:'haloF', hit:'ph3', t:'<i>Check 3 &middot; paid before</i> Searched <i>every</i> spelling &mdash; this vendor was <i>already paid $340,000</i> on 14 July. Found only because check 2 resolved it.'},
-    {on:[], tok:250, hit:'ph3', path:'pathDeny', term:'termDeny',
-     t:'<i>DENY &middot; confidence 1.00</i> A failed check is certain. The receipt names the check, the query that ran, and the matching payment.'}
+    {on:['ph3'], tok:250, halo:'haloF', hit:'ph3', t:'<i>Check 3 &middot; paid before</i> Searched <i>every</i> spelling &mdash; already paid <i>$340,000</i> on 14 July. Found only because check 2 resolved it.'},
+    {on:['ph4'], tok:350, hit:'ph3', t:'<b>Check 4 &middot; job status</b> Runs anyway &mdash; the job is <i>Complete</i> in the ERP. <b>Every check reports, so the receipt is whole.</b>'},
+    {on:[], tok:350, hit:'ph3', path:'pathDeny', term:'termDeny',
+     t:'<i>DENY &middot; confidence 1.00</i> Two checks failed: already paid, and the job is closed. The receipt names both, with the query that ran.'}
   ];
   var wfStep = 0;
 
