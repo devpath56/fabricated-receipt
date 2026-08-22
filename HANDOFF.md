@@ -20,6 +20,7 @@ node scripts/pull.mjs        # 4 datasets, no auth, no key, no dependencies
 node scripts/failures.mjs    # reproduces both failures; exits non-zero if the numbers drift
 node scripts/grain.mjs       # proves no table in this project has a unique key
 node scripts/seed-aliases.mjs # emits the vendor-alias gold-set seed
+node scripts/check-deck.mjs   # guards docs/deck.html; --selftest proves the check can fail
 ```
 
 Node 18+ for built-in `fetch`. Zero dependencies.
@@ -28,15 +29,43 @@ Node 18+ for built-in `fetch`. Zero dependencies.
 
 # 1. The problem
 
-## The user
+## Angela — who this is for
 
-A project accountant at a mid-market contractor — $50M–$500M revenue, Procore for the field, Vista
-or Spectrum for the money, **nobody on staff who writes integrations**. That last part is why this
-category exists at all.
+**Angela Reyes · Project Manager · Meridian Builders (general contractor)**
 
-Mid-meeting someone asks why job 1412 is over budget. Her AI tool answers in three seconds with a
-tidy paragraph explaining where the figure came from. Then she opens Vista and rebuilds the number
-by hand anyway.
+| | |
+|---|---|
+| Runs | 4 jobs at once, one of **25–30 PMs** |
+| Field truth | Procore — commitments, change orders, daily logs |
+| Money of record | the ERP — GL, AP, job cost, the audit trail |
+| Sees financials | **once a month.** A deeper review every few months |
+| Integration engineers on staff | **zero** |
+
+> A composite of two documented general contractors — a 25–30 PM firm whose forecasting ran as a
+> multi-day monthly export-to-Excel-and-back exercise, and a ten-office firm where a **$10 million
+> project was linked to the wrong job**, could not be reversed, and had to be tracked off-book for
+> months in a parallel manual ledger. Meridian Builders is a composite name, not a real company.
+
+### Three parties, and only one of them has to reconcile
+
+| party | holds | wants | fear | lever |
+|---|---|---|---|---|
+| **Budget owner** (the city) | the appropriation · knows the **FMS ID** only | every dollar traceable to a sanctioned project | paying for something unsanctioned; an audit finding | withhold the requisition |
+| **Angela** (the GC) | the **PID** *and* the **FMS ID** | pay subs on time so crews stay on site | approve a bad invoice → the owner refuses → the GC eats it | approve · comment · deny |
+| **Specialty contractors** (concrete, plumbing, electrical, HVAC) | the crews · know only their own contract | paid fast, retention released | retention held forever, backcharges, lien rights lapsing | demobilise · slow down · file a lien |
+
+- **Money moves down in weeks. Pressure moves up in days.** Angela pays the subs *before* the owner
+  reimburses her — she is the bank in the middle.
+- **Nobody above her joins PID to FMS ID. Nobody below her can.** She is the join.
+- And that join is **not guaranteed one-to-one** — which is the whole project. See §3.
+
+### Three beats
+
+| # | what happens | the clock |
+|---|---|---|
+| 1 | **The invoice lands.** HVAC bills **$340,000** against job 1412. The crew is due back Monday | 5 days |
+| 2 | **The systems disagree.** Procore says 60% built. The ERP says 80% of budget spent. Her AI tool answers in three seconds with a tidy paragraph she cannot check | 3 seconds |
+| 3 | **She decides anyway.** Pay wrong → the owner refuses and Meridian eats $340k. Don't pay → the crew walks and the schedule slips six weeks | both her name |
 
 > When she's wrong in front of the owner, it's her name on it — not the tool's.
 
@@ -197,10 +226,12 @@ finding those is the resolver's job and the seed is the floor it must clear.
 
 ---
 
-# 4. The six jobs, and what checks each one
+# 4. The eight evals, and what checks each one
 
 From the morning sync. Each row is a job the system must do, the **deterministic** check that
 catches it failing, what it costs if uncaught, and whether an off-the-shelf eval exists.
+
+**Six are in demo scope; E6 and E8 are out** — see the scope note under the table.
 
 | # | Job | Deterministic check | $ if uncaught | Plug-in eval |
 |---|---|---|---|---|
@@ -213,6 +244,33 @@ catches it failing, what it costs if uncaught, and whether an off-the-shelf eval
 
 **Jobs 3 and 4 are where nothing exists off the shelf. That is the differentiator, and it is also
 where the demo lives.**
+
+### What "out of scope" means
+
+| | |
+|---|---|
+| **not** | unimportant, or absent from the workflow |
+| **is** | not built by Sunday, and the demo **says so out loud** |
+
+- **E6 · authority + balance** needs an authority matrix and a live disbursal balance. Neither exists
+  in open data, and faking either turns a real demo into a rigged one.
+- **E8 · other contractual** needs waivers, certificates and certified payroll — **documents, not
+  tables.** The natural next build.
+- Both stay on the diagram, drawn dashed. **A gap you name is credibility; a gap you hide is the
+  thing they find.**
+
+### The dependency that decides build order
+
+```
+E1 --> E2 --> E7          vendor identity gates the duplicate hunt
+        |
+E3 --> E4 --> E5          the join gates the status question
+```
+
+- **E2 is the critical-path eval.** E7 cannot be graded before it, and E7 is the closing beat.
+- A duplicate search that runs against *one* spelling of a vendor finds nothing and reports clean.
+- E3 and E4 are independent of E2 and can be built in parallel by a second person.
+
 
 ---
 
