@@ -165,12 +165,69 @@ reading a ledger rather than by the pipeline.
 
 ---
 
+## The eight evals — and what the demo actually builds
+
+The checklist above is the **workflow**. This is the **eval layer** over it: eight questions, each
+answerable by a check, each owning one phase. Nothing here is granular by design — a step is what
+she does, an eval is what we grade.
+
+| # | eval | the question it answers | phase | demo |
+|---|---|---|---|---|
+| **E1** | Intake | Is this invoice ready for downstream analysis at all? If not, **reject with a comment** | A | ✅ in |
+| **E2** | **Vendor ID** | Is this the correct vendor? Similar names create confusion | B | ⭐ **headline** |
+| **E3** | FMS ID ↔ invoice join | Is this budget **sanctioned**? | C | ✅ in |
+| **E4** | FMS ID ↔ PID join | Does the **PID exist**? | C | ✅ in |
+| **E5** | Job status | What is the status of this sanctioned project? | D | ✅ in |
+| **E6** | Auth balance for disbursal | Is there authority and balance to disburse? | E | ⬜ **out** |
+| **E7** | **Paid before** | Has this vendor already been paid for this? | F | ⭐ **headline** |
+| **E8** | Other contractual requirements | Lien waivers, insurance, certified payroll, retention | G | ⬜ **out** |
+
+**Six in, two out.** Phase H is not an eval — it is the **action** the eight produce.
+
+### Why E2 and E7 carry the demo
+
+They are the two whose failure we can show in **real published data**, with no staging:
+
+| eval | the evidence on screen | source |
+|---|---|---|
+| **E2** vendor ID | 48 entities spelled more than one way, holding **$40,767,000** — 10.9% of $374,735,000 | `capital_awards` · `n6ej-pebd` |
+| **E7** paid before | The **$68,000** rebar failure: one invoice, two vendor records, both paid. E7 is only as good as E2 | named incident |
+| *(supporting)* **E3 + E4** | **207** projects fan out; **2,356** rows carry no PID at all, holding **$64,836,845,710** — 31.2% of the period | `budget_and_schedule` · `fb86-vt7u` |
+
+**E7 depends entirely on E2.** A duplicate search that runs against one spelling of a vendor finds
+nothing and reports clean. That dependency *is* the demo: fix the vendor, and the duplicate appears.
+
+### What "out of scope" means here
+
+| | |
+|---|---|
+| **not** | unimportant, or absent from the workflow |
+| **is** | not built by Sunday, and the demo **says so out loud** |
+
+- **E6** needs an authority matrix and a live disbursal balance. Neither exists in open data, and
+  faking either turns a real demo into a rigged one.
+- **E8** needs lien waivers, certificates and certified payroll — documents, not tables. It is the
+  natural next build and the obvious place a document-parsing layer earns its place.
+- Both stay on the diagram, drawn as out-of-scope, so a judge sees the **whole** workflow and sees
+  exactly where we stopped. A gap you name is credibility; a gap you hide is the thing they find.
+
+### The dependency that decides build order
+
+```
+E1 ──► E2 ──► E7          vendor identity gates the duplicate hunt
+        │
+E3 ──► E4 ──► E5          the join gates the status question
+```
+
+- **E2 is the critical-path eval.** E7 cannot be graded before it, and E7 is the closing beat.
+- E3 and E4 are independent of E2 and can be built in parallel by a second person.
+
 ## How to use this file when writing the gold set
 
 | rule | |
 |---|---|
 | 1 | A gold question must map to a **lettered step**. If it maps to none, it is a benchmark question, not a product question |
-| 2 | At least one case per step in **B, C, E and F** — the four phases with measured failures behind them |
+| 2 | At least one case per **eval E1–E5 and E7**; the richest sets belong to E2 and E7 — the four phases with measured failures behind them |
 | 3 | Every case states the **expected refusal**, not only the expected answer. "Refuse, and say what did not tie out" is a correct answer |
 | 4 | Seed from the failures we measured, not from questions that work. `eval/vendor-aliases.seed.json` is the floor for B, not the target |
 | 5 | `PNS` cases exist and must **refuse** until someone tells us what `PNS` means |
