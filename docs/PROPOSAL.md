@@ -308,19 +308,19 @@ verbatim field, enum or endpoint.
 
 | Rank | Project | Peak | Floor | Top two, weighted |
 |---|---|---|---|---|
-| 1 | 02 Change Ledger | 17.65 | clears | Agave 10 → 10.0 · Isha 9 → 7.65 |
-| 2 | 08 Twice-Billed | 17.00 | clears | Agave 10 → 10.0 · Shivam 10 → 7.00 |
-| 3 | 05 Commitment Invariant | 16.80 | clears | Agave 10 → 10.0 · Isha 8 → 6.80 |
-| **4** | **03 Budget View Replay** *(selected)* | **15.60** | clears | Agave 10 → 10.0 · Shivam 8 → 5.60 |
-| 5 | 01 Codeset Guard | 13.95 | clears | Agave 8 → 8.0 · Isha 7 → 5.95 |
-| 6 | 06 Two-Phase Post | 13.80 | clears | Isha 8 → 6.80 · Agave 7 → 7.0 |
-| 7 | 16 Field-Level Fault | 12.95 | clears | Agave 7 → 7.0 · Isha 7 → 5.95 |
-| 8 | 10 Certificate Watch | 12.60 | clears | Agave 7 → 7.0 · Shivam 8 → 5.60 |
-| 9 | 11 Schema Tripwire | 11.80 | clears | Isha 8 → 6.80 · Agave 5 → 5.0 |
-| 10 | 14 Vendor Canon | 11.60 | clears | Agave 6 → 6.0 · Shivam 8 → 5.60 |
-| 11 | 09 Entity Fence | 11.10 | clears | Agave 6 → 6.0 · Isha 6 → 5.10 |
+| 1 | 02 Change Ledger | 17.65 | clears | Domain 10 → 10.0 · Isha 9 → 7.65 |
+| 2 | 08 Twice-Billed | 17.00 | clears | Domain 10 → 10.0 · Shivam 10 → 7.00 |
+| 3 | 05 Commitment Invariant | 16.80 | clears | Domain 10 → 10.0 · Isha 8 → 6.80 |
+| **4** | **03 Budget View Replay** *(selected)* | **15.60** | clears | Domain 10 → 10.0 · Shivam 8 → 5.60 |
+| 5 | 01 Codeset Guard | 13.95 | clears | Domain 8 → 8.0 · Isha 7 → 5.95 |
+| 6 | 06 Two-Phase Post | 13.80 | clears | Isha 8 → 6.80 · Domain 7 → 7.0 |
+| 7 | 16 Field-Level Fault | 12.95 | clears | Domain 7 → 7.0 · Isha 7 → 5.95 |
+| 8 | 10 Certificate Watch | 12.60 | clears | Domain 7 → 7.0 · Shivam 8 → 5.60 |
+| 9 | 11 Schema Tripwire | 11.80 | clears | Isha 8 → 6.80 · Domain 5 → 5.0 |
+| 10 | 14 Vendor Canon | 11.60 | clears | Domain 6 → 6.0 · Shivam 8 → 5.60 |
+| 11 | 09 Entity Fence | 11.10 | clears | Domain 6 → 6.0 · Isha 6 → 5.10 |
 | — | 12 Replay Harness | 12.25 | **blocked** | Shivam 9 → 6.30 · Isha 7 → 5.95 |
-| — | 07 Approval Warrant | 9.10 | **blocked** | Isha 6 → 5.10 · Agave 4 → 4.0 |
+| — | 07 Approval Warrant | 9.10 | **blocked** | Isha 6 → 5.10 · Domain 4 → 4.0 |
 | — | 15 Exactly Once | 8.10 | **blocked** | Isha 5 → 4.25 · industry 7 → 3.85 |
 | — | 13 Prefetch Scope | 7.60 | **blocked** | Shivam 6 → 4.20 · Isha 4 → 3.40 |
 | — | 04 Inbox Quarantine | 5.05 | **blocked** | Isha 3 → 2.55 · general 10 → 2.50 |
@@ -351,13 +351,13 @@ because everyone has it.
 
 | Rank | Criterion | Weight | How it's scored |
 |---|---|---|---|
-| 1 | Agave relevance | **1.00** | **Derived**, not judged — five countable sub-signals worth 0–2 each: anchor · index · term count · JTBD grade · quote |
+| 1 | Domain grounding | **1.00** | **Derived**, not judged — five countable sub-signals worth 0–2 each: anchor · index · term count · JTBD grade · quote |
 | 2 | Isha unique strengths | 0.85 | Declared judgment |
 | 3 | Shivam fit | 0.70 | Declared judgment, graded on the rare half of his profile, not the RAG plumbing |
 | 4 | Construction-tech recognition | 0.55 | Declared judgment |
 | 5 | General-software recognition | 0.25 | Declared judgment |
 
-Ceiling is `18.5` — a perfect Agave relevance plus a perfect single spike.
+Ceiling is `18.5` — a perfect domain-grounding score plus a perfect single spike.
 
 **Read this before trusting the ranking.** Only criterion 1 is derived from counts. **Four of the
 five are declared judgment.** And the ordering of criteria 2 and 3 — Isha 0.85 above Shivam 0.70 —

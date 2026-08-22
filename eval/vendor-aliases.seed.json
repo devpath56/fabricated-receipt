@@ -1,0 +1,499 @@
+{
+  "source": "NYC Open Data · Capital Awards · n6ej-pebd",
+  "url": "https://data.cityofnewyork.us/d/n6ej-pebd",
+  "method": "punctuation + case + legal-suffix normalisation ONLY. No fuzzy matching, no threshold.",
+  "status": "SEED — hand-verify before using as ground truth. Recall is a lower bound: any alias pair that differs by more than punctuation is NOT in here and must be found by the resolver.",
+  "measured": {
+    "rows": 1256,
+    "distinct_raw_names": 1036,
+    "distinct_after_normalisation": 986,
+    "clusters_with_multiple_spellings": 48,
+    "dollars_in_those_clusters": 40767000,
+    "total_dollars": 374735000,
+    "pct_dollars_exposed": 10.9
+  },
+  "clusters": [
+    {
+      "entity_key": "ps 770 new american academy",
+      "variants": [
+        "PS 770 The New American Academy",
+        "PS 770-The New American Academy",
+        "PS 770, The New American Academy"
+      ],
+      "spellings": 3,
+      "rows": 4,
+      "dollars": 750000
+    },
+    {
+      "entity_key": "p s 274 kosciusko",
+      "variants": [
+        "P.S. 274 Kosciusko",
+        "P.S. 274, Kosciusko",
+        "P.S. 274 KOSCIUSKO"
+      ],
+      "spellings": 3,
+      "rows": 3,
+      "dollars": 285000
+    },
+    {
+      "entity_key": "brooklyn bridge park",
+      "variants": [
+        "Brooklyn Bridge Park",
+        "Brooklyn Bridge Park Corporation"
+      ],
+      "spellings": 2,
+      "rows": 5,
+      "dollars": 3650000
+    },
+    {
+      "entity_key": "brooklyn school inquiry",
+      "variants": [
+        "Brooklyn School of Inquiry",
+        "THE BROOKLYN SCHOOL OF INQUIRY"
+      ],
+      "spellings": 2,
+      "rows": 4,
+      "dollars": 3423000
+    },
+    {
+      "entity_key": "23k363 brownsville collaborative middle school",
+      "variants": [
+        "23K363 - Brownsville Collaborative Middle School",
+        "23K363 Brownsville Collaborative Middle School"
+      ],
+      "spellings": 2,
+      "rows": 4,
+      "dollars": 3050000
+    },
+    {
+      "entity_key": "bedford stuyvesant restoration",
+      "variants": [
+        "Bedford Stuyvesant Restoration Corp.",
+        "Bedford Stuyvesant Restoration Corporation"
+      ],
+      "spellings": 2,
+      "rows": 3,
+      "dollars": 2900000
+    },
+    {
+      "entity_key": "brooklyn academy music bam",
+      "variants": [
+        "Brooklyn Academy of Music, Inc. (BAM)",
+        "Brooklyn Academy of Music (BAM)"
+      ],
+      "spellings": 2,
+      "rows": 3,
+      "dollars": 2500000
+    },
+    {
+      "entity_key": "wildlife conservation new york aquarium",
+      "variants": [
+        "Wildlife Conservation Society New York Aquarium",
+        "Wildlife Conservation Society - New York Aquarium"
+      ],
+      "spellings": 2,
+      "rows": 2,
+      "dollars": 1500000
+    },
+    {
+      "entity_key": "dpr prospect park alliance",
+      "variants": [
+        "DPR -  Prospect Park Alliance",
+        "DPR - Prospect Park Alliance"
+      ],
+      "spellings": 2,
+      "rows": 2,
+      "dollars": 1500000
+    },
+    {
+      "entity_key": "hispanic information telecommunication network",
+      "variants": [
+        "Hispanic Information and Telecommunication Network Inc.",
+        "Hispanic Information & Telecommunication Network Inc."
+      ],
+      "spellings": 2,
+      "rows": 2,
+      "dollars": 1500000
+    },
+    {
+      "entity_key": "crown gardens housing",
+      "variants": [
+        "Crown Gardens Housing Corporation",
+        "Crown Gardens Housing Corp."
+      ],
+      "spellings": 2,
+      "rows": 3,
+      "dollars": 1375000
+    },
+    {
+      "entity_key": "habitat humanity nyc",
+      "variants": [
+        "Habitat for Humanity NYC",
+        "Habitat for Humanity NYC Inc"
+      ],
+      "spellings": 2,
+      "rows": 2,
+      "dollars": 1285000
+    },
+    {
+      "entity_key": "noel pointer foundation",
+      "variants": [
+        "Noel Pointer Foundation",
+        "The Noel Pointer Foundation"
+      ],
+      "spellings": 2,
+      "rows": 2,
+      "dollars": 1071000
+    },
+    {
+      "entity_key": "ridgewood bushwick senior citizens council",
+      "variants": [
+        "Ridgewood Bushwick Senior Citizens Council, Inc.",
+        "Ridgewood Bushwick Senior Citizens Council"
+      ],
+      "spellings": 2,
+      "rows": 2,
+      "dollars": 1000000
+    },
+    {
+      "entity_key": "dpr cadman park conservancy",
+      "variants": [
+        "DPR -  Cadman Park Conservancy, Inc.",
+        "DPR - Cadman Park Conservancy, Inc."
+      ],
+      "spellings": 2,
+      "rows": 2,
+      "dollars": 1000000
+    },
+    {
+      "entity_key": "institute community living",
+      "variants": [
+        "Institute for Community Living Inc",
+        "INSTITUTE FOR COMMUNITY LIVING"
+      ],
+      "spellings": 2,
+      "rows": 2,
+      "dollars": 1000000
+    },
+    {
+      "entity_key": "nyc health hospitals kings county",
+      "variants": [
+        "NYC Health + Hospitals/ Kings County",
+        "NYC Health + Hospitals/Kings County"
+      ],
+      "spellings": 2,
+      "rows": 2,
+      "dollars": 1000000
+    },
+    {
+      "entity_key": "p s 040 george w carver",
+      "variants": [
+        "P.S. 040 George W. Carver",
+        "P.S. 040 GEORGE W. CARVER"
+      ],
+      "spellings": 2,
+      "rows": 3,
+      "dollars": 974000
+    },
+    {
+      "entity_key": "brooklyn historical",
+      "variants": [
+        "Brooklyn Historical Society",
+        "The Brooklyn Historical Society"
+      ],
+      "spellings": 2,
+      "rows": 4,
+      "dollars": 853000
+    },
+    {
+      "entity_key": "new york blood center",
+      "variants": [
+        "New York Blood Center, Inc.",
+        "New York Blood Center"
+      ],
+      "spellings": 2,
+      "rows": 4,
+      "dollars": 778000
+    },
+    {
+      "entity_key": "community healthcare network",
+      "variants": [
+        "COMMUNITY HEALTHCARE NETWORK, INC",
+        "Community Healthcare Network Inc."
+      ],
+      "spellings": 2,
+      "rows": 2,
+      "dollars": 750000
+    },
+    {
+      "entity_key": "issue project room",
+      "variants": [
+        "Issue Project Room",
+        "ISSUE Project Room, Inc."
+      ],
+      "spellings": 2,
+      "rows": 2,
+      "dollars": 736000
+    },
+    {
+      "entity_key": "multicultural high school",
+      "variants": [
+        "Multicultural High School",
+        "MULTICULTURAL HIGH SCHOOL"
+      ],
+      "spellings": 2,
+      "rows": 3,
+      "dollars": 507000
+    },
+    {
+      "entity_key": "bedford academy high school",
+      "variants": [
+        "BEDFORD ACADEMY HIGH SCHOOL",
+        "Bedford Academy High School"
+      ],
+      "spellings": 2,
+      "rows": 3,
+      "dollars": 500000
+    },
+    {
+      "entity_key": "midwood high school 22k405",
+      "variants": [
+        "Midwood High School (22K405)",
+        "Midwood High School 22K405"
+      ],
+      "spellings": 2,
+      "rows": 2,
+      "dollars": 450000
+    },
+    {
+      "entity_key": "nyc health hospitals gotham health east new york",
+      "variants": [
+        "NYC Health + Hospitals/ Gotham Health, East New York",
+        "NYC Health + Hospitals, Gotham Health, East New York"
+      ],
+      "spellings": 2,
+      "rows": 2,
+      "dollars": 447000
+    },
+    {
+      "entity_key": "p s 023 carter g woodson",
+      "variants": [
+        "P.S. 023 Carter G. Woodson",
+        "P.S. 023 CARTER G. WOODSON"
+      ],
+      "spellings": 2,
+      "rows": 2,
+      "dollars": 433000
+    },
+    {
+      "entity_key": "ohel children s home family services",
+      "variants": [
+        "Ohel Children's Home and Family Services",
+        "Ohel Children's Home and Family Services, Inc."
+      ],
+      "spellings": 2,
+      "rows": 2,
+      "dollars": 422000
+    },
+    {
+      "entity_key": "dpr grand street district management",
+      "variants": [
+        "DPR -  Grand Street District Management Association, Inc.",
+        "DPR - Grand Street District Management Association, Inc."
+      ],
+      "spellings": 2,
+      "rows": 2,
+      "dollars": 405000
+    },
+    {
+      "entity_key": "p s 380 john wayne elementary",
+      "variants": [
+        "P.S. 380 John Wayne Elementary",
+        "P.S. 380 JOHN WAYNE ELEMENTARY"
+      ],
+      "spellings": 2,
+      "rows": 2,
+      "dollars": 400000
+    },
+    {
+      "entity_key": "p s 335 granville t woods",
+      "variants": [
+        "P.S. 335 Granville T. Woods",
+        "P.S. 335 GRANVILLE T. WOODS"
+      ],
+      "spellings": 2,
+      "rows": 2,
+      "dollars": 385000
+    },
+    {
+      "entity_key": "riverdale avenue community school",
+      "variants": [
+        "Riverdale Avenue Community School",
+        "RIVERDALE AVENUE COMMUNITY SCHOOL"
+      ],
+      "spellings": 2,
+      "rows": 2,
+      "dollars": 375000
+    },
+    {
+      "entity_key": "p s 321 william penn",
+      "variants": [
+        "P.S. 321 William Penn",
+        "P.S. 321 WILLIAM PENN"
+      ],
+      "spellings": 2,
+      "rows": 2,
+      "dollars": 340000
+    },
+    {
+      "entity_key": "cultural academy arts sciences",
+      "variants": [
+        "Cultural Academy for the Arts & Sciences",
+        "Cultural Academy for the Arts and Sciences"
+      ],
+      "spellings": 2,
+      "rows": 2,
+      "dollars": 316000
+    },
+    {
+      "entity_key": "aspirations diploma plus high school",
+      "variants": [
+        "Aspirations Diploma Plus High School",
+        "ASPIRATIONS DIPLOMA PLUS HIGH SCHOOL"
+      ],
+      "spellings": 2,
+      "rows": 2,
+      "dollars": 312000
+    },
+    {
+      "entity_key": "p s 91 albany avenue school",
+      "variants": [
+        "P.S.91 The Albany Avenue School",
+        "P.S. 91 THE ALBANY AVENUE SCHOOL"
+      ],
+      "spellings": 2,
+      "rows": 3,
+      "dollars": 312000
+    },
+    {
+      "entity_key": "p s 309 george e wibecan preparatory academy",
+      "variants": [
+        "P.S. 309 The George E. Wibecan Preparatory Academy",
+        "P.S. 309 THE GEORGE E. WIBECAN PREPARATORY ACADEMY"
+      ],
+      "spellings": 2,
+      "rows": 3,
+      "dollars": 282000
+    },
+    {
+      "entity_key": "k158 p s 158 warwick 400 ashford street",
+      "variants": [
+        "K158 P.S. 158 WARWICK 400 ASHFORD STREET",
+        "K158 P.S. 158 Warwick 400 Ashford Street"
+      ],
+      "spellings": 2,
+      "rows": 2,
+      "dollars": 260000
+    },
+    {
+      "entity_key": "middle school 763 brooklyn science engineering academy",
+      "variants": [
+        "Middle School 763- Brooklyn Science and Engineering Academy",
+        "Middle School 763 - Brooklyn Science and Engineering Academy"
+      ],
+      "spellings": 2,
+      "rows": 2,
+      "dollars": 246000
+    },
+    {
+      "entity_key": "origins high school",
+      "variants": [
+        "Origins High School",
+        "ORIGINS HIGH SCHOOL"
+      ],
+      "spellings": 2,
+      "rows": 2,
+      "dollars": 202000
+    },
+    {
+      "entity_key": "beginning with children charter school 2 k037",
+      "variants": [
+        "Beginning with Children Charter School 2 (K037)",
+        "Beginning with Children Charter School 2 K037"
+      ],
+      "spellings": 2,
+      "rows": 2,
+      "dollars": 200000
+    },
+    {
+      "entity_key": "ps 372 children s school",
+      "variants": [
+        "PS 372 - The Children's School",
+        "PS 372 The Children's School"
+      ],
+      "spellings": 2,
+      "rows": 2,
+      "dollars": 200000
+    },
+    {
+      "entity_key": "public school 59 william floyd",
+      "variants": [
+        "Public School 59 William Floyd",
+        "Public School 59- William Floyd"
+      ],
+      "spellings": 2,
+      "rows": 2,
+      "dollars": 200000
+    },
+    {
+      "entity_key": "abraham lincoln high school",
+      "variants": [
+        "Abraham Lincoln High School",
+        "ABRAHAM LINCOLN HIGH SCHOOL"
+      ],
+      "spellings": 2,
+      "rows": 2,
+      "dollars": 185000
+    },
+    {
+      "entity_key": "p s 397 foster laurie",
+      "variants": [
+        "P.S. 397, Foster Laurie",
+        "P.S. 397 FOSTER-LAURIE"
+      ],
+      "spellings": 2,
+      "rows": 2,
+      "dollars": 185000
+    },
+    {
+      "entity_key": "public school 44",
+      "variants": [
+        "Public School 44",
+        "PUBLIC SCHOOL 44"
+      ],
+      "spellings": 2,
+      "rows": 2,
+      "dollars": 112000
+    },
+    {
+      "entity_key": "gallim dance",
+      "variants": [
+        "Gallim Dance Company",
+        "Gallim Dance Company, Inc."
+      ],
+      "spellings": 2,
+      "rows": 2,
+      "dollars": 111000
+    },
+    {
+      "entity_key": "leaders high school 21k572",
+      "variants": [
+        "Leaders High School 21K572",
+        "Leaders High School, 21K572"
+      ],
+      "spellings": 2,
+      "rows": 2,
+      "dollars": 100000
+    }
+  ]
+}

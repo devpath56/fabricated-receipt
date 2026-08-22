@@ -12,6 +12,14 @@ const SETS = [
   { id: 'qj5n-h5qp', name: 'spend_history',
     what: 'monthly snapshots. earliest = original budget; budget_variance = delta vs prior month.',
     where: null },
+  { id: 'n6ej-pebd', name: 'capital_awards',
+    what: 'free-text recipient names + dollars. The entity-resolution surface: the same body is '
+        + 'spelled several ways across fiscal years, so a payee key is not unique either.',
+    where: null },
+  { id: '2xh6-psuq', name: 'project_schedules',
+    what: 'phase + status + budget vs estimate vs actual spend. The status-enum surface: totalling '
+        + 'across mixed statuses is a category error, not an arithmetic one.',
+    where: null },
 ];
 
 async function pull({ id, name, where }) {
