@@ -30,6 +30,8 @@ from checks.duplicate_payment import (  # noqa: E402
 )
 
 from checks.vendor_resolution import VendorResolver  # noqa: E402
+from checks.job_status import check_job_status  # noqa: E402
+from checks.intake import run_intake_check  # noqa: E402
 
 
 # ---------------------------------------------------------------------
@@ -110,6 +112,11 @@ st.markdown(
         opacity: .7;
     }
 
+    .dim {
+        opacity: .55;
+        font-weight: 500;
+    }
+
     </style>
     """,
     unsafe_allow_html=True,
@@ -135,18 +142,20 @@ st.caption(
 
 MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY")
 
-if not MISTRAL_API_KEY:
-    st.error(
-        "MISTRAL_API_KEY is not set. "
-        "Set it in your environment before starting the app."
+# The key is needed ONLY for OCR on an uploaded PDF. st.stop() here killed the
+# whole app, including the three checks -- which read data/erp.csv, data/
+# vendors.csv and data/invoices.csv and need no network at all. The gate now
+# fires where OCR is actually attempted, so a reviewer without a key can still
+# exercise vendor resolution, duplicate payment and job status.
+if MISTRAL_API_KEY:
+    mistral_client = Mistral(api_key=MISTRAL_API_KEY)
+else:
+    mistral_client = None
+    st.warning(
+        "MISTRAL_API_KEY is not set, so PDF upload is disabled. "
+        "Type a po_id instead — the vendor, duplicate and job-status checks "
+        "run against the committed CSVs and need no key."
     )
-    st.code(
-        '$env:MISTRAL_API_KEY="your_mistral_api_key_here"',
-        language="powershell",
-    )
-    st.stop()
-
-mistral_client = Mistral(api_key=MISTRAL_API_KEY)
 
 
 # ---------------------------------------------------------------------
@@ -167,10 +176,20 @@ def load_reference_data():
         for row in erp
     }
 
+    # check 4 needs the ROWS, not just the id set: one fms_id can carry
+    # several project records and they do not always agree.
+    erp_by_fms: dict[str, list] = {}
+    for row in erp:
+        erp_by_fms.setdefault(
+            row.fms_id,
+            [],
+        ).append(row)
+
     return (
         resolver,
         invoices,
         valid_fms_ids,
+        erp_by_fms,
     )
 
 
@@ -180,6 +199,7 @@ try:
         resolver,
         existing_invoices,
         valid_fms_ids,
+        erp_by_fms,
     ) = load_reference_data()
 
 except Exception as exc:
@@ -199,25 +219,6 @@ except Exception as exc:
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
-
-
-# ---------------------------------------------------------------------
-# CHAT HISTORY
-# ---------------------------------------------------------------------
-
-for message in st.session_state.messages:
-
-    with st.chat_message(message["role"]):
-
-        if message["type"] == "text":
-
-            st.markdown(message["content"])
-
-        elif message["type"] == "result":
-
-            render_result(
-                message["result"]
-            )
 
 
 # ---------------------------------------------------------------------
@@ -313,6 +314,20 @@ def encode_pdf(uploaded_file) -> str:
 
 
 def run_mistral_ocr(uploaded_file) -> tuple[dict[str, Any], str]:
+
+    # The key gate lives HERE, at the only place that needs the network.
+    # It used to st.stop() at import time, which took the three offline
+    # checks down with it.
+    if mistral_client is None:
+        st.error(
+            "MISTRAL_API_KEY is not set, so this PDF cannot be read. "
+            "Type a po_id instead, or set the key and restart."
+        )
+        st.code(
+            'export MISTRAL_API_KEY="..."',
+            language="bash",
+        )
+        st.stop()
 
     base64_pdf = encode_pdf(uploaded_file)
 
@@ -636,22 +651,68 @@ def run_duplicate_check(
 
 
 # ---------------------------------------------------------------------
+# RUN JOB STATUS CHECK
+# ---------------------------------------------------------------------
+
+def run_job_status_check(
+    invoice: Invoice,
+):
+
+    result = check_job_status(
+        invoice.po_id,
+        erp_by_fms.get(
+            invoice.po_id,
+            [],
+        ),
+    )
+
+    return {
+        "passed": result.outcome == "APPROVE",
+        "applicable": result.applicable,
+        "outcome": result.outcome,
+        "reason": result.reason,
+        "rows": result.rows,
+    }
+
+
+# ---------------------------------------------------------------------
 # DECISION
 # ---------------------------------------------------------------------
 
 def make_decision(
     vendor_result: dict,
     duplicate_result: dict,
+    job_result: dict,
 ) -> str:
+    """
+    APPROVE / COMMENT / DENY -- the same three words as
+    screens/check-4-job-status.html.
+
+    DENY     a check RAN and FAILED. The job no longer accepts charges.
+             applicable=True, so it counts against confidence.
+    COMMENT  a check COULD NOT RUN, or a soft check failed. An unruled
+             status, a hold and a missing agency record all land here:
+             none means "no", they mean "not established". A COMMENT
+             LEAVES the confidence denominator.
+    APPROVE  every applicable check ran and passed.
+
+    Collapsing DENY into COMMENT tells a reviewer that a cancelled job and
+    an undefined status are the same fact. Measured on data/erp.csv:
+    512 POs are dead; 2,096 are merely unestablished.
+    """
+
+    if job_result["outcome"] == "DENY":
+        return "DENY"
 
     if (
         vendor_result["passed"]
         and duplicate_result["passed"]
+        and job_result["outcome"] == "APPROVE"
     ):
 
-        return "CLEAR"
+        return "APPROVE"
 
-    return "HOLD"
+    return "COMMENT"
 
 
 # ---------------------------------------------------------------------
@@ -661,6 +722,31 @@ def make_decision(
 def run_invoice_checks(
     fields: dict[str, Any],
 ):
+
+    # ---- CHECK 1 GATES EVERYTHING ---------------------------------------
+    # If the document cannot be trusted as an invoice, the later checks are
+    # NOT RUN -- not "passed". Running them on garbage fields produces three
+    # confident answers about a document nobody read, which is exactly the
+    # fabricated receipt this project is named after.
+    intake = run_intake_check(fields)
+
+    if intake.outcome != "APPROVE":
+
+        return {
+            "invoice": None,
+            "fields": fields,
+            "intake": intake,
+            "vendor": None,
+            "duplicate": None,
+            "job_status": None,
+            "decision": "COMMENT",
+            # Only intake was applicable. It ran and did not pass, so the
+            # score is 0/1 -- NOT 0/4, which would imply three checks ran
+            # and failed.
+            "confidence": 0.0,
+            "passed_count": 0,
+            "applicable_count": 1,
+        }
 
     invoice = make_invoice(
         fields
@@ -674,17 +760,47 @@ def run_invoice_checks(
         invoice
     )
 
+    job_result = run_job_status_check(
+        invoice
+    )
+
     decision = make_decision(
         vendor_result,
         duplicate_result,
+        job_result,
+    )
+
+    # confidence = passed / applicable. A check that COULD NOT RUN leaves
+    # the denominator: never scored as a pass, never as a failure.
+    applicable = [
+        True,                              # intake ran and passed
+        vendor_result["passed"],
+        duplicate_result["passed"],
+    ]
+    if job_result["applicable"]:
+        applicable.append(
+            job_result["passed"]
+        )
+
+    passed_count = sum(
+        1 for a in applicable if a
     )
 
     return {
         "invoice": invoice,
         "fields": fields,
+        "intake": intake,
         "vendor": vendor_result,
         "duplicate": duplicate_result,
+        "job_status": job_result,
         "decision": decision,
+        "confidence": (
+            passed_count / len(applicable)
+            if applicable
+            else None
+        ),
+        "passed_count": passed_count,
+        "applicable_count": len(applicable),
     }
 
 
@@ -695,6 +811,78 @@ def run_invoice_checks(
 def render_result(
     result: dict,
 ):
+
+    intake = result["intake"]
+
+    # ---- CHECK 1 -------------------------------------------------------
+    st.markdown("#### 1. Intake check")
+    st.caption("Is this invoice complete enough to check?")
+
+    if intake.outcome == "APPROVE":
+        st.markdown(
+            f'<span class="pass">✓ {intake.present_count} / '
+            f'{intake.required_count} fields present</span>',
+            unsafe_allow_html=True,
+        )
+    else:
+        st.markdown(
+            f'<span class="warning">⚠ {intake.present_count} / '
+            f'{intake.required_count} fields present</span>',
+            unsafe_allow_html=True,
+        )
+
+    st.write(intake.reason)
+
+    if intake.missing:
+        st.dataframe(
+            [
+                {
+                    "missing field": m["label"],
+                    "what needed it": m["why"],
+                }
+                for m in intake.missing
+            ],
+            hide_index=True,
+            width="stretch",
+        )
+
+        # Downstream checks are NOT RUN. Saying so is the point -- a blank
+        # space would read as "fine", and a green tick would be a lie.
+        st.divider()
+        for n, name in (
+            (2, "Vendor entity check"),
+            (3, "Payment duplication check"),
+            (4, "Job status check"),
+        ):
+            st.markdown(f"#### {n}. {name}")
+            st.markdown(
+                '<span class="dim">— NOT RUN</span>',
+                unsafe_allow_html=True,
+            )
+            st.caption("intake did not pass, so this check was never attempted")
+
+        st.divider()
+        st.markdown(
+            """
+            <div class="decision decision-hold">
+                <div class="decision-title">⚠ COMMENT</div>
+                <div class="decision-subtitle">
+                    The document could not be treated as a complete invoice.
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+        st.caption(
+            f"confidence = {result['passed_count']}/"
+            f"{result['applicable_count']} = "
+            f"{result['confidence']:.2f}   ·   only intake was applicable; "
+            "the other three were never attempted, so they are absent from "
+            "the denominator rather than counted as failures"
+        )
+        return
+
+    st.divider()
 
     invoice = result["invoice"]
     fields = result["fields"]
@@ -886,14 +1074,85 @@ def render_result(
 
     st.divider()
 
-    if decision == "CLEAR":
+    job_status = result["job_status"]
+
+    # ---- check 4 evidence, before the verdict ------------------------
+    st.markdown(
+        '<div class="check-card">',
+        unsafe_allow_html=True,
+    )
+
+    st.markdown(
+        '<div class="check-title">Job status</div>',
+        unsafe_allow_html=True,
+    )
+    st.caption("Is the job behind this PO still live?")
+
+    if job_status["outcome"] == "APPROVE":
+        st.markdown(
+            '<span class="pass">✓ job open for charges</span>',
+            unsafe_allow_html=True,
+        )
+    elif job_status["outcome"] == "DENY":
+        st.markdown(
+            '<span class="fail">✕ job is dead</span>',
+            unsafe_allow_html=True,
+        )
+    else:
+        st.markdown(
+            '<span class="warning">⚠ could not establish</span>',
+            unsafe_allow_html=True,
+        )
+
+    st.write(job_status["reason"])
+
+    if job_status["rows"]:
+        st.caption(
+            f"the {len(job_status['rows'])} ERP row(s) this was read from:"
+        )
+        st.dataframe(
+            [
+                {
+                    "pid": row.pid or "(null)",
+                    "current_phase": row.current_phase,
+                    "agency_project_name": (
+                        row.agency_project_name or "(none)"
+                    ),
+                }
+                for row in job_status["rows"]
+            ],
+            hide_index=True,
+            width="stretch",
+        )
+
+    st.markdown(
+        "</div>",
+        unsafe_allow_html=True,
+    )
+
+    # ---- the verdict -------------------------------------------------
+    if decision == "APPROVE":
 
         st.markdown(
             """
             <div class="decision decision-clear">
-                <div class="decision-title">✓ CLEAR</div>
+                <div class="decision-title">✓ APPROVE</div>
                 <div class="decision-subtitle">
-                    Vendor verified and no duplicate payment detected.
+                    Every applicable check ran and passed.
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    elif decision == "DENY":
+
+        st.markdown(
+            f"""
+            <div class="decision decision-block">
+                <div class="decision-title">✕ DENY</div>
+                <div class="decision-subtitle">
+                    {job_status["reason"]}
                 </div>
             </div>
             """,
@@ -905,13 +1164,26 @@ def render_result(
         st.markdown(
             """
             <div class="decision decision-hold">
-                <div class="decision-title">⚠ HOLD</div>
+                <div class="decision-title">⚠ COMMENT</div>
                 <div class="decision-subtitle">
-                    Invoice requires manual review before payment.
+                    A check could not be evaluated. Manual review before payment.
                 </div>
             </div>
             """,
             unsafe_allow_html=True,
+        )
+
+    if result["confidence"] is not None:
+        st.caption(
+            f"confidence = {result['passed_count']}/"
+            f"{result['applicable_count']} = "
+            f"{result['confidence']:.2f}"
+            + (
+                ""
+                if job_status["applicable"]
+                else "   ·   job status could not run, so it LEAVES the "
+                     "denominator — never scored as a pass, never as a failure"
+            )
         )
 
     # -------------------------------------------------------------
@@ -935,8 +1207,38 @@ def render_result(
     ):
 
         st.text(
-            fields["raw_text"]
+            fields.get(
+                "raw_text",
+                "(no OCR text — this invoice was not read from a PDF)",
+            )
         )
+
+
+# ---------------------------------------------------------------------
+# CHAT HISTORY
+#
+# MOVED. This loop used to sit near the top of the file, ABOVE the
+# definition of render_result -- so the first rerun that had a stored
+# result raised NameError: name 'render_result' is not defined. Streamlit
+# re-executes the whole module top to bottom on every interaction, so a
+# replay loop must come AFTER the function it replays with.
+# ---------------------------------------------------------------------
+
+for message in st.session_state.messages:
+
+    with st.chat_message(message["role"]):
+
+        if message["type"] == "text":
+
+            st.markdown(message["content"])
+
+        elif message["type"] == "result":
+
+            render_result(
+                message["result"]
+            )
+
+
 
 
 # ---------------------------------------------------------------------
@@ -966,24 +1268,73 @@ if chat_submission:
     # -------------------------------------------------------------
 
     if not uploaded_files:
+        typed = chat_submission.get(
+            "text",
+            "",
+        ).strip()
 
         st.session_state.messages.append(
             {
                 "role": "user",
                 "type": "text",
-                "content": chat_submission.get(
-                    "text",
-                    "",
-                ),
+                "content": typed,
             }
         )
 
-        with st.chat_message("assistant"):
+        # ---------------------------------------------------------
+        # TYPED po_id FALLBACK.
+        # The repo ships ZERO invoice PDFs -- data/invoices.csv points at
+        # docs/invoices/*.pdf that were never committed -- so without this a
+        # fresh clone cannot exercise the app at all. Typing a po_id runs the
+        # same three checks against the real ERP rows, skipping only the PDF
+        # extraction step.
+        # ---------------------------------------------------------
+        candidate = typed.upper()
 
-            st.write(
-                "Please attach an invoice PDF so I can run the "
-                "vendor entity and payment duplication checks."
+        if candidate in erp_by_fms:
+
+            result = run_invoice_checks(
+                {
+                    "invoice_id": f"TYPED-{candidate}",
+                    "po_id": candidate,
+                    "vendor_name": "Brooklyn Public Library",
+                    "amount": 50000.00,
+                    "period": "202605",
+                    "date": "2026-05-15",
+                    "raw_text": (
+                        "(typed po_id — no PDF, so no OCR text)"
+                    ),
+                }
             )
+
+            st.session_state.messages.append(
+                {
+                    "role": "assistant",
+                    "type": "result",
+                    "result": result,
+                }
+            )
+
+            with st.chat_message("assistant"):
+                render_result(result)
+
+        else:
+
+            with st.chat_message("assistant"):
+
+                st.write(
+                    "Attach an invoice PDF, or type a po_id. These six are "
+                    "one per outcome:"
+                )
+                st.code(
+                    "CA202HS04   APPROVE   live phase, agency record on file\n"
+                    "BX024-011   DENY      the job is (Completed)\n"
+                    "HWK973      DENY      one dead record among live ones\n"
+                    "52CHAMELV   COMMENT   (Inactive) -- on hold\n"
+                    "ACSPDF      COMMENT   (Pending) -- NYC defines it nowhere\n"
+                    "ACECUN211   COMMENT   no agency record to verify against",
+                    language="text",
+                )
 
     # -------------------------------------------------------------
     # PDF uploaded
