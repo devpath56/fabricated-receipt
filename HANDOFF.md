@@ -19,6 +19,7 @@ git clone https://github.com/devpath56/fabricated-receipt && cd fabricated-recei
 node scripts/pull.mjs        # 4 datasets, no auth, no key, no dependencies
 node scripts/failures.mjs    # reproduces both failures; exits non-zero if the numbers drift
 node scripts/grain.mjs       # proves no table in this project has a unique key
+node scripts/findings.mjs    # the joinability, status and conflict findings above
 node scripts/seed-aliases.mjs # emits the vendor-alias gold-set seed
 node scripts/check-deck.mjs   # guards docs/deck.html; --selftest proves the check can fail
 ```
@@ -226,7 +227,78 @@ finding those is the resolver's job and the seed is the floor it must clear.
 
 ---
 
-# 4. The eight evals, and what checks each one
+# 3b. Findings that decide the build plan
+
+> Reproduce all of these with `node scripts/findings.mjs`.
+
+## Two datasets we carried for days do not join
+
+```
+fb86-vt7u <-> 2xh6-psuq : NO SHARED FIELD
+fb86-vt7u <-> n6ej-pebd : NO SHARED FIELD
+```
+
+| dataset | verdict |
+|---|---|
+| `fb86-vt7u` | **the spine.** The only table with both keys, plus budget, spend and phase |
+| `qj5n-h5qp` | joins on `fms_id` |
+| `n6ej-pebd` | **standalone.** Survives as a vendor-name corpus, nothing more |
+| `2xh6-psuq` | **standalone. Dropped** — school construction keyed on building id, and the field we wanted is already on the spine |
+
+## Job status needs no join
+
+`current_phase` is on the **same row** as `fms_id` and `pid`. The invoice carries `po_id`. Check 4
+is a lookup, not a join.
+
+| measure | value |
+|---|---|
+| distinct phase values | 36 |
+| rows `Completed` or `Cancelled` | **502** |
+| dollars on those rows | **$11,616,084,685** |
+| synthetic fields check 4 needs | **zero** |
+
+## Finding A — the status enum is aliased
+
+36 raw values collapse to **31** on stripping parentheses and case. Five phases are written more
+than one way:
+
+```
+(Pre-Design)  |  Pre-Design
+Design        |  (Design)
+Construction  |  (Construction)
+Construction Procurement  |  Construction procurement
+(On-hold)     |  (On-Hold)
+```
+
+- **Same failure class as vendor aliasing**, sitting in the field check 4 depends on.
+- **Build consequence:** normalise before comparing, or the same job reads as two.
+
+## Finding B — one key, conflicting answers
+
+**96** of 5,608 `fms_id` return **more than one phase**, carrying **$60,366,832,689**.
+
+```
+OFFSHRWND   pending / pre-design
+ACEFIT241   partner-managed / pending
+HWHARPERG   pending / design
+```
+
+- "What is the status of this PO" has **no single answer** for these.
+- **Build consequence:** check 4 must **detect the conflict and COMMENT**, never pick one. This is
+  its real difficulty, and it is why it is not a lookup after all.
+
+## What each check needs
+
+| check | real | synthetic |
+|---|---|---|
+| 1 · Intake | nothing | documents + missing-field labels. No NYC set holds invoice scans |
+| 2 · Vendor | 48 alias clusters, $40,767,000 | the invoice side; vendor master **derived** from the real corpus |
+| 3 · Paid before | 5,608 real `fms_id` values | the ledger and its payment history |
+| 4 · Job status | `current_phase`, 502 dead rows, 96 conflicts | **none** |
+
+---
+
+# 4. The four checks
 
 From the morning sync. Each row is a job the system must do, the **deterministic** check that
 catches it failing, what it costs if uncaught, and whether an off-the-shelf eval exists.
@@ -360,6 +432,7 @@ docs/deck.html          the decision deck, self-contained HTML
 scripts/pull.mjs        pull 4 NYC datasets via Socrata. no auth, no deps
 scripts/failures.mjs    reproduce failures 1 and 2; exits non-zero on drift
 scripts/grain.mjs       measure the real grain of every table
+scripts/findings.mjs    the findings that decide the build plan
 scripts/seed-aliases.mjs emit the vendor-alias gold-set seed
 
 eval/                   gold sets and graders          (Shivam)

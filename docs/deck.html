@@ -743,73 +743,122 @@ table.tight td,table.tight th{padding:7px 12px;font-size:12.4px}
       <!-- DATA ─────────────────────────────────────────── -->
       <section class="pane" data-title="The data" data-group="Project">
         <p class="eyebrow">Decision 05 — What we have, and what we must build</p>
-        <h1 class="lede">Real data covers <b>one</b> of the four checks. The rest needs an invoice ledger that doesn't exist publicly.</h1>
+        <h1 class="lede">One check runs on <b>real data alone</b>. Two datasets we were counting on <em>cannot join</em>.</h1>
 
-        <h2 class="sub">What we have — pulled, measured, on disk</h2>
+        <p>Reproduce every number here with <span class="mono">node scripts/findings.mjs</span>.</p>
+
+        <h2 class="sub">The four datasets</h2>
         <div class="tw">
           <table class="tight">
-            <thead><tr><th>Dataset</th><th>Rows</th><th>Carries</th></tr></thead>
+            <thead><tr><th>Dataset</th><th>Rows</th><th>What it is</th><th>Joins?</th></tr></thead>
             <tbody>
-              <tr><th scope="row"><span class="mono">fb86-vt7u</span> Budget &amp; Schedule</th><td class="num">5,801</td><td>both keys — <span class="mono">fms_id</span> and <span class="mono">pid</span></td></tr>
-              <tr><th scope="row"><span class="mono">2xh6-psuq</span> Project Schedules</th><td class="num">13,437</td><td>status enum: <span class="mono">PNS</span> · <span class="mono">In-Progress</span> · <span class="mono">Complete</span></td></tr>
-              <tr><th scope="row"><span class="mono">n6ej-pebd</span> Capital Awards</th><td class="num">1,256</td><td>free-text payee names — <strong>48 real alias clusters</strong></td></tr>
-              <tr><th scope="row"><span class="mono">qj5n-h5qp</span> Spend History</th><td class="num">53,495</td><td>monthly snapshots, original vs revised budget</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h2 class="sub">What is missing, per check</h2>
-        <div class="tw">
-          <table class="tight">
-            <thead><tr><th>Check</th><th>Needs</th><th>Have it?</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">1 · Intake</th><td>Invoice documents — PDFs or images, some deliberately incomplete</td><td><span class="pill pill--claim">none</span></td></tr>
-              <tr><th scope="row">2 · Wrong vendor</th><td>A vendor master, and invoices naming vendors in varied spellings</td><td><span class="pill pill--ask">aliases yes, invoices no</span></td></tr>
-              <tr><th scope="row">3 · Paid twice</th><td>An invoice ledger with <span class="mono">status</span> and payment history</td><td><span class="pill pill--claim">none</span></td></tr>
-              <tr><th scope="row">4 · Job dead</th><td>FMS ID → PID mapping and job status</td><td><span class="pill pill--ok">both, real</span></td></tr>
+              <tr>
+                <th scope="row"><a href="https://data.cityofnewyork.us/d/fb86-vt7u">Citywide Budget &amp; Schedule</a><br><span class="mono">fb86-vt7u</span></th>
+                <td class="num">5,801</td>
+                <td>The <strong>only</strong> table carrying both keys — plus budget, spend, phase and agency</td>
+                <td><span class="pill pill--ok">the spine</span></td>
+              </tr>
+              <tr>
+                <th scope="row"><a href="https://data.cityofnewyork.us/d/qj5n-h5qp">Budget Spend History &amp; Variance</a><br><span class="mono">qj5n-h5qp</span></th>
+                <td class="num">53,495</td>
+                <td>One row per budget line per month; earliest snapshot is the original budget</td>
+                <td><span class="pill pill--ok">on fms_id</span></td>
+              </tr>
+              <tr>
+                <th scope="row"><a href="https://data.cityofnewyork.us/d/n6ej-pebd">Capital Awards</a><br><span class="mono">n6ej-pebd</span></th>
+                <td class="num">1,256</td>
+                <td>Free-text award recipients and dollars — <strong>48 real alias clusters</strong></td>
+                <td><span class="pill pill--claim">no shared field</span></td>
+              </tr>
+              <tr>
+                <th scope="row"><a href="https://data.cityofnewyork.us/d/2xh6-psuq">Capital Project Schedules</a><br><span class="mono">2xh6-psuq</span></th>
+                <td class="num">13,437</td>
+                <td>School construction, keyed on building id — <strong>not used</strong></td>
+                <td><span class="pill pill--claim">no shared field</span></td>
+              </tr>
             </tbody>
           </table>
         </div>
 
         <div class="sowhat sowhat--claim">
-          <span class="sowhat__k">The honest gap</span>
-          <p>No public dataset contains a contractor's invoice ledger — <strong>contractors do not publish who they paid and when</strong>. Three of four checks need one. So we generate it, and we say so on stage rather than implying the invoices are real.</p>
+          <span class="sowhat__k">Correction — we carried this wrong for days</span>
+          <p>Both standalone sets were in the plan on the assumption they joined to the spine. <strong>They share zero fields with it.</strong> <span class="mono">n6ej-pebd</span> survives as a <em>vendor-name corpus</em>; <span class="mono">2xh6-psuq</span> is dropped entirely, because the field we wanted from it is already on the spine.</p>
         </div>
 
-        <h2 class="sub">Recommended: generate the invoice layer on top of the real data</h2>
-        <p>Every foreign key points at a <strong>real NYC row</strong>. Only the invoice layer is synthetic, so the join ambiguity, the payee aliases and the status enum stay real.</p>
+        <h2 class="sub">Job status needs no join at all</h2>
+        <p><span class="mono">current_phase</span> sits on the <strong>same row</strong> as <span class="mono">fms_id</span> and <span class="mono">pid</span>. The invoice carries <span class="mono">po_id</span>, so check 4 is a single lookup.</p>
 
+        <div class="stats">
+          <div class="stat"><span class="stat__v ok">36</span><span class="stat__k">distinct phase values on the spine</span></div>
+          <div class="stat"><span class="stat__v claim">502</span><span class="stat__k">rows Completed or Cancelled — the real positive class</span></div>
+          <div class="stat"><span class="stat__v claim">$11.6B</span><span class="stat__k">carried by those dead rows</span></div>
+          <div class="stat"><span class="stat__v ok">0</span><span class="stat__k">synthetic fields check 4 needs</span></div>
+        </div>
+
+        <h2 class="sub">Two findings that change how check 4 is built</h2>
         <div class="tw">
           <table class="tight">
-            <thead><tr><th>Table</th><th>Field</th><th>Type / source</th></tr></thead>
+            <thead><tr><th>Finding</th><th>Measured</th><th>What the build must do</th></tr></thead>
             <tbody>
-              <tr><th scope="row" rowspan="8"><span class="mono">invoices</span></th><td><span class="mono">invoice_id</span></td><td>string, unique</td></tr>
-              <tr><td><span class="mono">po_id</span></td><td><strong>real</strong> <span class="mono">fms_id</span> from <span class="mono">fb86-vt7u</span></td></tr>
-              <tr><td><span class="mono">vendor_name</span></td><td>free text — <strong>drawn from the 48 real alias clusters</strong></td></tr>
-              <tr><td><span class="mono">amount</span></td><td>decimal, ≤ the line's real budget</td></tr>
-              <tr><td><span class="mono">period</span></td><td><span class="mono">YYYY-MM</span>, within the project's real schedule</td></tr>
-              <tr><td><span class="mono">status</span></td><td><span class="mono">paid</span> · <span class="mono">denied</span> · <span class="mono">pending</span></td></tr>
-              <tr><td><span class="mono">submitted_at</span></td><td>date</td></tr>
-              <tr><td><span class="mono">doc_uri</span></td><td>path to the rendered PDF for check 1</td></tr>
-              <tr><th scope="row" rowspan="3"><span class="mono">vendors</span></th><td><span class="mono">vendor_id</span></td><td>string, unique</td></tr>
-              <tr><td><span class="mono">canonical_name</span></td><td>the resolved entity</td></tr>
-              <tr><td><span class="mono">aliases[]</span></td><td><strong>real</strong> spellings from <span class="mono">n6ej-pebd</span></td></tr>
-              <tr><th scope="row" rowspan="3"><span class="mono">documents</span></th><td><span class="mono">doc_id</span></td><td>string, unique</td></tr>
-              <tr><td><span class="mono">invoice_id</span></td><td>FK</td></tr>
-              <tr><td><span class="mono">missing_field</span></td><td>ground truth: which required field was removed, or <span class="mono">none</span></td></tr>
+              <tr>
+                <th scope="row">The status enum is <strong>aliased</strong></th>
+                <td>36 raw values → <strong>31</strong> after stripping parentheses and case. <span class="mono">Design</span> / <span class="mono">(Design)</span> · <span class="mono">Construction</span> / <span class="mono">(Construction)</span> · <span class="mono">(On-hold)</span> / <span class="mono">(On-Hold)</span> and two more</td>
+                <td>Normalise before comparing. <strong>Same failure class as vendor aliasing</strong>, in the field check 4 depends on</td>
+              </tr>
+              <tr>
+                <th scope="row">One key, <strong>conflicting answers</strong></th>
+                <td><strong>96</strong> of 5,608 <span class="mono">fms_id</span> return more than one phase, carrying <strong>$60,366,832,689</strong>. <span class="mono">OFFSHRWND</span> is both <span class="mono">pending</span> and <span class="mono">pre-design</span></td>
+                <td><strong>Detect the conflict and COMMENT.</strong> Never pick one. This is check 4's real difficulty, and it is why it is not a lookup</td>
+              </tr>
             </tbody>
           </table>
         </div>
 
-        <h2 class="sub">Metadata the generator must declare</h2>
+        <h2 class="sub">What each check needs, and what must be generated</h2>
         <div class="tw">
           <table class="tight">
-            <thead><tr><th>Knob</th><th>Why it must be declared, not discovered</th></tr></thead>
+            <thead><tr><th>Check</th><th>Real</th><th>Synthetic</th></tr></thead>
             <tbody>
-              <tr><th scope="row">duplicate rate</th><td>Check 3's precision and recall are meaningless without a known planted count</td></tr>
+              <tr><th scope="row">1 · Intake</th><td><span class="pill pill--claim">nothing</span></td><td>Documents and missing-field labels. No NYC set holds invoice scans</td></tr>
+              <tr><th scope="row">2 · Vendor</th><td>48 alias clusters, $40.77M</td><td>The invoice side. Vendor master is <strong>derived</strong> from the real corpus</td></tr>
+              <tr><th scope="row">3 · Paid before</th><td>5,608 real <span class="mono">fms_id</span> values</td><td>The ledger and its payment history</td></tr>
+              <tr><th scope="row">4 · Job status</th><td><span class="mono">current_phase</span>, 502 dead rows, 96 conflicts</td><td><span class="pill pill--ok">none</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 class="sub">The generated layer — every foreign key points at a real row</h2>
+        <div class="tw">
+          <table class="tight">
+            <thead><tr><th>Table</th><th>Field</th><th>Source</th></tr></thead>
+            <tbody>
+              <tr><th scope="row" rowspan="8"><span class="mono">invoices</span></th><td><span class="mono">invoice_id</span></td><td>generated, unique</td></tr>
+              <tr><td><span class="mono">po_id</span></td><td><strong>real</strong> <span class="mono">fms_id</span> from the spine</td></tr>
+              <tr><td><span class="mono">vendor_name</span></td><td><strong>real</strong> spelling from an alias cluster</td></tr>
+              <tr><td><span class="mono">amount</span></td><td>generated, ≤ the line's real budget</td></tr>
+              <tr><td><span class="mono">period</span></td><td>within the project's <strong>real</strong> schedule dates</td></tr>
+              <tr><td><span class="mono">status</span></td><td><span class="mono">paid</span> · <span class="mono">denied</span> · <span class="mono">pending</span></td></tr>
+              <tr><td><span class="mono">submitted_at</span></td><td>generated</td></tr>
+              <tr><td><span class="mono">doc_uri</span></td><td>rendered PDF, for check 1</td></tr>
+              <tr><th scope="row" rowspan="3"><span class="mono">vendors</span></th><td><span class="mono">vendor_id</span></td><td>derived</td></tr>
+              <tr><td><span class="mono">canonical_name</span></td><td>derived from the real corpus</td></tr>
+              <tr><td><span class="mono">aliases[]</span></td><td><strong>real</strong></td></tr>
+              <tr><th scope="row" rowspan="3"><span class="mono">documents</span></th><td><span class="mono">doc_id</span></td><td>generated</td></tr>
+              <tr><td><span class="mono">invoice_id</span></td><td>FK</td></tr>
+              <tr><td><span class="mono">missing_field</span></td><td>ground truth — which field was removed, or <span class="mono">none</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 class="sub">Rates the generator must declare</h2>
+        <div class="tw">
+          <table class="tight">
+            <thead><tr><th>Knob</th><th>Why it is declared, not discovered</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">duplicate rate</th><td>Check 3's precision and recall mean nothing without a known planted count</td></tr>
               <tr><th scope="row">alias rate</th><td>How often an invoice uses a non-canonical spelling — check 2's difficulty dial</td></tr>
               <tr><th scope="row">missing-field rate</th><td>Check 1's positive class</td></tr>
-              <tr><th scope="row">dead-job rate</th><td>How many invoices point at a <span class="mono">Complete</span> or <span class="mono">PNS</span> job</td></tr>
+              <tr><th scope="row">dead-job rate</th><td>Not needed — <strong>the real data already supplies 502</strong></td></tr>
               <tr><th scope="row">ground-truth label per row</th><td><strong>The whole point.</strong> A generated set with no labels is a demo prop, not an eval</td></tr>
             </tbody>
           </table>
@@ -817,39 +866,12 @@ table.tight td,table.tight th{padding:7px 12px;font-size:12.4px}
 
         <div class="sowhat">
           <span class="sowhat__k">Why this is defensible on stage</span>
-          <p>The <strong>failures are real</strong>: the alias clusters, the non-unique join key and the undefined status all come from published city data and are measured in this repo. <strong>Only the invoices are generated</strong>, and every one of them points at a real budget line.</p>
+          <p>Every <strong>failure</strong> is real and measured in this repo: the alias clusters, the non-unique key, the aliased status enum, the 96 conflicting phases. <strong>Only the invoices are generated</strong> — and each one points at a real budget line.</p>
         </div>
       </section>
 
 
-      <!-- 06 ───────────────────────────────────────────── -->
-      <section class="pane" data-title="The proof" data-group="Project">
-        <p class="eyebrow">Decision 06 — The proof <span class="tick">measured</span></p>
-        <h1 class="lede">Two failures, both already in the data, both invisible to a <b>green</b> pipeline.</h1>
 
-        <p>Queried live against <span class="mono">fb86-vt7u</span>, reporting period <span class="mono">202605</span>. Not estimated.</p>
-
-        <h2 class="sub">Failure one — the key fans out</h2>
-        <div class="stats">
-          <div class="stat"><span class="stat__v claim">207</span><span class="stat__k">of 3,063 projects carry more than one FMS ID</span></div>
-          <div class="stat"><span class="stat__v">382</span><span class="stat__k">surplus rows a naive join invents</span></div>
-          <div class="stat"><span class="stat__v claim">$9.93B</span><span class="stat__k">sits on those projects</span></div>
-          <div class="stat"><span class="stat__v">14</span><span class="stat__k">FMS IDs on the worst single project (pid 2845)</span></div>
-        </div>
-
-        <h2 class="sub">Failure two — the join drops a third of the money and says nothing</h2>
-        <div class="stats">
-          <div class="stat"><span class="stat__v claim">2,356</span><span class="stat__k">rows with no project ID (2,343 distinct FMS IDs)</span></div>
-          <div class="stat"><span class="stat__v claim">$64.84B</span><span class="stat__k">of budget on those rows</span></div>
-          <div class="stat"><span class="stat__v claim">31.2%</span><span class="stat__k">of the period's dollars unjoinable to a project</span></div>
-          <div class="stat"><span class="stat__v ok">$0</span><span class="stat__k">errors raised when this happens</span></div>
-        </div>
-
-        <div class="sowhat sowhat--claim">
-          <span class="sowhat__k">The one that matters</span>
-          <p>Fan-out double-counts <em>loudly</em> — a total that grows is a total someone questions. The silent drop is the dangerous one: an inner join discards $64.84B and returns a smaller, tidier, entirely credible number. <strong>Neither prior handoff had this second failure. The data did.</strong></p>
-        </div>
-      </section>
 
 
 
@@ -903,6 +925,34 @@ table.tight td,table.tight th{padding:7px 12px;font-size:12.4px}
         </div>
       </section>
 
+      <!-- 06 ───────────────────────────────────────────── -->
+      <section class="pane" data-title="Real data errors caught" data-group="Appendix">
+        <p class="eyebrow">Decision 06 — The proof <span class="tick">measured</span></p>
+        <h1 class="lede">Two failures, both already in the data, both invisible to a <b>green</b> pipeline.</h1>
+
+        <p>Queried live against <span class="mono">fb86-vt7u</span>, reporting period <span class="mono">202605</span>. Not estimated.</p>
+
+        <h2 class="sub">Failure one — the key fans out</h2>
+        <div class="stats">
+          <div class="stat"><span class="stat__v claim">207</span><span class="stat__k">of 3,063 projects carry more than one FMS ID</span></div>
+          <div class="stat"><span class="stat__v">382</span><span class="stat__k">surplus rows a naive join invents</span></div>
+          <div class="stat"><span class="stat__v claim">$9.93B</span><span class="stat__k">sits on those projects</span></div>
+          <div class="stat"><span class="stat__v">14</span><span class="stat__k">FMS IDs on the worst single project (pid 2845)</span></div>
+        </div>
+
+        <h2 class="sub">Failure two — the join drops a third of the money and says nothing</h2>
+        <div class="stats">
+          <div class="stat"><span class="stat__v claim">2,356</span><span class="stat__k">rows with no project ID (2,343 distinct FMS IDs)</span></div>
+          <div class="stat"><span class="stat__v claim">$64.84B</span><span class="stat__k">of budget on those rows</span></div>
+          <div class="stat"><span class="stat__v claim">31.2%</span><span class="stat__k">of the period's dollars unjoinable to a project</span></div>
+          <div class="stat"><span class="stat__v ok">$0</span><span class="stat__k">errors raised when this happens</span></div>
+        </div>
+
+        <div class="sowhat sowhat--claim">
+          <span class="sowhat__k">The one that matters</span>
+          <p>Fan-out double-counts <em>loudly</em> — a total that grows is a total someone questions. The silent drop is the dangerous one: an inner join discards $64.84B and returns a smaller, tidier, entirely credible number. <strong>Neither prior handoff had this second failure. The data did.</strong></p>
+        </div>
+      </section>
       <!-- A1 ───────────────────────────────────────────── -->
       <section class="pane" data-title="What else we considered" data-group="Appendix">
         <p class="eyebrow">Appendix A — The alternatives</p>
