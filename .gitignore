@@ -1,0 +1,8 @@
+node_modules/
+data/*.json
+data/*.csv
+!data/.gitkeep
+.env
+*.pem
+*.key
+.DS_Store
