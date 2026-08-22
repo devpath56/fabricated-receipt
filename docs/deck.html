@@ -205,9 +205,6 @@ h2.sub{
 #wf .ph.hit.on .pl{fill:var(--claim)}
 #wf .pt{font-size:16px;fill:var(--ink);font-weight:500}
 #wf .ps{font-size:13px;fill:var(--ink-mid)}
-#wf .pe{font-size:12.5px;font-family:var(--f-mono);text-anchor:end;fill:var(--verified)}
-#wf .pe-ask{fill:var(--ask)}
-#wf .pe-claim{fill:var(--claim)}
 #wf .halo{opacity:0;transition:opacity .2s ease}
 #wf .halo.on{opacity:1;animation:wfPulse 1.1s ease-in-out infinite}
 @keyframes wfPulse{0%,100%{opacity:.35}50%{opacity:1}}
@@ -243,6 +240,27 @@ h2.sub{
   #ang .wave,#ang .row,#ang .inv rect{animation:none}
   #ang .inv rect{opacity:.6}
 }
+
+/* -- workflow rows: a divider splits detail from the cost it avoids,
+      so the right column can never run into the left one ------------- */
+#wf .pk{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;fill:var(--ink-muted)}
+#wf .pv{font-family:var(--f-mono);font-size:19px;font-weight:500;fill:var(--claim)}
+#wf .ph.on .pv{fill:var(--claim)}
+
+/* -- four cost cards ---------------------------------------------- */
+.checks{display:grid;grid-template-columns:repeat(auto-fit,minmax(268px,1fr));gap:16px;margin:24px 0}
+.chk{background:var(--surface);border:1px solid var(--hairline-strong);border-top:3px solid var(--claim);
+  border-radius:var(--r);padding:16px 20px 20px;display:flex;flex-direction:column}
+.chk__n{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-muted);display:block;margin-bottom:8px}
+.chk__t{font-family:var(--f-display);font-size:21px;font-weight:400;line-height:1.19;margin:0 0 12px;color:var(--ink)}
+.chk__d{font-size:14px;line-height:1.55;color:var(--ink-mid);margin:0 0 16px}
+.chk__cost{font-family:var(--f-mono);font-size:34px;font-weight:500;line-height:1;letter-spacing:-.02em;
+  color:var(--claim);margin:0 0 16px;font-variant-numeric:tabular-nums}
+.chk__cost span{font-size:13px;font-weight:400;color:var(--ink-muted);letter-spacing:0;margin-left:6px}
+.chk__how{font-size:13.5px;line-height:1.55;color:var(--ink-mid);margin:auto 0 0;
+  padding-top:12px;border-top:1px solid var(--hairline)}
+.chk__how strong{color:var(--verified);font-weight:600}
 
 .cards3{display:grid;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));gap:16px;margin:24px 0}
 .card3{background:var(--surface);border:1px solid var(--hairline-strong);border-top:3px solid var(--hairline-strong);
@@ -503,10 +521,10 @@ table.tight td,table.tight th{padding:7px 12px;font-size:12.4px}
         <p class="footnote">A composite of two documented general contractors: a 25–30 PM firm whose monthly forecasting was a multi-day export-to-Excel-and-back exercise, and a ten-office firm where a <strong>$10 million project was linked to the wrong job</strong>, could not be reversed, and ran off-book for months. Meridian Builders is a composite name, not a real company.</p>
       </section>
 
-      <!-- 02 ───────────────────────────────────────────── -->
+      <!-- SQUEEZE ──────────────────────────────────────── -->
       <section class="pane" data-title="The squeeze" data-group="Project">
-        <p class="eyebrow">Decision 02 — Why it lands on her, and what it costs</p>
-        <h1 class="lede">Three groups. <b>One person</b> in the middle. Four ways to be wrong.</h1>
+        <p class="eyebrow">Decision 02 — Why it lands on her</p>
+        <h1 class="lede">Three parties. <b>One person</b> reconciles them.</h1>
 
         <div class="cards3">
           <div class="card3">
@@ -514,7 +532,8 @@ table.tight td,table.tight th{padding:7px 12px;font-size:12.4px}
             <h3 class="card3__t">The city</h3>
             <ul>
               <li>Owns the budget</li>
-              <li>Only pays for work it <strong>already approved</strong></li>
+              <li>Pays only for work it <strong>already approved</strong></li>
+              <li>Knows each job by <strong>its own ID</strong></li>
             </ul>
           </div>
           <div class="card3 card3--mid">
@@ -522,7 +541,8 @@ table.tight td,table.tight th{padding:7px 12px;font-size:12.4px}
             <h3 class="card3__t">Angela's company</h3>
             <ul>
               <li>Does the building</li>
-              <li>Pays the specialists <strong>out of its own pocket first</strong></li>
+              <li>Pays specialists <strong>from its own pocket first</strong></li>
+              <li>Knows the same job by <strong>a different ID</strong></li>
             </ul>
           </div>
           <div class="card3">
@@ -531,146 +551,40 @@ table.tight td,table.tight th{padding:7px 12px;font-size:12.4px}
             <ul>
               <li>Concrete · plumbing · electrical · HVAC</li>
               <li>Unpaid, <strong>the crews leave</strong></li>
+              <li>Each sees <strong>only their own contract</strong></li>
             </ul>
           </div>
         </div>
 
+        <h2 class="sub">The three frictions</h2>
         <ul class="big">
-          <li>The city's records and Angela's records use <strong>different ID numbers for the same job</strong>.</li>
-          <li><strong>Nobody ever made those two lists match.</strong></li>
-          <li>She is the only person who has to match them — <strong>on every invoice</strong>.</li>
+          <li>The two sides use <strong>different ID numbers for the same job</strong>, and nobody made them match.</li>
+          <li>Money arrives in <strong>weeks</strong>. Crews walk in <strong>days</strong>. She pays before she is paid.</li>
+          <li>She sees the real financial picture <strong>once a month</strong> — by then the mistake is weeks old.</li>
         </ul>
 
-        <h2 class="sub">And a mistake is not a rounding error</h2>
+        <h2 class="sub">What that costs her, measured</h2>
         <div class="tw">
           <table class="tight">
-            <thead><tr><th>The mistake</th><th>Cost</th><th>Who finds out, and when</th></tr></thead>
+            <thead><tr><th>Pain</th><th>In dollars</th><th>In risk &amp; trust</th></tr></thead>
             <tbody>
-              <tr><th scope="row">Pay the <strong>wrong vendor</strong></th><td class="num num--claim">the invoice</td><td>Two records, one name. Recovery is a lawsuit</td></tr>
-              <tr><th scope="row">Pay the <strong>same bill twice</strong></th><td class="num num--claim">$68,000</td><td>A person reading a ledger, <strong>months later</strong></td></tr>
-              <tr><th scope="row">Charge it to the <strong>wrong job</strong></th><td class="num num--claim">$10,000,000</td><td>Could not be undone. Ran <strong>off-book for months</strong></td></tr>
-              <tr><th scope="row">Refuse a good invoice</th><td class="num num--claim">6 weeks</td><td>The crew walks off. <strong>Immediately</strong></td></tr>
+              <tr><th scope="row">Re-keying and error resolution</th><td class="num num--claim">~$73,000 / yr</td><td>Work that looks like the job, so nobody counts it</td></tr>
+              <tr><th scope="row">A payment sent twice</th><td class="num num--claim">$68,000</td><td>Found by a person reading a ledger, <strong>months later</strong></td></tr>
+              <tr><th scope="row">A job coded wrong</th><td class="num num--claim">$10,000,000</td><td>Unreversible. Ran <strong>off-book for months</strong> in a second manual ledger</td></tr>
+              <tr><th scope="row">Every AI answer re-checked by hand</th><td class="num num--claim">adoption → 0</td><td><strong>Her name is on the number, not the tool's</strong></td></tr>
             </tbody>
           </table>
         </div>
-
-        <blockquote>
-          <p>When she's wrong in front of the owner, it's <b>her name</b> on it — not the tool's.</p>
-          <cite>Why she rebuilds every number by hand</cite>
-        </blockquote>
-      </section>
-
-      <!-- 03 ───────────────────────────────────────────── -->
-      <section class="pane" data-title="The failure" data-group="Project">
-        <p class="eyebrow">Decision 03 — The failure we're fixing</p>
-        <h1 class="lede">A wrong number arrives wearing a <em>convincing receipt</em>.</h1>
-
-        <p>Her tool answers, and explains itself. The explanation is written by <strong>the same model that made the error</strong> — the receipt is written by the suspect.</p>
-
-        <div class="beat" id="beat">
-          <div class="beat__row">
-            <span class="beat__k">The question</span>
-            <p class="beat__q">"Have we already paid ACME Concrete for this?"</p>
-          </div>
-          <div class="beat__row">
-            <span class="beat__k">The answer, in three seconds</span>
-            <p class="beat__ans">No prior payment found</p>
-            <p class="beat__narr">"Searched all invoices for ACME Concrete against purchase order <span class="mono">P-108TBTF</span>. No matching payment exists."</p>
-          </div>
-          <div class="beat__row">
-            <span class="beat__k">What actually ran</span>
-<pre class="beat__sql">SELECT * FROM invoices
-WHERE  vendor_name = 'ACME Concrete'
-  AND  po_id = 'P-108TBTF'
-<span class="hl">-- exact string match on the name.
--- 'ACME Concrete, Inc.' was paid $340,000 last month.</span></pre>
-          </div>
-          <div class="beat__row">
-            <span class="beat__k">The truth</span>
-            <div class="beat__truth">
-              <div><span class="lab">Reported</span><span class="val num--ok">not paid</span></div>
-              <div><span class="lab">Actually</span><span class="val num--claim">paid 2026-07-14</span></div>
-              <div><span class="lab">About to pay again</span><span class="val num--claim">$340,000</span></div>
-            </div>
-          </div>
-        </div>
-        <p><button class="ghost" id="replay" type="button">Replay</button></p>
-
-        <p>Every word of that explanation is true except <em>all</em>. Nothing errored. Nothing turned red.</p>
-
-        <div class="sowhat">
-          <span class="sowhat__k">The build, in one sentence</span>
-          <p>We don't grade the answer. <strong>We grade the receipt against the query that executed</strong> — and we refuse to answer when it doesn't tie back.</p>
-        </div>
-      </section>
-
-      <!-- 04 ───────────────────────────────────────────── -->
-      <section class="pane" data-title="The three checks" data-group="Project">
-        <p class="eyebrow">Decision 04 — The scope</p>
-        <h1 class="lede">Two checks that need <b>no join</b>. One that does — and that one is hard.</h1>
-
-        <p>The invoice already carries its purchase order. <strong>There is no invoice-to-budget join to get wrong.</strong> That leaves exactly one join in the whole system, and it is the last check.</p>
-
-        <div class="tw">
-          <table>
-            <thead><tr><th></th><th>Check</th><th>The question</th><th>What it avoids</th><th>Scope</th></tr></thead>
-            <tbody>
-              <tr>
-                <td class="num">1</td>
-                <th scope="row">Vendor resolution</th>
-                <td>Is this the <strong>correct vendor</strong>?</td>
-                <td class="num num--claim">wrong vendor paid</td>
-                <td><span class="pill pill--ok">core</span></td>
-              </tr>
-              <tr>
-                <td class="num">2</td>
-                <th scope="row">Paid before?</th>
-                <td>Has this vendor <strong>already been paid</strong> for this?</td>
-                <td class="num num--claim">double, triple payment</td>
-                <td><span class="pill pill--ok">core</span></td>
-              </tr>
-              <tr>
-                <td class="num">3</td>
-                <th scope="row">Job status</th>
-                <td>What is the status of the job this PO belongs to?</td>
-                <td class="num num--claim">paying against a closed or unsanctioned job</td>
-                <td><span class="pill pill--ask">if time allows</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h2 class="sub">What the invoice already tells us</h2>
-        <div class="tw">
-          <table class="tight">
-            <thead><tr><th>Field</th><th>Why it matters</th></tr></thead>
-            <tbody>
-              <tr><th scope="row"><span class="mono">invoice_id</span></th><td>Identity of this bill</td></tr>
-              <tr><th scope="row"><span class="mono">po_id</span> <em>(the FMS ID)</em></th><td><strong>The invoice carries the budget key.</strong> No join required — this is why checks 1 and 2 are clean</td></tr>
-              <tr><th scope="row"><span class="mono">status</span></th><td><span class="mono">paid</span> · <span class="mono">denied</span> · <span class="mono">pending</span> — check 2 is a search over this</td></tr>
-              <tr><th scope="row"><span class="mono">vendor_name</span>, amount, period</th><td>What checks 1 and 2 match on</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="sowhat sowhat--claim">
-          <span class="sowhat__k">Check 2 depends entirely on check 1</span>
-          <p>A duplicate search that runs against <em>one</em> spelling of a vendor finds nothing and reports clean. <strong>Resolve the vendor, and the duplicate appears.</strong> That dependency is the demo — and it is why check 1 is built first.</p>
-        </div>
-
-        <div class="sowhat">
-          <span class="sowhat__k">Why check 3 is last</span>
-          <p>It is the only one that needs the <span class="mono">FMS ID → PID</span> join, and that join is <strong>not one-to-one</strong>: 207 projects carry several FMS IDs and 2,356 rows carry no project at all. Real, measured, and the reason it is a stretch goal rather than a promise.</p>
-        </div>
+        <p class="footnote">Dollar figures are drawn from two published contractor case studies and are estimates except the $68,000 and $10,000,000, which are named incidents. Basis is on the checks page.</p>
       </section>
 
       <!-- WORKFLOW ─────────────────────────────────────── -->
       <section class="pane" data-title="The workflow" data-group="Project">
-        <p class="eyebrow">Decision 05 — The workflow</p>
-        <h1 class="lede">Three checks. Three answers. <b>Confidence is a count.</b></h1>
+        <p class="eyebrow">Decision 03 — The workflow</p>
+        <h1 class="lede">Four checks. Three answers. <b>Confidence is a count.</b></h1>
 
         <figure class="fig">
-          <svg id="wf" data-step="0" viewBox="0 0 940 640" role="img" aria-label="Stepped workflow. An invoice arrives already carrying its purchase order. Check one resolves the vendor, check two searches for a prior payment across every spelling of that vendor, and an optional check three resolves job status through the FMS to PID join. The invoice exits as approve, comment or deny." xmlns="http://www.w3.org/2000/svg">
+          <svg id="wf" data-step="0" viewBox="0 0 960 700" role="img" aria-label="Stepped workflow. An invoice arrives already carrying its purchase order. Four checks run in order: intake completeness, vendor resolution, whether the vendor was already paid, and whether the job is still live in the ERP. The invoice exits as approve, comment or deny." xmlns="http://www.w3.org/2000/svg">
             <defs>
               <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker>
               <marker id="ah-deny" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--claim)"/></marker>
@@ -678,67 +592,84 @@ WHERE  vendor_name = 'ACME Concrete'
               <marker id="ah-ask" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ask)"/></marker>
             </defs>
 
-            <rect x="270" y="18" width="400" height="58" rx="3" fill="var(--surface)" stroke="var(--ink-mid)" stroke-width="2"/>
-            <text x="470" y="44" text-anchor="middle" font-size="16" font-weight="600" fill="var(--ink)">Invoice arrives</text>
-            <text x="470" y="64" text-anchor="middle" font-size="13" font-family="monospace" fill="var(--ask)">it already carries po_id — no join needed</text>
-            <line x1="470" y1="76" x2="470" y2="98" stroke="currentColor" stroke-width="1.5" marker-end="url(#ah)"/>
+            <rect x="230" y="16" width="500" height="56" rx="3" fill="var(--surface)" stroke="var(--ink-mid)" stroke-width="2"/>
+            <text x="480" y="40" text-anchor="middle" font-size="16" font-weight="600" fill="var(--ink)">Invoice arrives</text>
+            <text x="480" y="60" text-anchor="middle" font-size="12.5" font-family="monospace" fill="var(--ask)">already carries po_id — no join needed</text>
+            <line x1="480" y1="72" x2="480" y2="92" stroke="currentColor" stroke-width="1.5" marker-end="url(#ah)"/>
 
             <g class="spine">
               <g class="ph ph1" data-at="1">
-                <rect x="230" y="102" width="480" height="76" rx="3"/>
-                <text class="pl" x="252" y="132">1</text>
-                <text class="pt" x="284" y="132">Vendor resolution</text>
-                <text class="ps" x="284" y="154">Is this the correct vendor? · 48 alias clusters · $40.77M</text>
-                <text class="pe" x="690" y="132">avoids: wrong vendor paid</text>
+                <rect x="200" y="96" width="560" height="80" rx="3"/>
+                <line x1="580" y1="104" x2="580" y2="168" stroke="var(--hairline-strong)" stroke-width="1"/>
+                <text class="pl" x="222" y="128">1</text>
+                <text class="pt" x="252" y="128">Intake</text>
+                <text class="ps" x="252" y="152">Is the invoice complete enough to check?</text>
+                <text class="pk" x="600" y="124">AVOIDS</text>
+                <text class="pv" x="600" y="152">$25,000 / yr</text>
               </g>
               <g class="ph ph2" data-at="2">
-                <rect x="230" y="216" width="480" height="76" rx="3"/>
-                <text class="pl" x="252" y="246">2</text>
-                <text class="pt" x="284" y="246">Paid before?</text>
-                <text class="ps" x="284" y="268">Search every spelling · status paid / denied / pending</text>
-                <text class="pe pe-claim" x="690" y="246">avoids: double, triple payment</text>
+                <rect x="200" y="196" width="560" height="80" rx="3"/>
+                <line x1="580" y1="204" x2="580" y2="268" stroke="var(--hairline-strong)" stroke-width="1"/>
+                <text class="pl" x="222" y="228">2</text>
+                <text class="pt" x="252" y="228">Vendor resolution</text>
+                <text class="ps" x="252" y="252">Is this the correct vendor? · 48 alias clusters</text>
+                <text class="pk" x="600" y="224">AVOIDS</text>
+                <text class="pv" x="600" y="252">$340,000</text>
               </g>
-              <g class="ph ph3 out" data-at="3">
-                <rect x="230" y="330" width="480" height="76" rx="3" stroke-dasharray="5 5"/>
-                <text class="pl" x="252" y="360">3</text>
-                <text class="pt" x="284" y="360">Job status</text>
-                <text class="ps" x="284" y="382">needs the FMS ID → PID join · 207 fan out · 2,356 orphans</text>
-                <text class="pe" x="690" y="360">if time allows</text>
+              <g class="ph ph3" data-at="3">
+                <rect x="200" y="296" width="560" height="80" rx="3"/>
+                <line x1="580" y1="304" x2="580" y2="368" stroke="var(--hairline-strong)" stroke-width="1"/>
+                <text class="pl" x="222" y="328">3</text>
+                <text class="pt" x="252" y="328">Paid before?</text>
+                <text class="ps" x="252" y="352">Every spelling · status paid / denied / pending</text>
+                <text class="pk" x="600" y="324">AVOIDS</text>
+                <text class="pv" x="600" y="352">$272,000 / yr</text>
+              </g>
+              <g class="ph ph4" data-at="4">
+                <rect x="200" y="396" width="560" height="80" rx="3"/>
+                <line x1="580" y1="404" x2="580" y2="468" stroke="var(--hairline-strong)" stroke-width="1"/>
+                <text class="pl" x="222" y="428">4</text>
+                <text class="pt" x="252" y="428">Is the job still live?</text>
+                <text class="ps" x="252" y="452">ERP status via the FMS ID → PID join</text>
+                <text class="pk" x="600" y="424">AVOIDS</text>
+                <text class="pv" x="600" y="452">$10,000,000</text>
               </g>
             </g>
 
             <g stroke="currentColor" stroke-width="1.5" marker-end="url(#ah)" opacity=".5">
-              <line x1="470" y1="178" x2="470" y2="212"/>
-              <line x1="470" y1="292" x2="470" y2="326"/>
+              <line x1="480" y1="176" x2="480" y2="192"/>
+              <line x1="480" y1="276" x2="480" y2="292"/>
+              <line x1="480" y1="376" x2="480" y2="392"/>
             </g>
-            <line class="pathOk" x1="470" y1="406" x2="470" y2="454" stroke="var(--verified)" stroke-width="2.5" marker-end="url(#ah-ok)"/>
+            <line class="pathOk" x1="480" y1="476" x2="480" y2="512" stroke="var(--verified)" stroke-width="2.5" marker-end="url(#ah-ok)"/>
 
-            <path class="pathAsk" d="M230,140 H110 V454" stroke="var(--ask)" stroke-width="2.5" fill="none" marker-end="url(#ah-ask)"/>
-            <path class="pathDeny" d="M710,254 H830 V454" stroke="var(--claim)" stroke-width="2.5" fill="none" marker-end="url(#ah-deny)"/>
+            <path class="pathAsk" d="M200,136 H100 V512" stroke="var(--ask)" stroke-width="2.5" fill="none" marker-end="url(#ah-ask)"/>
+            <path class="pathDeny" d="M760,336 H860 V512" stroke="var(--claim)" stroke-width="2.5" fill="none" marker-end="url(#ah-deny)"/>
 
-            <rect class="halo haloB" x="224" y="96" width="492" height="88" rx="6" fill="none" stroke="var(--ask)" stroke-width="3"/>
-            <rect class="halo haloF" x="224" y="210" width="492" height="88" rx="6" fill="none" stroke="var(--claim)" stroke-width="3"/>
+            <rect class="halo haloB" x="194" y="190" width="572" height="92" rx="6" fill="none" stroke="var(--ask)" stroke-width="3"/>
+            <rect class="halo haloF" x="194" y="290" width="572" height="92" rx="6" fill="none" stroke="var(--claim)" stroke-width="3"/>
 
-            <g class="tok"><circle cx="470" cy="90" r="9" fill="var(--verified)"/></g>
+            <g class="tok"><circle cx="480" cy="86" r="9" fill="var(--verified)"/></g>
 
             <g class="term termAsk">
-              <rect x="20" y="458" width="180" height="96" rx="3" fill="var(--surface)" stroke="var(--ask)" stroke-width="1.5"/>
-              <text x="110" y="488" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ask)">COMMENT</text>
-              <text x="110" y="510" text-anchor="middle" font-size="12.5" fill="var(--ink-mid)">a check could not</text>
-              <text x="110" y="527" text-anchor="middle" font-size="12.5" fill="var(--ink-mid)">be evaluated</text>
-              <text x="110" y="546" text-anchor="middle" font-size="11.5" font-family="monospace" fill="var(--ask)">names what's missing</text>
+              <rect x="20" y="516" width="180" height="100" rx="3" fill="var(--surface)" stroke="var(--ask)" stroke-width="1.5"/>
+              <text x="110" y="546" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ask)">COMMENT</text>
+              <text x="110" y="570" text-anchor="middle" font-size="12.5" fill="var(--ink-mid)">a check could not</text>
+              <text x="110" y="588" text-anchor="middle" font-size="12.5" fill="var(--ink-mid)">be evaluated</text>
+              <text x="110" y="607" text-anchor="middle" font-size="11.5" font-family="monospace" fill="var(--ask)">names what's missing</text>
             </g>
             <g class="term termOk">
-              <rect x="280" y="458" width="380" height="96" rx="3" fill="var(--surface)" stroke="var(--verified)" stroke-width="2"/>
-              <text x="470" y="488" text-anchor="middle" font-size="15" font-weight="700" fill="var(--verified)">APPROVE</text>
-              <text x="470" y="511" text-anchor="middle" font-size="12.5" fill="var(--ink-mid)">every applicable check passed</text>
-              <text x="470" y="536" text-anchor="middle" font-size="14" font-family="monospace" fill="var(--verified)">confidence = passed ÷ applicable</text>
+              <rect x="290" y="516" width="380" height="100" rx="3" fill="var(--surface)" stroke="var(--verified)" stroke-width="2"/>
+              <text x="480" y="546" text-anchor="middle" font-size="15" font-weight="700" fill="var(--verified)">APPROVE</text>
+              <text x="480" y="571" text-anchor="middle" font-size="12.5" fill="var(--ink-mid)">every applicable check passed</text>
+              <text x="480" y="597" text-anchor="middle" font-size="14" font-family="monospace" fill="var(--verified)">confidence = passed ÷ applicable</text>
             </g>
             <g class="term termDeny">
-              <rect x="740" y="458" width="180" height="96" rx="3" fill="var(--surface)" stroke="var(--claim)" stroke-width="1.5"/>
-              <text x="830" y="488" text-anchor="middle" font-size="15" font-weight="700" fill="var(--claim)">DENY</text>
-              <text x="830" y="510" text-anchor="middle" font-size="12.5" fill="var(--ink-mid)">a check failed outright</text>
-              <text x="830" y="536" text-anchor="middle" font-size="14" font-family="monospace" fill="var(--claim)">confidence 1.00</text>
+              <rect x="760" y="516" width="180" height="100" rx="3" fill="var(--surface)" stroke="var(--claim)" stroke-width="1.5"/>
+              <text x="850" y="546" text-anchor="middle" font-size="15" font-weight="700" fill="var(--claim)">DENY</text>
+              <text x="850" y="570" text-anchor="middle" font-size="12.5" fill="var(--ink-mid)">a check failed</text>
+              <text x="850" y="588" text-anchor="middle" font-size="12.5" fill="var(--ink-mid)">outright</text>
+              <text x="850" y="607" text-anchor="middle" font-size="14" font-family="monospace" fill="var(--claim)">confidence 1.00</text>
             </g>
           </svg>
 
@@ -752,66 +683,135 @@ WHERE  vendor_name = 'ACME Concrete'
               <button class="ghost" id="wff" type="button">next → N</button>
             </div>
           </div>
-          <figcaption>Press <b>N</b> to advance, <b>B</b> to go back. Check 2 finds the duplicate <strong>only because check 1 resolved the vendor first</strong>. Check 3 is dashed: real, needed, out of demo scope unless there is time.</figcaption>
+          <figcaption>Press <b>N</b> to advance, <b>B</b> to go back. Check 3 finds the duplicate <strong>only because check 2 resolved the vendor first</strong>.</figcaption>
         </figure>
-
-        <div class="tw">
-          <table class="tight">
-            <thead><tr><th>Answer</th><th>When</th><th>Confidence</th></tr></thead>
-            <tbody>
-              <tr><th scope="row"><span class="pill pill--ok">Approve</span></th><td>Every applicable check passed</td><td class="num num--ok">passed ÷ applicable</td></tr>
-              <tr><th scope="row"><span class="pill pill--ask">Comment</span></th><td>A check returned <strong>cannot evaluate</strong></td><td class="num">names each one</td></tr>
-              <tr><th scope="row"><span class="pill pill--claim">Deny</span></th><td>A check <strong>failed outright</strong></td><td class="num num--claim">1.00 — certain</td></tr>
-            </tbody>
-          </table>
-        </div>
 
         <div class="sowhat">
           <span class="sowhat__k">The rule that makes it honest</span>
           <p><strong>A check that could not run is never counted as passed.</strong> It leaves the denominator and routes to Comment. A model reporting "95% confident" has produced another fabricated receipt — this number is <strong>checks passed over checks applicable</strong>, and every term is nameable.</p>
         </div>
-
-        <div class="sowhat sowhat--claim">
-          <span class="sowhat__k">What we deliberately do not automate</span>
-          <p>The tool never decides — <strong>Angela decides.</strong> It supplies the query, the rows and the tie-out. When someone asks "why did you approve this?", <strong>she has the receipt</strong>, and it was checked rather than written.</p>
-        </div>
       </section>
 
+      <!-- CHECKS ───────────────────────────────────────── -->
+      <section class="pane" data-title="Four checks" data-group="Project">
+        <p class="eyebrow">Decision 04 — What we build</p>
+        <h1 class="lede">Four errors we catch, and what each one costs when we don't.</h1>
 
+        <div class="checks">
+          <article class="chk">
+            <span class="chk__n">Check 1</span>
+            <h3 class="chk__t">Intake: the invoice is incomplete</h3>
+            <p class="chk__d">Missing PO, missing period, unreadable amount. It enters the pipeline anyway and every check downstream answers a question about a document nobody read.</p>
+            <p class="chk__cost">$25,000<span>/ yr</span></p>
+            <p class="chk__how"><strong>Mistral OCR 4.1</strong> reads the document and reports which required fields are absent — by name, before anything else runs.</p>
+          </article>
+          <article class="chk">
+            <span class="chk__n">Check 2</span>
+            <h3 class="chk__t">The wrong vendor gets paid</h3>
+            <p class="chk__d">Two records, one company. <span class="mono">ACME Concrete</span> and <span class="mono">ACME Concrete, Inc.</span> are separate rows with separate payment histories.</p>
+            <p class="chk__cost">$340,000<span>/ incident</span></p>
+            <p class="chk__how">Candidate set must resolve to <strong>exactly one</strong> vendor. If it doesn't, the system halts and asks — it never picks.</p>
+          </article>
+          <article class="chk">
+            <span class="chk__n">Check 3</span>
+            <h3 class="chk__t">The same vendor is paid twice</h3>
+            <p class="chk__d">The duplicate search runs against one spelling, finds nothing, and reports clean. The second payment goes out.</p>
+            <p class="chk__cost">$272,000<span>/ yr</span></p>
+            <p class="chk__how">Search <strong>every</strong> spelling resolved by check 2, against PO, amount and period. A prior <span class="mono">paid</span> row is a hard deny.</p>
+          </article>
+          <article class="chk">
+            <span class="chk__n">Check 4</span>
+            <h3 class="chk__t">The job is dead and the payment isn't</h3>
+            <p class="chk__d">The ERP closed the job, or never sanctioned it. The invoice still gets approved against a budget line that no longer accepts charges.</p>
+            <p class="chk__cost">$10,000,000<span>/ incident</span></p>
+            <p class="chk__how">Resolve status through the <span class="mono">FMS ID → PID</span> join. Undefined status is not a pass — it routes to Comment.</p>
+          </article>
+        </div>
 
+        <p class="footnote"><strong>Basis.</strong> $10,000,000 and $68,000 are named incidents in published contractor case studies — a project linked to the wrong job and run off-book for months, and a double-billed material order caught by hand. <strong>$272,000/yr</strong> is 4 × the $68,000 unit at the upper end of a 1–4-per-year rate. <strong>$340,000</strong> is the invoice on this demo. <strong>$25,000/yr</strong> is manual error-resolution time — a reported 5–10 hours per week across an accounting team, at a loaded rate. Everything except the two named incidents is an estimate.</p>
+      </section>
 
-      <!-- 05 ───────────────────────────────────────────── -->
+      <!-- DATA ─────────────────────────────────────────── -->
       <section class="pane" data-title="The data" data-group="Project">
-        <p class="eyebrow">Decision 05 — The data</p>
-        <h1 class="lede">NYC publishes $207B of capital spend — and documents its own <em>broken join key</em>.</h1>
+        <p class="eyebrow">Decision 05 — What we have, and what we must build</p>
+        <h1 class="lede">Real data covers <b>one</b> of the four checks. The rest needs an invoice ledger that doesn't exist publicly.</h1>
 
-        <p>From the dataset description NYC ships with <span class="mono">fb86-vt7u</span>, read live today:</p>
-
-        <blockquote>
-          <p>Each row is uniquely identified by its Financial Management Service (FMS) ID… This ID can be universally joined with any OMB dataset that has the same field… FMS IDs and agency projects don't always have a one-to-one relationship (i.e., one project schedule may correlate to multiple FMS IDs, and one FMS may correct to multiple projects with different schedules).</p>
-          <cite>NYC Open Data · Capital Projects Dashboard · dataset description</cite>
-        </blockquote>
-
-        <p>Three claims in one paragraph, and they cannot all be true. The key is unique. Join on it universally. The key is not unique. The dataset's own row label offers a fourth answer — <span class="mono">"unique project and budget line combination"</span>.</p>
-
+        <h2 class="sub">What we have — pulled, measured, on disk</h2>
         <div class="tw">
           <table class="tight">
-            <thead><tr><th>Dataset</th><th>ID</th><th>Carries</th><th>Key</th></tr></thead>
+            <thead><tr><th>Dataset</th><th>Rows</th><th>Carries</th></tr></thead>
             <tbody>
-              <tr><th scope="row">Citywide Budget and Schedule</th><td class="num">fb86-vt7u</td><td>The bridge — budget, spend, phase, schedule, agency</td><td><span class="pill pill--ok">fms_id + pid</span></td></tr>
-              <tr><th scope="row">Budget Spend History and Variance</th><td class="num">qj5n-h5qp</td><td>Monthly snapshots. Earliest = original budget; variance = delta vs prior month</td><td><span class="pill pill--ok">fms_id</span></td></tr>
-              <tr><th scope="row">Capital Commitment Plan</th><td class="num">2cmn-uidm</td><td>Committed dollars by budget line and funding source</td><td><span class="pill pill--claim">no fms_id</span></td></tr>
+              <tr><th scope="row"><span class="mono">fb86-vt7u</span> Budget &amp; Schedule</th><td class="num">5,801</td><td>both keys — <span class="mono">fms_id</span> and <span class="mono">pid</span></td></tr>
+              <tr><th scope="row"><span class="mono">2xh6-psuq</span> Project Schedules</th><td class="num">13,437</td><td>status enum: <span class="mono">PNS</span> · <span class="mono">In-Progress</span> · <span class="mono">Complete</span></td></tr>
+              <tr><th scope="row"><span class="mono">n6ej-pebd</span> Capital Awards</th><td class="num">1,256</td><td>free-text payee names — <strong>48 real alias clusters</strong></td></tr>
+              <tr><th scope="row"><span class="mono">qj5n-h5qp</span> Spend History</th><td class="num">53,495</td><td>monthly snapshots, original vs revised budget</td></tr>
             </tbody>
           </table>
         </div>
 
-        <p class="footnote"><strong>Correction carried forward.</strong> The prior handoff recorded this family as "all keyed on FMS ID". It isn't — <code>2cmn-uidm</code> has no <code>fms_id</code> column at all; it keys on <code>budline</code>, <code>projtype</code> and <code>funding</code>. Verified against the live Socrata metadata, not recalled.</p>
+        <h2 class="sub">What is missing, per check</h2>
+        <div class="tw">
+          <table class="tight">
+            <thead><tr><th>Check</th><th>Needs</th><th>Have it?</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">1 · Intake</th><td>Invoice documents — PDFs or images, some deliberately incomplete</td><td><span class="pill pill--claim">none</span></td></tr>
+              <tr><th scope="row">2 · Wrong vendor</th><td>A vendor master, and invoices naming vendors in varied spellings</td><td><span class="pill pill--ask">aliases yes, invoices no</span></td></tr>
+              <tr><th scope="row">3 · Paid twice</th><td>An invoice ledger with <span class="mono">status</span> and payment history</td><td><span class="pill pill--claim">none</span></td></tr>
+              <tr><th scope="row">4 · Job dead</th><td>FMS ID → PID mapping and job status</td><td><span class="pill pill--ok">both, real</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="sowhat sowhat--claim">
+          <span class="sowhat__k">The honest gap</span>
+          <p>No public dataset contains a contractor's invoice ledger — <strong>contractors do not publish who they paid and when</strong>. Three of four checks need one. So we generate it, and we say so on stage rather than implying the invoices are real.</p>
+        </div>
+
+        <h2 class="sub">Recommended: generate the invoice layer on top of the real data</h2>
+        <p>Every foreign key points at a <strong>real NYC row</strong>. Only the invoice layer is synthetic, so the join ambiguity, the payee aliases and the status enum stay real.</p>
+
+        <div class="tw">
+          <table class="tight">
+            <thead><tr><th>Table</th><th>Field</th><th>Type / source</th></tr></thead>
+            <tbody>
+              <tr><th scope="row" rowspan="8"><span class="mono">invoices</span></th><td><span class="mono">invoice_id</span></td><td>string, unique</td></tr>
+              <tr><td><span class="mono">po_id</span></td><td><strong>real</strong> <span class="mono">fms_id</span> from <span class="mono">fb86-vt7u</span></td></tr>
+              <tr><td><span class="mono">vendor_name</span></td><td>free text — <strong>drawn from the 48 real alias clusters</strong></td></tr>
+              <tr><td><span class="mono">amount</span></td><td>decimal, ≤ the line's real budget</td></tr>
+              <tr><td><span class="mono">period</span></td><td><span class="mono">YYYY-MM</span>, within the project's real schedule</td></tr>
+              <tr><td><span class="mono">status</span></td><td><span class="mono">paid</span> · <span class="mono">denied</span> · <span class="mono">pending</span></td></tr>
+              <tr><td><span class="mono">submitted_at</span></td><td>date</td></tr>
+              <tr><td><span class="mono">doc_uri</span></td><td>path to the rendered PDF for check 1</td></tr>
+              <tr><th scope="row" rowspan="3"><span class="mono">vendors</span></th><td><span class="mono">vendor_id</span></td><td>string, unique</td></tr>
+              <tr><td><span class="mono">canonical_name</span></td><td>the resolved entity</td></tr>
+              <tr><td><span class="mono">aliases[]</span></td><td><strong>real</strong> spellings from <span class="mono">n6ej-pebd</span></td></tr>
+              <tr><th scope="row" rowspan="3"><span class="mono">documents</span></th><td><span class="mono">doc_id</span></td><td>string, unique</td></tr>
+              <tr><td><span class="mono">invoice_id</span></td><td>FK</td></tr>
+              <tr><td><span class="mono">missing_field</span></td><td>ground truth: which required field was removed, or <span class="mono">none</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 class="sub">Metadata the generator must declare</h2>
+        <div class="tw">
+          <table class="tight">
+            <thead><tr><th>Knob</th><th>Why it must be declared, not discovered</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">duplicate rate</th><td>Check 3's precision and recall are meaningless without a known planted count</td></tr>
+              <tr><th scope="row">alias rate</th><td>How often an invoice uses a non-canonical spelling — check 2's difficulty dial</td></tr>
+              <tr><th scope="row">missing-field rate</th><td>Check 1's positive class</td></tr>
+              <tr><th scope="row">dead-job rate</th><td>How many invoices point at a <span class="mono">Complete</span> or <span class="mono">PNS</span> job</td></tr>
+              <tr><th scope="row">ground-truth label per row</th><td><strong>The whole point.</strong> A generated set with no labels is a demo prop, not an eval</td></tr>
+            </tbody>
+          </table>
+        </div>
 
         <div class="sowhat">
-          <span class="sowhat__k">Why this beats a synthetic dataset</span>
-          <p>The monthly snapshot trail in <span class="mono">qj5n-h5qp</span> is an original-versus-revised budget history — <strong>the change-order story in contractor terms</strong>, in real money, published by the party that owns it. Pair it with BookSQL for question variety and accounting structure.</p>
+          <span class="sowhat__k">Why this is defensible on stage</span>
+          <p>The <strong>failures are real</strong>: the alias clusters, the non-unique join key and the undefined status all come from published city data and are measured in this repo. <strong>Only the invoices are generated</strong>, and every one of them points at a real budget line.</p>
         </div>
       </section>
+
 
       <!-- 06 ───────────────────────────────────────────── -->
       <section class="pane" data-title="The proof" data-group="Project">
@@ -843,57 +843,6 @@ WHERE  vendor_name = 'ACME Concrete'
       </section>
 
 
-      <!-- TEAM ─────────────────────────────────────── -->
-      <section class="pane" data-title="The team" data-group="The team">
-        <p class="eyebrow">Who builds what</p>
-        <h1 class="lede">The eval is the hard part. Making wrongness <b>loud</b> is the other half.</h1>
-        <h2 class="sub">Shivam — checks 1 and 2, the graded set</h2>
-
-        <p>This is an eval problem end to end, and it is the specific flavour of eval problem that is genuinely hard to fake in a weekend.</p>
-
-        <div class="tw">
-          <table>
-            <thead><tr><th>What he already does</th><th>What it becomes here</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">Finance-document parsing — the table top-up heuristic, so numeric questions don't get answered from prose</th><td>The same instinct, one layer up: <strong>a numeric answer must not be explained by prose.</strong> The narration is graded against the query, not accepted as one</td></tr>
-              <tr><th scope="row">Duplicate detection at portfolio scale — GBM across 32 clients, 50M+ transactions/month</th><td>Fan-out detection on a join key that the publisher itself says is not unique</td></tr>
-              <tr><th scope="row">Entity resolution by metric learning — triplet mining, silhouette 0.72 → 0.90</th><td>Is <span class="mono">fms_id</span> = <span class="mono">pid</span> the same entity? The dataset says both yes and no</td></tr>
-              <tr><th scope="row">Interpretability — SHAP, PDP, ELI5 since 2020</th><td>The receipt itself. Why this number, traced to the rows that produced it</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h2 class="sub">The engineering excellence he gets to show</h2>
-        <p>Semantics here are genuinely nasty and no amount of prompt engineering gets past them: committed versus actual versus forecast, retention held back, pending versus approved change orders. <strong>A join can be technically valid and financially wrong</strong> — so the eval has to catch semantic wrongness, not syntax errors.</p>
-
-        <div class="sowhat">
-          <span class="sowhat__k">The research surface</span>
-          <p>Faithfulness scoring at the level of <strong>joins and filters</strong>, not vibes: does the explanation describe the query that ran? That's a groundedness eval where the "retrieved evidence" is an execution plan. Very few people at this hackathon will be grading a narration against a query plan.</p>
-        </div>
-              <h2 class="sub">Isha — the guards, and the refusal</h2>
-
-        <p>$64.84B disappears from an answer and every health check stays green. This is the silent-default anti-pattern in its natural habitat — and turning silent failure into loud, fast failure is the discipline she already sells.</p>
-
-        <div class="tw">
-          <table class="tight">
-            <thead><tr><th>Guard</th><th>What it does</th><th>Failure mode it kills</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">Tie-out, fail closed</th><td>Does this figure reconcile to the source total within tolerance? If not, <strong>refuse to answer</strong> — don't degrade gracefully</td><td>Confident wrong totals</td></tr>
-              <tr><th scope="row">Unmatched-row accounting</th><td>Every join reports what it dropped, in rows and in dollars, on the answer itself</td><td>The $64.84B silent drop</td></tr>
-              <tr><th scope="row">Cardinality contract</th><td>Assert the expected key relationship before the join; a 1:1 assumption that turns 1:N throws</td><td>The 207-project fan-out</td></tr>
-              <tr><th scope="row">Provenance envelope</th><td>Every number carries its query, schema version and data watermark</td><td>"Was the model wrong, or the data stale?" — currently unanswerable</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h2 class="sub">The objection, answered</h2>
-        <p>The earlier scoring knocked this idea down on audience recognition, on the grounds that <em>the budget view is its interface</em> — the harness isn't a visible layer beside a recognisable Procore screen, it <em>is</em> the screen.</p>
-
-        <div class="sowhat">
-          <span class="sowhat__k">That's the argument for it, not against it</span>
-          <p>A reliability layer that lives beside the number gets ignored. <strong>This one sits where the number is read</strong>, so refusing to answer is a product behaviour a controller experiences, not a dashboard she'd have to go look at. Recognition comes from the field names on screen — <span class="mono">total_budget</span>, <span class="mono">budget_variance</span>, <span class="mono">current_phase</span> — not from a screenshot.</p>
-        </div>
-            </section>
 
 
       <!-- 09 ───────────────────────────────────────────── -->
@@ -1144,11 +1093,11 @@ WHERE  vendor_name = 'ACME Concrete'
   // which claim is on screen. B goes back -- a timed reveal cannot.
   var WF = [
     {t:'An invoice arrives, already carrying its purchase order. Nothing has been checked yet.'},
-    {on:['ph1'], tok:50, halo:'haloB', t:'<u>Check 1 &middot; vendor</u> Two vendor records match this name. <u>Resolve first</u> &mdash; check 2 is only as good as this.'},
-    {on:['ph1'], tok:50, t:'<b>Check 1 &middot; vendor</b> Resolved to one entity. Both spellings were the same company.'},
-    {on:['ph2'], tok:164, halo:'haloF', hit:'ph2', t:'<i>Check 2 &middot; paid before</i> Searched <i>every</i> spelling &mdash; this vendor was <i>already paid $340,000</i> on 14 July. Found only because check 1 resolved it.'},
-    {on:['ph3'], tok:278, hit:'ph2', t:'<b>Check 3 &middot; job status</b> Needs the FMS ID to PID join &mdash; <b>out of scope unless there is time</b>. Skipped, and the skip is on the record.'},
-    {on:[], tok:278, hit:'ph2', path:'pathDeny', term:'termDeny',
+    {on:['ph1'], tok:50, t:'<b>Check 1 &middot; intake</b> The document is readable and every required field is present. It is safe to check.'},
+    {on:['ph2'], tok:150, halo:'haloB', t:'<u>Check 2 &middot; vendor</u> Two vendor records match this name. <u>Resolve first</u> &mdash; check 3 is only as good as this.'},
+    {on:['ph2'], tok:150, t:'<b>Check 2 &middot; vendor</b> Resolved to one entity. Both spellings were the same company.'},
+    {on:['ph3'], tok:250, halo:'haloF', hit:'ph3', t:'<i>Check 3 &middot; paid before</i> Searched <i>every</i> spelling &mdash; this vendor was <i>already paid $340,000</i> on 14 July. Found only because check 2 resolved it.'},
+    {on:[], tok:250, hit:'ph3', path:'pathDeny', term:'termDeny',
      t:'<i>DENY &middot; confidence 1.00</i> A failed check is certain. The receipt names the check, the query that ran, and the matching payment.'}
   ];
   var wfStep = 0;

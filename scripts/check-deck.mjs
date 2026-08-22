@@ -92,8 +92,12 @@ const src = readFileSync('docs/deck.html', 'utf8');
 if (process.argv.includes('--selftest')) {
   // NEGATIVE CONTROLS: each mutation must be caught by a different clause above.
   const cases = [
-    ['class the step machine names is renamed', s => s.replace('class="ph ph2"', 'class="ph phZZ"')],
-    ['a token stop no longer lands on a phase', s => s.replace('tok:164', 'tok:9999')],
+    // Both derive their target from the source. A control that hardcodes a literal
+    // goes stale the moment the figure is redrawn, and then proves nothing.
+    ['class the step machine names is renamed',
+     s => s.replace(/class="ph (ph\d)"/, 'class="ph phZZ"')],
+    ['a token stop no longer lands on a phase',
+     s => s.replace(/tok:\d+/, 'tok:9999')],
     ['a theme token is removed', s => s.replace('  --ask:#ffcf25;', '')],
     ['a marker definition is dropped', s => s.replace(/<marker id="ah-deny"[\s\S]*?<\/marker>/, '')],
     ['the N key binding is removed', s => s.replace("e.key === 'n'", "e.key === 'Q'")],
