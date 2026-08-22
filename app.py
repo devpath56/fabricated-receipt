@@ -1,45 +1,20 @@
-"""
-Invoice Verification Chat Demo
-
-Flow:
-    PDF invoice
-        |
-        v
-    Extract invoice fields
-        |
-        +--> Vendor Entity Check
-        |
-        +--> Payment Duplication Check
-        |
-        v
-    FINAL DECISION
-        CLEAR / HOLD
-
-Run:
-    streamlit run app.py
-
-Install:
-    pip install streamlit pypdf
-"""
-
 from __future__ import annotations
 
+import base64
 import json
-import re
+import os
 import sys
 from pathlib import Path
 from typing import Any
 
 import streamlit as st
-
+from mistralai.client import Mistral
 
 # ---------------------------------------------------------------------
 # PATHS
 # ---------------------------------------------------------------------
 
 ROOT = Path(__file__).resolve().parent
-
-# Allow imports from checks/
 sys.path.insert(0, str(ROOT))
 
 from checks.common import (  # noqa: E402
@@ -97,10 +72,6 @@ st.markdown(
         background: rgba(230, 126, 34, .10);
     }
 
-    .decision-block {
-        background: rgba(220, 53, 69, .10);
-    }
-
     .decision-title {
         font-size: 34px;
         font-weight: 800;
@@ -117,11 +88,6 @@ st.markdown(
         border-radius: 12px;
         padding: 18px;
         margin: 10px 0;
-    }
-
-    .check-title {
-        font-size: 18px;
-        font-weight: 700;
     }
 
     .pass {
@@ -158,8 +124,29 @@ st.title("🧾 Invoice Verification")
 
 st.caption(
     "Upload an incoming invoice. "
-    "Vendor entity and payment duplication checks run automatically."
+    "Mistral OCR extracts the invoice data, then vendor entity "
+    "and payment duplication checks run automatically."
 )
+
+
+# ---------------------------------------------------------------------
+# MISTRAL CLIENT
+# ---------------------------------------------------------------------
+
+MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY")
+
+if not MISTRAL_API_KEY:
+    st.error(
+        "MISTRAL_API_KEY is not set. "
+        "Set it in your environment before starting the app."
+    )
+    st.code(
+        '$env:MISTRAL_API_KEY="your_mistral_api_key_here"',
+        language="powershell",
+    )
+    st.stop()
+
+mistral_client = Mistral(api_key=MISTRAL_API_KEY)
 
 
 # ---------------------------------------------------------------------
@@ -234,93 +221,177 @@ for message in st.session_state.messages:
 
 
 # ---------------------------------------------------------------------
-# PDF TEXT EXTRACTION
+# MISTRAL OCR / DOCUMENT EXTRACTION
 # ---------------------------------------------------------------------
 
-def extract_pdf_text(uploaded_file) -> str:
-    """
-    Extract text from a normal text-based PDF.
+INVOICE_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "invoice_id": {
+            "type": ["string", "null"],
+            "description": (
+                "The invoice number or invoice identifier. "
+                "Look anywhere in the document. "
+                "Return null if not present."
+            ),
+        },
+        "vendor_name": {
+            "type": ["string", "null"],
+            "description": (
+                "The legal/business name of the company or supplier "
+                "issuing the invoice. Do not return the customer/bill-to "
+                "company. Look at the invoice header, supplier section, "
+                "from section, remittance section, or seller information."
+            ),
+        },
+        "vendor_address": {
+            "type": ["string", "null"],
+            "description": (
+                "The address of the company issuing the invoice. "
+                "Return null if not available."
+            ),
+        },
+        "po_id": {
+            "type": ["string", "null"],
+            "description": (
+                "The purchase order number associated with the invoice. "
+                "Look for PO, purchase order, PO number, or similar. "
+                "Return null if not present."
+            ),
+        },
+        "amount": {
+            "type": ["number", "null"],
+            "description": (
+                "The final total amount due on the invoice. "
+                "Use the grand total, total due, amount due, or equivalent. "
+                "Do not use subtotal or tax unless that is the final amount."
+            ),
+        },
+        "currency": {
+            "type": ["string", "null"],
+            "description": (
+                "The invoice currency, such as USD, EUR, or GBP. "
+                "Return null if it cannot be determined."
+            ),
+        },
+        "invoice_date": {
+            "type": ["string", "null"],
+            "description": (
+                "The invoice date. Return it as YYYY-MM-DD when possible. "
+                "Return null if not present."
+            ),
+        },
+        "payment_terms": {
+            "type": ["string", "null"],
+            "description": (
+                "Payment terms such as Net 30, Net 45, Due on receipt. "
+                "Return null if not present."
+            ),
+        },
+    },
+    "required": [
+        "invoice_id",
+        "vendor_name",
+        "vendor_address",
+        "po_id",
+        "amount",
+        "currency",
+        "invoice_date",
+        "payment_terms",
+    ],
+    "additionalProperties": False,
+}
 
-    For scanned/image-only invoices, OCR would be needed.
-    """
 
-    try:
-
-        from pypdf import PdfReader
-
-    except ImportError:
-
-        st.error(
-            "pypdf is not installed. Run: pip install pypdf"
-        )
-
-        st.stop()
+def encode_pdf(uploaded_file) -> str:
 
     uploaded_file.seek(0)
 
-    reader = PdfReader(uploaded_file)
+    pdf_bytes = uploaded_file.read()
 
-    pages = []
-
-    for page in reader.pages:
-
-        text = page.extract_text() or ""
-
-        pages.append(text)
-
-    return "\n".join(pages)
+    return base64.b64encode(pdf_bytes).decode("utf-8")
 
 
-# ---------------------------------------------------------------------
-# TEXT HELPERS
-# ---------------------------------------------------------------------
+def run_mistral_ocr(uploaded_file) -> tuple[dict[str, Any], str]:
 
-def clean_text(value: str) -> str:
+    base64_pdf = encode_pdf(uploaded_file)
 
-    value = value.replace("\xa0", " ")
-
-    value = re.sub(
-        r"[ \t]+",
-        " ",
-        value,
+    response = mistral_client.ocr.process(
+        model="mistral-ocr-latest",
+        pages=list(range(8)),
+        document={
+            "type": "document_url",
+            "document_url": (
+                f"data:application/pdf;base64,{base64_pdf}"
+            ),
+        },
+        document_annotation_format={
+            "type": "json_schema",
+            "json_schema": {
+                "name": "invoice",
+                "schema_definition": INVOICE_SCHEMA,
+                "strict": True,
+            },
+        },
+        document_annotation_prompt=(
+            "Extract the invoice fields from the entire document. "
+            "Identify the company that issued/sent the invoice as "
+            "vendor_name, not the bill-to/customer company. "
+            "Use visual layout, headers, tables, and document context. "
+            "Do not guess values that are not present. "
+            "For amount, return the final amount due or grand total."
+        ),
+        include_image_base64=False,
+        include_blocks=True,
+        confidence_scores_granularity="page",
+        extract_header=True,
+        extract_footer=True,
+        table_format="html",
     )
 
-    value = re.sub(
-        r"\n{3,}",
-        "\n\n",
-        value,
-    )
+    # Structured annotation
+    annotation_raw = response.document_annotation
 
-    return value.strip()
-
-
-def find_first(
-    text: str,
-    patterns: list[str],
-) -> str | None:
-
-    for pattern in patterns:
-
-        match = re.search(
-            pattern,
-            text,
-            flags=re.IGNORECASE | re.MULTILINE,
+    if not annotation_raw:
+        raise RuntimeError(
+            "Mistral OCR did not return structured invoice data."
         )
 
-        if match:
+    if isinstance(annotation_raw, str):
+        extracted = json.loads(annotation_raw)
+    else:
+        extracted = annotation_raw
 
-            return match.group(1).strip()
+    # OCR markdown
+    pages = getattr(response, "pages", []) or []
 
-    return None
+    markdown_parts = []
+
+    for page in pages:
+        markdown = getattr(page, "markdown", None)
+
+        if markdown:
+            markdown_parts.append(markdown)
+
+    raw_text = "\n\n".join(markdown_parts)
+
+    return extracted, raw_text
 
 
-def parse_amount(value: str | None) -> float | None:
+# ---------------------------------------------------------------------
+# NORMALIZE EXTRACTED DATA
+# ---------------------------------------------------------------------
 
-    if not value:
+def normalize_amount(value: Any) -> float | None:
+
+    if value is None:
         return None
 
-    cleaned = (
-        value
+    if isinstance(value, (int, float)):
+        return float(value)
+
+    text = (
+        str(value)
         .replace("$", "")
         .replace(",", "")
         .replace("USD", "")
@@ -328,117 +399,87 @@ def parse_amount(value: str | None) -> float | None:
     )
 
     try:
-
-        return float(cleaned)
+        return float(text)
 
     except ValueError:
-
         return None
 
 
-# ---------------------------------------------------------------------
-# INVOICE EXTRACTION
-# ---------------------------------------------------------------------
+def normalize_period(date_value: str | None) -> str:
 
-def extract_invoice_fields(
-    text: str,
-) -> dict[str, Any]:
-
-    text = clean_text(text)
-
-    invoice_id = find_first(
-        text,
-        [
-            r"(?:invoice\s*(?:number|no\.?|#)|inv(?:oice)?\s*#?)\s*[:\-]?\s*([A-Z0-9][A-Z0-9\-_\/]+)",
-        ],
-    )
-
-    vendor_name = find_first(
-        text,
-        [
-            r"(?:vendor|supplier|seller)\s*(?:name)?\s*[:\-]\s*(.+)",
-            r"(?:from)\s*[:\-]\s*(.+)",
-        ],
-    )
-
-    po_id = find_first(
-        text,
-        [
-            r"(?:purchase\s*order|po)\s*(?:number|no\.?|#|id)?\s*[:\-]?\s*([A-Z0-9][A-Z0-9\-_\/]+)",
-        ],
-    )
-
-    amount_raw = find_first(
-        text,
-        [
-            r"(?:total\s*due|invoice\s*total|grand\s*total|amount\s*due|total)\s*[:\-]?\s*\$?\s*([\d,]+\.\d{2})",
-        ],
-    )
-
-    date = find_first(
-        text,
-        [
-            r"(?:invoice\s*date|date)\s*[:\-]\s*([0-9]{1,4}[\/\-][0-9]{1,2}[\/\-][0-9]{1,4})",
-        ],
-    )
-
-    amount = parse_amount(amount_raw)
-
-    # -------------------------------------------------------------
-    # Period
-    # -------------------------------------------------------------
-    period = ""
-
-    if date:
-
-        digits = re.findall(
-            r"\d+",
-            date,
-        )
-
-        if len(digits) >= 3:
-
-            # Best-effort YYYYMM
-            year = None
-            month = None
-
-            for d in digits:
-
-                if len(d) == 4:
-                    year = d
-
-            if year:
-
-                for d in digits:
-
-                    if len(d) <= 2:
-
-                        n = int(d)
-
-                        if 1 <= n <= 12:
-
-                            month = f"{n:02d}"
-                            break
-
-                if month:
-
-                    period = f"{year}{month}"
-
-    # Fallback to current demo period
-    if not period:
-
+    if not date_value:
         from datetime import datetime
 
-        period = datetime.now().strftime("%Y%m")
+        return datetime.now().strftime("%Y%m")
+
+    # Expected output is normally YYYY-MM-DD.
+    parts = date_value.split("-")
+
+    if len(parts) >= 2 and len(parts[0]) == 4:
+
+        year = parts[0]
+        month = parts[1]
+
+        if month.isdigit():
+
+            month_num = int(month)
+
+            if 1 <= month_num <= 12:
+                return f"{year}{month_num:02d}"
+
+    # Fallback for other common formats.
+    import re
+
+    digits = re.findall(r"\d+", date_value)
+
+    year = None
+    month = None
+
+    for item in digits:
+
+        if len(item) == 4:
+            year = item
+
+    if year:
+
+        for item in digits:
+
+            if len(item) <= 2:
+
+                number = int(item)
+
+                if 1 <= number <= 12:
+                    month = f"{number:02d}"
+                    break
+
+    if year and month:
+        return f"{year}{month}"
+
+    from datetime import datetime
+
+    return datetime.now().strftime("%Y%m")
+
+
+def normalize_invoice_fields(
+    extracted: dict[str, Any],
+    raw_text: str,
+) -> dict[str, Any]:
 
     return {
-        "invoice_id": invoice_id,
-        "vendor_name": vendor_name,
-        "po_id": po_id,
-        "amount": amount,
-        "date": date,
-        "period": period,
-        "raw_text": text,
+        "invoice_id": extracted.get("invoice_id"),
+        "vendor_name": extracted.get("vendor_name"),
+        "vendor_address": extracted.get("vendor_address"),
+        "po_id": extracted.get("po_id"),
+        "amount": normalize_amount(
+            extracted.get("amount")
+        ),
+        "currency": extracted.get("currency"),
+        "date": extracted.get("invoice_date"),
+        "period": normalize_period(
+            extracted.get("invoice_date")
+        ),
+        "payment_terms": extracted.get("payment_terms"),
+        "raw_text": raw_text,
     }
 
 
@@ -454,22 +495,22 @@ def validate_invoice(
 
     if not fields.get("invoice_id"):
         errors.append(
-            "Could not extract invoice number."
+            "Mistral OCR could not identify an invoice number."
         )
 
     if not fields.get("vendor_name"):
         errors.append(
-            "Could not extract vendor name."
+            "Mistral OCR could not identify the invoice vendor."
         )
 
     if not fields.get("po_id"):
         errors.append(
-            "Could not extract PO number."
+            "Mistral OCR could not identify a purchase order number."
         )
 
     if fields.get("amount") is None:
         errors.append(
-            "Could not extract invoice amount."
+            "Mistral OCR could not identify the final invoice amount."
         )
 
     return errors
@@ -878,7 +919,7 @@ def render_result(
     # -------------------------------------------------------------
 
     with st.expander(
-        "View extracted invoice data"
+        "View Mistral extracted invoice data"
     ):
 
         st.json(
@@ -890,7 +931,7 @@ def render_result(
         )
 
     with st.expander(
-        "View extracted PDF text"
+        "View Mistral OCR text"
     ):
 
         st.text(
@@ -978,48 +1019,41 @@ if chat_submission:
             ) as status:
 
                 # -------------------------------------------------
-                # Extraction
+                # Mistral OCR + extraction
                 # -------------------------------------------------
 
                 st.write(
-                    "📄 Extracting invoice fields..."
+                    "🤖 Reading invoice with Mistral OCR..."
                 )
 
                 try:
 
-                    pdf_text = extract_pdf_text(
+                    extracted, raw_text = run_mistral_ocr(
                         uploaded_file
                     )
 
                 except Exception as exc:
 
                     status.update(
-                        label="PDF extraction failed",
+                        label="Mistral OCR failed",
                         state="error",
                     )
 
                     st.error(
-                        str(exc)
+                        "Mistral OCR could not process this invoice."
                     )
+
+                    st.exception(exc)
 
                     st.stop()
 
-                if not pdf_text.strip():
+                fields = normalize_invoice_fields(
+                    extracted,
+                    raw_text,
+                )
 
-                    status.update(
-                        label="No text found in PDF",
-                        state="error",
-                    )
-
-                    st.error(
-                        "This appears to be a scanned/image-only PDF. "
-                        "OCR is required for this invoice."
-                    )
-
-                    st.stop()
-
-                fields = extract_invoice_fields(
-                    pdf_text
+                st.write(
+                    "✓ Invoice fields extracted"
                 )
 
                 # -------------------------------------------------
@@ -1033,7 +1067,7 @@ if chat_submission:
                 if errors:
 
                     status.update(
-                        label="Could not extract required fields",
+                        label="Invoice extraction incomplete",
                         state="error",
                     )
 
@@ -1049,18 +1083,22 @@ if chat_submission:
                         )
 
                     with st.expander(
-                        "View extracted PDF text"
+                        "View Mistral extracted data"
+                    ):
+
+                        st.json(
+                            extracted
+                        )
+
+                    with st.expander(
+                        "View Mistral OCR text"
                     ):
 
                         st.text(
-                            pdf_text
+                            raw_text
                         )
 
                     st.stop()
-
-                st.write(
-                    "✓ Invoice fields extracted"
-                )
 
                 # -------------------------------------------------
                 # Vendor check
