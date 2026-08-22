@@ -16,7 +16,7 @@ const SETS = [
 
 async function pull({ id, name, where }) {
   const rows = [];
-  const LIMIT = 50000;               // Socrata's $limit DEFAULTS TO 1000. Never rely on the default.
+  const LIMIT = 70000;               // Socrata's $limit DEFAULTS TO 1000. Never rely on the default.
   for (let offset = 0; ; offset += LIMIT) {
     const u = new URL(`${HOST}/${id}.json`);
     u.searchParams.set('$limit', LIMIT);
