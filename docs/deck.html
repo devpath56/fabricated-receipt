@@ -24,6 +24,7 @@
   --claim-dim:#d9775726;
   --verified:#7fb8a1;      /* what the query actually did */
   --verified-dim:#7fb8a126;
+  --ask:#9b93d6;
   --shadow:0 18px 40px -22px #000000cc;
 
   --rail:264px;
@@ -48,6 +49,7 @@
   --claim-dim:#b8552f1f;
   --verified:#3f7360;
   --verified-dim:#3f73601f;
+  --ask:#6058a8;
   --shadow:0 18px 40px -26px #10131140;
 }
 
@@ -185,6 +187,11 @@ h2.sub{
 .sowhat--claim .sowhat__k{color:var(--claim)}
 .sowhat p{margin:0;color:var(--ink)}
 
+.fig{margin:26px 0;border:1px solid var(--hairline);border-radius:var(--r);
+  padding:20px 18px 14px;background:var(--surface);overflow-x:auto}
+.fig svg{display:block;width:100%;min-width:660px;max-width:900px;height:auto;margin:0 auto;color:var(--ink-mid)}
+.fig figcaption{margin-top:14px;font-size:11.5px;color:var(--ink-muted);line-height:1.55;max-width:var(--measure)}
+.fig figcaption strong{color:var(--ink-mid);font-weight:500}
 blockquote{
   margin:26px 0;padding:0 0 0 20px;border-left:1px solid var(--hairline-strong);
   max-width:var(--measure);
@@ -334,6 +341,169 @@ table.tight td,table.tight th{padding:7px 12px;font-size:12.4px}
         <div class="sowhat sowhat--claim">
           <span class="sowhat__k">So what</span>
           <p>The tool didn't save her an afternoon. It <strong>added a thing she has to check</strong>. Every "show your work" panel that narrates itself makes this worse, not better — it gives her more to read and no more to verify.</p>
+        </div>
+      </section>
+
+      <!-- WORKFLOW ─────────────────────────────────────── -->
+      <section class="pane" data-title="Her workflow today" data-group="Project">
+        <p class="eyebrow">Decision 02 — The workflow we are entering</p>
+        <h1 class="lede">Every gate we build removes a step she does <em>by hand</em>.</h1>
+
+        <p>A project manager at a general contractor, reconciling two systems that were never designed to agree: the ERP holds sanctioned project status under a <span class="mono">PID</span>; the finance contract DB holds the money under an <span class="mono">FMS ID</span>. <strong>Her whole job is one join nobody guaranteed.</strong></p>
+
+        <figure class="fig">
+          <svg viewBox="0 0 900 890" role="img" aria-label="Invoice workflow: an invoice enters, passes through eight check phases A to H, and exits as one of three actions — comment, approve, or deny — each carrying a computed confidence score." xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+              </marker>
+              <marker id="ah-ask" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="var(--ask)"/>
+              </marker>
+              <marker id="ah-deny" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="var(--claim)"/>
+              </marker>
+              <marker id="ah-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="var(--verified)"/>
+              </marker>
+            </defs>
+
+            <!-- start -->
+            <rect x="250" y="18" width="240" height="40" rx="20" fill="none" stroke="currentColor" stroke-width="1.5"/>
+            <text x="370" y="43" text-anchor="middle" font-size="13" fill="currentColor">Invoice received</text>
+            <line x1="370" y1="58" x2="370" y2="80" stroke="currentColor" stroke-width="1.5" marker-end="url(#ah)"/>
+
+            <!-- ── spine: eight phases ── -->
+            <g font-size="12.5">
+              <!-- A -->
+              <rect x="200" y="84" width="340" height="54" rx="5" fill="var(--surface)" stroke="var(--hairline-strong)"/>
+              <text x="216" y="106" font-size="12" font-weight="600" fill="var(--verified)">A</text>
+              <text x="240" y="106" fill="currentColor">Intake — before any system</text>
+              <text x="240" y="124" font-size="11" fill="var(--ink-muted)">invoice not a statement · period covered · pay app or invoice</text>
+
+              <!-- B -->
+              <rect x="200" y="162" width="340" height="54" rx="5" fill="var(--surface)" stroke="var(--hairline-strong)"/>
+              <text x="216" y="184" font-size="12" font-weight="600" fill="var(--verified)">B</text>
+              <text x="240" y="184" fill="currentColor">Who is this? — vendor identity</text>
+              <text x="240" y="202" font-size="11" fill="var(--ink-muted)">48 alias clusters · $40.77M · remit-to · insurance · payroll</text>
+
+              <!-- C -->
+              <rect x="200" y="240" width="340" height="54" rx="5" fill="var(--surface)" stroke="var(--claim)" stroke-width="1.5"/>
+              <text x="216" y="262" font-size="12" font-weight="600" fill="var(--claim)">C</text>
+              <text x="240" y="262" fill="currentColor">Which money? — PID ↔ FMS ID</text>
+              <text x="240" y="280" font-size="11" fill="var(--ink-muted)">207 fan out · 2,356 orphans · fms_id 5,608 of 5,801</text>
+
+              <!-- D -->
+              <rect x="200" y="318" width="340" height="54" rx="5" fill="var(--surface)" stroke="var(--hairline-strong)"/>
+              <text x="216" y="340" font-size="12" font-weight="600" fill="var(--verified)">D</text>
+              <text x="240" y="340" fill="currentColor">Did the work happen?</text>
+              <text x="240" y="358" font-size="11" fill="var(--ink-muted)">status · phase · % complete · tickets · backcharges</text>
+
+              <!-- E -->
+              <rect x="200" y="396" width="340" height="54" rx="5" fill="var(--surface)" stroke="var(--hairline-strong)"/>
+              <text x="216" y="418" font-size="12" font-weight="600" fill="var(--verified)">E</text>
+              <text x="240" y="418" fill="currentColor">Money there, scope authorised?</text>
+              <text x="240" y="436" font-size="11" fill="var(--ink-muted)">approved COs only · billed-to-date · line still funded</text>
+
+              <!-- F -->
+              <rect x="200" y="474" width="340" height="54" rx="5" fill="var(--surface)" stroke="var(--claim)" stroke-width="1.5"/>
+              <text x="216" y="496" font-size="12" font-weight="600" fill="var(--claim)">F</text>
+              <text x="240" y="496" fill="currentColor">Already paid this?</text>
+              <text x="240" y="514" font-size="11" fill="var(--ink-muted)">across every spelling — the $68,000 failure</text>
+
+              <!-- G -->
+              <rect x="200" y="552" width="340" height="54" rx="5" fill="var(--surface)" stroke="var(--hairline-strong)"/>
+              <text x="216" y="574" font-size="12" font-weight="600" fill="var(--verified)">G</text>
+              <text x="240" y="574" fill="currentColor">Withholdings</text>
+              <text x="240" y="592" font-size="11" fill="var(--ink-muted)">retention · lien waivers · backcharges · LDs</text>
+
+              <!-- H -->
+              <rect x="200" y="630" width="340" height="54" rx="5" fill="var(--surface)" stroke="var(--hairline-strong)"/>
+              <text x="216" y="652" font-size="12" font-weight="600" fill="var(--verified)">H</text>
+              <text x="240" y="652" fill="currentColor">Code, authority, evidence</text>
+              <text x="240" y="670" font-size="11" fill="var(--ink-muted)">PID · FMS ID · budget line · cost code · attachments</text>
+            </g>
+
+            <!-- spine arrows -->
+            <g stroke="currentColor" stroke-width="1.5" marker-end="url(#ah)">
+              <line x1="370" y1="138" x2="370" y2="158"/>
+              <line x1="370" y1="216" x2="370" y2="236"/>
+              <line x1="370" y1="294" x2="370" y2="314"/>
+              <line x1="370" y1="372" x2="370" y2="392"/>
+              <line x1="370" y1="450" x2="370" y2="470"/>
+              <line x1="370" y1="528" x2="370" y2="548"/>
+              <line x1="370" y1="606" x2="370" y2="626"/>
+            </g>
+            <line x1="370" y1="684" x2="370" y2="754" stroke="var(--verified)" stroke-width="2" marker-end="url(#ah-ok)"/>
+            <text x="380" y="722" font-size="11" fill="var(--verified)">all gates passed</text>
+
+            <!-- ask rail (left) -->
+            <g stroke="var(--ask)" stroke-width="1.5" fill="none">
+              <path d="M200,189 H90 V754" marker-end="url(#ah-ask)"/>
+              <path d="M200,267 H90"/>
+              <path d="M200,345 H90"/>
+              <path d="M200,579 H90"/>
+            </g>
+            <g font-size="10" fill="var(--ask)" text-anchor="end">
+              <text x="196" y="184">2 vendor records</text>
+              <text x="196" y="262">no mapping</text>
+              <text x="196" y="340">status undefined</text>
+              <text x="196" y="574">waiver missing</text>
+            </g>
+
+            <!-- deny rail (right) -->
+            <g stroke="var(--claim)" stroke-width="1.5" fill="none">
+              <path d="M540,189 H640 V754" marker-end="url(#ah-deny)"/>
+              <path d="M540,423 H640"/>
+              <path d="M540,501 H640"/>
+            </g>
+            <g font-size="10" fill="var(--claim)">
+              <text x="546" y="184">remit-to changed</text>
+              <text x="546" y="418">exceeds contract</text>
+              <text x="546" y="496">duplicate found</text>
+            </g>
+
+            <!-- terminals -->
+            <rect x="10" y="758" width="160" height="86" rx="5" fill="none" stroke="var(--ask)" stroke-width="1.5"/>
+            <text x="90" y="784" text-anchor="middle" font-size="13" font-weight="600" fill="var(--ask)">COMMENT</text>
+            <text x="90" y="803" text-anchor="middle" font-size="10.5" fill="var(--ink-muted)">a gate could not</text>
+            <text x="90" y="817" text-anchor="middle" font-size="10.5" fill="var(--ink-muted)">be evaluated</text>
+            <text x="90" y="835" text-anchor="middle" font-size="10.5" font-family="monospace" fill="var(--ask)">names what's missing</text>
+
+            <rect x="210" y="758" width="320" height="86" rx="5" fill="none" stroke="var(--verified)" stroke-width="2"/>
+            <text x="370" y="784" text-anchor="middle" font-size="13" font-weight="600" fill="var(--verified)">APPROVE</text>
+            <text x="370" y="803" text-anchor="middle" font-size="10.5" fill="var(--ink-muted)">every applicable gate passed, tie-out reconciled</text>
+            <text x="370" y="826" text-anchor="middle" font-size="12" font-family="monospace" fill="var(--verified)">confidence = passed ÷ applicable</text>
+
+            <rect x="560" y="758" width="160" height="86" rx="5" fill="none" stroke="var(--claim)" stroke-width="1.5"/>
+            <text x="640" y="784" text-anchor="middle" font-size="13" font-weight="600" fill="var(--claim)">DENY</text>
+            <text x="640" y="803" text-anchor="middle" font-size="10.5" fill="var(--ink-muted)">a gate hard-failed</text>
+            <text x="640" y="826" text-anchor="middle" font-size="12" font-family="monospace" fill="var(--claim)">confidence 1.00</text>
+          </svg>
+          <figcaption>One invoice, eight gates, three exits. <strong>C</strong> and <strong>F</strong> are outlined because both carry failures we measured in real published data. Every exception arrow is a step she performs by hand today.</figcaption>
+        </figure>
+
+        <h2 class="sub">The confidence score is a count, not a feeling</h2>
+
+        <div class="tw">
+          <table class="tight">
+            <thead><tr><th>Action</th><th>Fires when</th><th>Confidence</th></tr></thead>
+            <tbody>
+              <tr><th scope="row"><span class="pill pill--ok">Approve</span></th><td>Every <em>applicable</em> gate passed and the figure reconciled to the source total within tolerance</td><td class="num num--ok">passed ÷ applicable</td></tr>
+              <tr><th scope="row"><span class="pill">Comment</span></th><td>At least one gate returned <strong>cannot evaluate</strong> — an unresolved alias, a missing mapping, an undefined status</td><td class="num">reports the unevaluable gates <strong>by name</strong></td></tr>
+              <tr><th scope="row"><span class="pill pill--claim">Deny</span></th><td>At least one gate <strong>hard-failed</strong> — duplicate found, invoice exceeds contract, remit-to changed</td><td class="num num--claim">1.00 — a hard fail is certain</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="sowhat">
+          <span class="sowhat__k">The rule that makes it honest</span>
+          <p><strong>An unevaluable gate is never counted as passed.</strong> It leaves the denominator and routes to Comment. A model that says "95% confident" has produced another fabricated receipt — this number is <strong>gates passed over gates applicable</strong>, and every term is nameable.</p>
+        </div>
+
+        <div class="sowhat sowhat--claim">
+          <span class="sowhat__k">Two steps we deliberately do not automate</span>
+          <p><strong>D5</strong> — walk it, or call the superintendent. No system knows what was actually built. <strong>H4</strong> — record <em>why</em>, not merely that. The judgment is the approval; we supply the evidence, never the decision.</p>
         </div>
       </section>
 
@@ -757,16 +927,24 @@ WHERE  b.reporting_period = '202605'
     var li = document.createElement('li');
     var b = document.createElement('button');
     b.type = 'button';
-    b.innerHTML = '<span class="n">' + (i < 9 ? '0' + (i+1) : String.fromCharCode(65 + i - 9)) + '</span><span>' + p.getAttribute('data-title') + '</span>';
+    b.innerHTML = '<span class="n">' + mark(i) + '</span><span>' + p.getAttribute('data-title') + '</span>';
     b.addEventListener('click', function(){ go(i); });
     li.appendChild(b); chain.appendChild(li); buttons.push(b);
   });
 
+  // Number WITHIN the group: decisions count 01.., appendices letter A.. — so inserting a
+  // decision never renames an appendix. Index-based numbering did, and silently.
+  function mark(i){
+    var app = panes[i].getAttribute('data-group') === 'Appendix';
+    var n = 0;
+    for (var j = 0; j <= i; j++)
+      if ((panes[j].getAttribute('data-group') === 'Appendix') === app) n++;
+    return app ? String.fromCharCode(64 + n) : (n < 10 ? '0' + n : String(n));
+  }
   function label(i){
-    var p = panes[i];
-    var isApp = p.getAttribute('data-group') === 'Appendix';
-    var n = i < 9 ? '0' + (i+1) : String.fromCharCode(65 + i - 9);
-    return (isApp ? 'Appendix ' + n : 'Decision ' + n) + ' — <em>' + p.getAttribute('data-title') + '</em>';
+    var app = panes[i].getAttribute('data-group') === 'Appendix';
+    return (app ? 'Appendix ' : 'Decision ') + mark(i)
+      + ' — <em>' + panes[i].getAttribute('data-title') + '</em>';
   }
 
   function go(i){
