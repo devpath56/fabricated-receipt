@@ -386,7 +386,7 @@ table.tight td,table.tight th{padding:7px 12px;font-size:12.4px}
 FROM   budget_and_schedule b
 <span class="hl">JOIN</span>   projects p <span class="hl">ON p.pid = b.pid</span>
 WHERE  b.reporting_period = '202605'
-<span class="hl">-- inner join. 2,343 rows have no pid at all.</span></pre>
+<span class="hl">-- inner join. 2,356 rows have no pid at all.</span></pre>
           </div>
           <div class="beat__row">
             <span class="beat__k">Reconciled against the source total</span>
@@ -485,7 +485,7 @@ WHERE  b.reporting_period = '202605'
 
         <h2 class="sub">Failure two — the join drops a third of the money and says nothing</h2>
         <div class="stats">
-          <div class="stat"><span class="stat__v claim">2,343</span><span class="stat__k">rows with no project ID at all</span></div>
+          <div class="stat"><span class="stat__v claim">2,356</span><span class="stat__k">rows with no project ID (2,343 distinct FMS IDs)</span></div>
           <div class="stat"><span class="stat__v claim">$64.84B</span><span class="stat__k">of budget on those rows</span></div>
           <div class="stat"><span class="stat__v claim">31.2%</span><span class="stat__k">of the period's dollars unjoinable to a project</span></div>
           <div class="stat"><span class="stat__v ok">$0</span><span class="stat__k">errors raised when this happens</span></div>
@@ -660,19 +660,19 @@ WHERE  b.reporting_period = '202605'
           <table class="tight">
             <thead><tr><th>#</th><th>Project</th><th>Peak</th><th>Floor</th><th>Top two, weighted</th></tr></thead>
             <tbody>
-              <tr><td class="num">1</td><th scope="row">02 Change Ledger</th><td class="num">17.65</td><td><span class="pill pill--ok">clears</span></td><td>Agave 10 → 10.0 · Isha 9 → 7.65</td></tr>
-              <tr><td class="num">2</td><th scope="row">08 Twice-Billed</th><td class="num">17.00</td><td><span class="pill pill--ok">clears</span></td><td>Agave 10 → 10.0 · Shivam 10 → 7.00</td></tr>
-              <tr><td class="num">3</td><th scope="row">05 Commitment Invariant</th><td class="num">16.80</td><td><span class="pill pill--ok">clears</span></td><td>Agave 10 → 10.0 · Isha 8 → 6.80</td></tr>
-              <tr><td class="num">4</td><th scope="row">03 Budget View Replay <span class="pill pill--ok">selected</span></th><td class="num num--ok">15.60</td><td><span class="pill pill--ok">clears</span></td><td>Agave 10 → 10.0 · Shivam 8 → 5.60</td></tr>
-              <tr><td class="num">5</td><th scope="row">01 Codeset Guard</th><td class="num">13.95</td><td><span class="pill pill--ok">clears</span></td><td>Agave 8 → 8.0 · Isha 7 → 5.95</td></tr>
-              <tr><td class="num">6</td><th scope="row">06 Two-Phase Post</th><td class="num">13.80</td><td><span class="pill pill--ok">clears</span></td><td>Isha 8 → 6.80 · Agave 7 → 7.0</td></tr>
-              <tr><td class="num">7</td><th scope="row">16 Field-Level Fault</th><td class="num">12.95</td><td><span class="pill pill--ok">clears</span></td><td>Agave 7 → 7.0 · Isha 7 → 5.95</td></tr>
-              <tr><td class="num">8</td><th scope="row">10 Certificate Watch</th><td class="num">12.60</td><td><span class="pill pill--ok">clears</span></td><td>Agave 7 → 7.0 · Shivam 8 → 5.60</td></tr>
-              <tr><td class="num">9</td><th scope="row">11 Schema Tripwire</th><td class="num">11.80</td><td><span class="pill pill--ok">clears</span></td><td>Isha 8 → 6.80 · Agave 5 → 5.0</td></tr>
-              <tr><td class="num">10</td><th scope="row">14 Vendor Canon</th><td class="num">11.60</td><td><span class="pill pill--ok">clears</span></td><td>Agave 6 → 6.0 · Shivam 8 → 5.60</td></tr>
-              <tr><td class="num">11</td><th scope="row">09 Entity Fence</th><td class="num">11.10</td><td><span class="pill pill--ok">clears</span></td><td>Agave 6 → 6.0 · Isha 6 → 5.10</td></tr>
+              <tr><td class="num">1</td><th scope="row">02 Change Ledger</th><td class="num">17.65</td><td><span class="pill pill--ok">clears</span></td><td>Domain 10 → 10.0 · Isha 9 → 7.65</td></tr>
+              <tr><td class="num">2</td><th scope="row">08 Twice-Billed</th><td class="num">17.00</td><td><span class="pill pill--ok">clears</span></td><td>Domain 10 → 10.0 · Shivam 10 → 7.00</td></tr>
+              <tr><td class="num">3</td><th scope="row">05 Commitment Invariant</th><td class="num">16.80</td><td><span class="pill pill--ok">clears</span></td><td>Domain 10 → 10.0 · Isha 8 → 6.80</td></tr>
+              <tr><td class="num">4</td><th scope="row">03 Budget View Replay <span class="pill pill--ok">selected</span></th><td class="num num--ok">15.60</td><td><span class="pill pill--ok">clears</span></td><td>Domain 10 → 10.0 · Shivam 8 → 5.60</td></tr>
+              <tr><td class="num">5</td><th scope="row">01 Codeset Guard</th><td class="num">13.95</td><td><span class="pill pill--ok">clears</span></td><td>Domain 8 → 8.0 · Isha 7 → 5.95</td></tr>
+              <tr><td class="num">6</td><th scope="row">06 Two-Phase Post</th><td class="num">13.80</td><td><span class="pill pill--ok">clears</span></td><td>Isha 8 → 6.80 · Domain 7 → 7.0</td></tr>
+              <tr><td class="num">7</td><th scope="row">16 Field-Level Fault</th><td class="num">12.95</td><td><span class="pill pill--ok">clears</span></td><td>Domain 7 → 7.0 · Isha 7 → 5.95</td></tr>
+              <tr><td class="num">8</td><th scope="row">10 Certificate Watch</th><td class="num">12.60</td><td><span class="pill pill--ok">clears</span></td><td>Domain 7 → 7.0 · Shivam 8 → 5.60</td></tr>
+              <tr><td class="num">9</td><th scope="row">11 Schema Tripwire</th><td class="num">11.80</td><td><span class="pill pill--ok">clears</span></td><td>Isha 8 → 6.80 · Domain 5 → 5.0</td></tr>
+              <tr><td class="num">10</td><th scope="row">14 Vendor Canon</th><td class="num">11.60</td><td><span class="pill pill--ok">clears</span></td><td>Domain 6 → 6.0 · Shivam 8 → 5.60</td></tr>
+              <tr><td class="num">11</td><th scope="row">09 Entity Fence</th><td class="num">11.10</td><td><span class="pill pill--ok">clears</span></td><td>Domain 6 → 6.0 · Isha 6 → 5.10</td></tr>
               <tr><td class="num">—</td><th scope="row">12 Replay Harness</th><td class="num">12.25</td><td><span class="pill pill--claim">blocked</span></td><td>Shivam 9 → 6.30 · Isha 7 → 5.95</td></tr>
-              <tr><td class="num">—</td><th scope="row">07 Approval Warrant</th><td class="num">9.10</td><td><span class="pill pill--claim">blocked</span></td><td>Isha 6 → 5.10 · Agave 4 → 4.0</td></tr>
+              <tr><td class="num">—</td><th scope="row">07 Approval Warrant</th><td class="num">9.10</td><td><span class="pill pill--claim">blocked</span></td><td>Isha 6 → 5.10 · Domain 4 → 4.0</td></tr>
               <tr><td class="num">—</td><th scope="row">15 Exactly Once</th><td class="num">8.10</td><td><span class="pill pill--claim">blocked</span></td><td>Isha 5 → 4.25 · industry 7 → 3.85</td></tr>
               <tr><td class="num">—</td><th scope="row">13 Prefetch Scope</th><td class="num">7.60</td><td><span class="pill pill--claim">blocked</span></td><td>Shivam 6 → 4.20 · Isha 4 → 3.40</td></tr>
               <tr><td class="num">—</td><th scope="row">04 Inbox Quarantine</th><td class="num">5.05</td><td><span class="pill pill--claim">blocked</span></td><td>Isha 3 → 2.55 · general 10 → 2.50</td></tr>
@@ -710,7 +710,7 @@ WHERE  b.reporting_period = '202605'
           <table class="tight">
             <thead><tr><th>Rank</th><th>Criterion</th><th>Weight</th><th>How it's scored</th></tr></thead>
             <tbody>
-              <tr><td class="num">1</td><th scope="row">Agave relevance</th><td class="num num--ok">1.00</td><td><strong>Derived</strong>, not judged — five countable sub-signals worth 0–2 each: anchor · index · term count · JTBD grade · quote</td></tr>
+              <tr><td class="num">1</td><th scope="row">Domain grounding</th><td class="num num--ok">1.00</td><td><strong>Derived</strong>, not judged — five countable sub-signals worth 0–2 each: anchor · index · term count · JTBD grade · quote</td></tr>
               <tr><td class="num">2</td><th scope="row">Isha unique strengths</th><td class="num">0.85</td><td>Declared judgment</td></tr>
               <tr><td class="num">3</td><th scope="row">Shivam fit</th><td class="num">0.70</td><td>Declared judgment, graded on the rare half of his profile, not the RAG plumbing</td></tr>
               <tr><td class="num">4</td><th scope="row">Construction-tech recognition</th><td class="num">0.55</td><td>Declared judgment</td></tr>
@@ -719,7 +719,7 @@ WHERE  b.reporting_period = '202605'
           </table>
         </div>
 
-        <p>Ceiling is <span class="mono">18.5</span> — a perfect Agave relevance plus a perfect single spike.</p>
+        <p>Ceiling is <span class="mono">18.5</span> — a perfect domain-grounding score plus a perfect single spike.</p>
 
         <div class="sowhat sowhat--claim">
           <span class="sowhat__k">Read this before trusting the ranking</span>
