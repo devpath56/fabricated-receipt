@@ -218,6 +218,40 @@ h2.sub{
 #wf .tok{opacity:0;transition:transform .32s cubic-bezier(.4,0,.2,1),opacity .2s ease}
 #wf .tok.on{opacity:1}
 
+/* -- persona card -------------------------------------- */
+.persona{display:flex;flex-wrap:wrap;gap:22px 40px;align-items:flex-start;margin:24px 0 10px;
+  padding:20px 22px;background:var(--surface);border:1px solid var(--hairline-strong);border-radius:var(--r)}
+.persona__id{display:flex;gap:16px;align-items:center;min-width:250px}
+.persona__av{width:52px;height:52px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;
+  background:var(--surface-2);border:2px solid var(--ask);color:var(--ask);
+  font-family:var(--f-mono);font-size:17px;font-weight:500;letter-spacing:.04em}
+.persona__n{font-family:var(--f-display);font-size:25px;font-weight:400;margin:0;line-height:1.1}
+.persona__r{font-size:13.5px;color:var(--ink-mid);margin:5px 0 0}
+.persona__facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:12px 28px;margin:0;flex:1;min-width:280px}
+.persona__facts div{display:flex;flex-direction:column;gap:3px}
+.persona__facts dt{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ink-muted)}
+.persona__facts dd{margin:0;font-size:14px;color:var(--ink-mid);line-height:1.4}
+.persona__facts dd strong{color:var(--ink);font-weight:600}
+
+/* -- three-party diagram: reveals on open, no interaction needed -- */
+#pz .pz1,#pz .pz2,#pz .pz3,#pz .flowDown,#pz .flowUp,#pz .pinch{opacity:0}
+#pz.run .pz1{animation:pzIn .45s ease .10s forwards}
+#pz.run .pz3{animation:pzIn .45s ease .35s forwards}
+#pz.run .pz2{animation:pzIn .45s ease .60s forwards}
+#pz.run .flowDown{animation:pzIn .6s ease 1.00s forwards}
+#pz.run .flowDown path{stroke-dashoffset:120;animation:pzCrawl 2.4s linear 1.0s infinite}
+#pz.run .flowUp{animation:pzSnap .3s ease 1.85s forwards}
+#pz.run .pinch{animation:pzIn .5s ease 2.30s forwards}
+@keyframes pzIn{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+@keyframes pzSnap{0%{opacity:0;transform:translateY(14px)}60%{opacity:1;transform:translateY(-3px)}100%{opacity:1;transform:none}}
+@keyframes pzCrawl{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){
+  #pz .pz1,#pz .pz2,#pz .pz3,#pz .flowDown,#pz .flowUp,#pz .pinch{opacity:1;animation:none}
+  #pz.run .flowDown path{animation:none}
+}
+
 .stepbar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
   margin-top:16px;padding:12px 14px;background:var(--surface-2);border:1px solid var(--hairline-strong);
   border-radius:var(--r)}
@@ -370,22 +404,130 @@ table.tight td,table.tight th{padding:7px 12px;font-size:12.4px}
     <div class="panes" id="panes">
 
       <!-- 01 ───────────────────────────────────────────── -->
-      <section class="pane" data-title="The user" data-group="Project">
-        <p class="eyebrow">Decision 01 — The user</p>
-        <h1 class="lede">She doesn't distrust the number. She distrusts that she <em>can't check it</em>.</h1>
+      <section class="pane" data-title="Angela" data-group="Project">
+        <p class="eyebrow">Decision 01 — Who this is for</p>
+        <h1 class="lede">Angela is the only person who has to make <em>two systems</em> agree.</h1>
 
-        <p>A project accountant at a mid-market contractor — $50M to $500M in revenue, Procore for the field, Vista or Spectrum for the money, and nobody on staff who writes integrations. That last part is why this whole category exists.</p>
+        <div class="persona">
+          <div class="persona__id">
+            <div class="persona__av" aria-hidden="true">AR</div>
+            <div>
+              <h3 class="persona__n">Angela Reyes</h3>
+              <p class="persona__r">Project Manager · Meridian Builders (general contractor)</p>
+            </div>
+          </div>
+          <dl class="persona__facts">
+            <div><dt>Runs</dt><dd>4 jobs at once, one of <strong>25–30 PMs</strong></dd></div>
+            <div><dt>Field truth</dt><dd>Procore — commitments, change orders, daily logs</dd></div>
+            <div><dt>Money of record</dt><dd>the ERP — GL, AP, job cost, the audit trail</dd></div>
+            <div><dt>Sees financials</dt><dd><strong>once a month.</strong> A deeper review every few months</dd></div>
+            <div><dt>Integration engineers on staff</dt><dd><strong>zero</strong></dd></div>
+          </dl>
+        </div>
+        <p class="footnote">A composite of two documented general contractors — a 25–30 PM firm whose forecasting ran as a multi-day monthly export-to-Excel-and-back exercise, and a ten-office firm where a <strong>$10 million project was linked to the wrong job</strong>, could not be reversed, and had to be tracked off-book for months in a parallel manual ledger.</p>
 
-        <p>Mid-meeting, someone asks why job 1412 is over budget. Her AI tool answers in three seconds with a tidy paragraph explaining where the figure came from. Then she opens Vista and rebuilds the number by hand anyway.</p>
+        <h2 class="sub">Three parties, and only one of them has to reconcile</h2>
+
+        <figure class="fig">
+          <svg id="pz" viewBox="0 0 980 600" role="img" aria-label="Three-party diagram. The budget owner at top releases money slowly, gated by an approved requisition against a sanctioned FMS ID. The general contractor in the middle holds both the project ID and the FMS ID and must reconcile them. Four specialty contractors at the bottom — concrete, plumbing, electrical, HVAC — apply fast pressure upward because unpaid crews demobilise." xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="pd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--verified)"/></marker>
+              <marker id="pu" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--claim)"/></marker>
+            </defs>
+
+            <!-- budget owner -->
+            <g class="pz1">
+              <rect x="200" y="18" width="580" height="94" rx="3" fill="var(--surface)" stroke="var(--hairline-strong)" stroke-width="1.5"/>
+              <text x="224" y="50" font-size="17" font-weight="600" fill="var(--ink)">Budget owner — the city</text>
+              <text x="224" y="74" font-size="13.5" fill="var(--ink-mid)">Holds the appropriation. Pays only against an approved requisition.</text>
+              <text x="224" y="95" font-size="13.5" fill="var(--ink-mid)">Fear: paying for something unsanctioned. Lever: withhold.</text>
+              <text x="756" y="50" font-size="13" font-family="monospace" text-anchor="end" fill="var(--ask)">knows FMS ID only</text>
+            </g>
+
+            <!-- the GC -->
+            <g class="pz2">
+              <rect x="200" y="238" width="580" height="124" rx="3" fill="var(--surface-2)" stroke="var(--ask)" stroke-width="2.5"/>
+              <text x="224" y="272" font-size="17" font-weight="600" fill="var(--ink)">Angela — the general contractor</text>
+              <text x="224" y="296" font-size="13.5" fill="var(--ink-mid)">Pays the subs <strong>before</strong> the owner reimburses her. She is the bank.</text>
+              <text x="224" y="317" font-size="13.5" fill="var(--ink-mid)">Fear: approve a bad invoice, the owner refuses, the GC eats it.</text>
+              <text x="224" y="345" font-size="14" font-family="monospace" fill="var(--ask)">holds PID  ·  holds FMS ID  ·  must make them agree</text>
+            </g>
+
+            <!-- specialty contractors -->
+            <g class="pz3">
+              <rect x="200" y="470" width="136" height="88" rx="3" fill="var(--surface)" stroke="var(--hairline-strong)" stroke-width="1.5"/>
+              <text x="268" y="502" font-size="15" text-anchor="middle" fill="var(--ink)">Concrete</text>
+              <text x="268" y="524" font-size="12" text-anchor="middle" fill="var(--ink-mid)">crew of 14</text>
+              <text x="268" y="543" font-size="12" text-anchor="middle" fill="var(--claim)">demobilises</text>
+
+              <rect x="348" y="470" width="136" height="88" rx="3" fill="var(--surface)" stroke="var(--hairline-strong)" stroke-width="1.5"/>
+              <text x="416" y="502" font-size="15" text-anchor="middle" fill="var(--ink)">Plumbing</text>
+              <text x="416" y="524" font-size="12" text-anchor="middle" fill="var(--ink-mid)">retention 10%</text>
+              <text x="416" y="543" font-size="12" text-anchor="middle" fill="var(--claim)">files a lien</text>
+
+              <rect x="496" y="470" width="136" height="88" rx="3" fill="var(--surface)" stroke="var(--hairline-strong)" stroke-width="1.5"/>
+              <text x="564" y="502" font-size="15" text-anchor="middle" fill="var(--ink)">Electrical</text>
+              <text x="564" y="524" font-size="12" text-anchor="middle" fill="var(--ink-mid)">on the critical path</text>
+              <text x="564" y="543" font-size="12" text-anchor="middle" fill="var(--claim)">slows down</text>
+
+              <rect x="644" y="470" width="136" height="88" rx="3" fill="var(--surface)" stroke="var(--hairline-strong)" stroke-width="1.5"/>
+              <text x="712" y="502" font-size="15" text-anchor="middle" fill="var(--ink)">HVAC</text>
+              <text x="712" y="524" font-size="12" text-anchor="middle" fill="var(--ink-mid)">$340k billed</text>
+              <text x="712" y="543" font-size="12" text-anchor="middle" fill="var(--claim)">walks off</text>
+            </g>
+
+            <!-- money down: slow, dashed -->
+            <g class="flowDown">
+              <path d="M150,112 V232" stroke="var(--verified)" stroke-width="3" fill="none"
+                    stroke-dasharray="9 9" marker-end="url(#pd)"/>
+              <path d="M150,362 V464" stroke="var(--verified)" stroke-width="3" fill="none"
+                    stroke-dasharray="9 9" marker-end="url(#pd)"/>
+              <text x="138" y="168" font-size="13" text-anchor="end" fill="var(--verified)">money</text>
+              <text x="138" y="186" font-size="12" text-anchor="end" fill="var(--ink-mid)">30–60 days</text>
+              <text x="138" y="404" font-size="13" text-anchor="end" fill="var(--verified)">money</text>
+              <text x="138" y="422" font-size="12" text-anchor="end" fill="var(--ink-mid)">less retention</text>
+            </g>
+
+            <!-- pressure up: fast, solid -->
+            <g class="flowUp">
+              <path d="M830,464 V366" stroke="var(--claim)" stroke-width="3" fill="none" marker-end="url(#pu)"/>
+              <path d="M830,232 V116" stroke="var(--claim)" stroke-width="3" fill="none" marker-end="url(#pu)"/>
+              <text x="842" y="404" font-size="13" fill="var(--claim)">pressure</text>
+              <text x="842" y="422" font-size="12" fill="var(--ink-mid)">this week</text>
+              <text x="842" y="168" font-size="13" fill="var(--claim)">audit</text>
+              <text x="842" y="186" font-size="12" fill="var(--ink-mid)">eventually</text>
+            </g>
+
+            <!-- the pinch -->
+            <g class="pinch">
+              <rect x="196" y="234" width="588" height="132" rx="5" fill="none" stroke="var(--ask)" stroke-width="3"/>
+              <text x="490" y="404" font-size="15" font-weight="600" text-anchor="middle" fill="var(--ask)">Money moves down in weeks. Pressure moves up in days.</text>
+              <text x="490" y="426" font-size="14" text-anchor="middle" fill="var(--ink-mid)">Nobody above her joins PID to FMS ID. Nobody below her can. She is the join.</text>
+            </g>
+          </svg>
+          <figcaption>The city knows the <span class="mono">FMS ID</span>. The subs know their contract. <strong>Only Angela holds both keys</strong> — and the join between them is not guaranteed to be one-to-one.</figcaption>
+        </figure>
+
+        <h2 class="sub">Three beats</h2>
+        <div class="tw">
+          <table class="tight">
+            <thead><tr><th></th><th>What happens</th><th>The clock</th></tr></thead>
+            <tbody>
+              <tr><td class="num">1</td><td><strong>The invoice lands.</strong> HVAC bills <strong>$340,000</strong> against job 1412. The crew is due back on site Monday</td><td class="num">5 days</td></tr>
+              <tr><td class="num">2</td><td><strong>The systems disagree.</strong> Procore says 60% built. The ERP says 80% of budget spent. Her AI tool answers in three seconds with a tidy paragraph she cannot check</td><td class="num">3 seconds</td></tr>
+              <tr><td class="num">3</td><td><strong>She decides anyway.</strong> Pay wrong → the owner refuses to reimburse and Meridian eats $340k. Don't pay → the crew walks and the schedule slips six weeks</td><td class="num">both her name</td></tr>
+            </tbody>
+          </table>
+        </div>
 
         <blockquote>
           <p>When she's wrong in front of the owner, it's her name on it — not the tool's.</p>
-          <cite>The reason she rebuilds it</cite>
+          <cite>Why she rebuilds the number by hand</cite>
         </blockquote>
 
         <div class="sowhat sowhat--claim">
           <span class="sowhat__k">So what</span>
-          <p>The tool didn't save her an afternoon. It <strong>added a thing she has to check</strong>. Every "show your work" panel that narrates itself makes this worse, not better — it gives her more to read and no more to verify.</p>
+          <p>The tool didn't save her an afternoon. It <strong>added a thing she has to check</strong>. Every "show your work" panel that narrates itself makes this worse — more to read, no more to verify.</p>
         </div>
       </section>
 
@@ -1031,6 +1173,8 @@ WHERE  b.reporting_period = '202605'
     window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
     if (panes[i].querySelector('#beat')) runBeat();
     if (panes[i].querySelector('#wf')) runWf();
+    var pz = panes[i].querySelector('#pz');
+    if (pz){ pz.classList.remove('run'); void pz.offsetWidth; pz.classList.add('run'); }
   }
 
   var beatTimer = null;

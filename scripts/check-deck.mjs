@@ -13,20 +13,33 @@ const TOKEN_ONLY_IN_DARK = new Set(
 
 export function checkDeck(s) {
   const bad = [];
-  const svg = /<svg id="wf" data-step="0" viewBox="0 0 (\d+) (\d+)"[\s\S]*?<\/svg>/.exec(s);
-  if (!svg) return ['workflow svg not found'];
-  const [W, H] = [Number(svg[1]), Number(svg[2])];
-  const b = svg[0];
 
-  // 1. everything inside the viewBox
-  for (const m of b.matchAll(/<rect[^>]*?x="([\d.]+)" y="([\d.]+)" width="([\d.]+)" height="([\d.]+)"/g)) {
-    const [x, y, w, h] = m.slice(1).map(Number);
-    if (x < 0 || y < 0 || x + w > W || y + h > H) bad.push(`rect outside viewBox: ${x},${y},${w},${h}`);
+  // 1. EVERY figure is checked, not only the one this file was written for.
+  //    A check that inspects a named subject silently skips the next one added.
+  const svgs = [...s.matchAll(/<svg id="(\w+)"[^>]*?viewBox="0 0 (\d+) (\d+)"[\s\S]*?<\/svg>/g)];
+  if (!svgs.length) return ['no svg with an id and a viewBox found'];
+  for (const sv of svgs) {
+    const id = sv[1], W = Number(sv[2]), H = Number(sv[3]), body = sv[0];
+    for (const m of body.matchAll(/<rect[^>]*?x="([\d.]+)" y="([\d.]+)" width="([\d.]+)" height="([\d.]+)"/g)) {
+      const [x, y, w, h] = m.slice(1).map(Number);
+      if (x < 0 || y < 0 || x + w > W || y + h > H) bad.push(`#${id}: rect outside viewBox: ${x},${y},${w},${h}`);
+    }
+    for (const m of body.matchAll(/<text[^>]*?x="([\d.]+)" y="([\d.]+)"/g)) {
+      const [x, y] = m.slice(1).map(Number);
+      if (x < 0 || x > W || y < 0 || y > H) bad.push(`#${id}: text outside viewBox: ${x},${y}`);
+    }
+    for (const m of body.matchAll(/url\(#([\w-]+)\)/g))
+      if (!new RegExp(`<marker id="${m[1]}"`).test(body)) bad.push(`#${id}: marker #${m[1]} referenced, never defined`);
   }
-  for (const m of b.matchAll(/<text[^>]*?x="([\d.]+)" y="([\d.]+)"/g)) {
-    const [x, y] = m.slice(1).map(Number);
-    if (x < 0 || x > W || y < 0 || y > H) bad.push(`text outside viewBox: ${x},${y}`);
-  }
+  const wfSvg = svgs.find(v => v[1] === 'wf');
+  if (!wfSvg) return [...bad, 'workflow svg #wf not found'];
+  const b = wfSvg[0];
+
+  // 1b. every class an animation or state rule names must exist in the markup
+  const allClasses = new Set();
+  for (const m of s.matchAll(/class="([^"]+)"/g)) m[1].split(/\s+/).forEach(c => allClasses.add(c));
+  for (const m of s.matchAll(/#(wf|pz)(?:\.run)?\s+\.([\w]+)/g))
+    if (!allClasses.has(m[2])) bad.push(`css targets #${m[1]} .${m[2]}, absent from the markup`);
 
   // 2. every class the step machine names must exist in the markup
   const classes = new Set();
@@ -47,11 +60,6 @@ export function checkDeck(s) {
     if (!centres.has(Number(m[1]) + START_CY))
       bad.push(`tok:${m[1]} -> y=${Number(m[1]) + START_CY} is not a phase centre (${[...centres].sort((a, c) => a - c)})`);
 
-  // 4. markers referenced are defined
-  const refs = new Set([...b.matchAll(/url\(#([\w-]+)\)/g)].map(m => m[1]));
-  const defs = new Set([...b.matchAll(/<marker id="([\w-]+)"/g)].map(m => m[1]));
-  for (const r of refs) if (!defs.has(r)) bad.push(`marker #${r} referenced, never defined`);
-
   // 5. every custom property used anywhere resolves in BOTH themes
   const dark = /:root\{([\s\S]*?)\n\}/.exec(s)?.[1] ?? '';
   const light = /:root\[data-theme="light"\]\{([\s\S]*?)\n\}/.exec(s)?.[1] ?? '';
@@ -70,6 +78,7 @@ export function checkDeck(s) {
   return bad;
 }
 
+const svgCount = t => (t.match(/<svg id="/g) || []).length;
 const src = readFileSync('docs/deck.html', 'utf8');
 
 if (process.argv.includes('--selftest')) {
@@ -81,6 +90,8 @@ if (process.argv.includes('--selftest')) {
     ['a marker definition is dropped', s => s.replace(/<marker id="ah-deny"[\s\S]*?<\/marker>/, '')],
     ['the N key binding is removed', s => s.replace("e.key === 'n'", "e.key === 'Q'")],
     ['the script is broken', s => s.replace('function wfGo(d){', 'function wfGo(d){ {{')],
+    ['a shape leaves the persona diagram viewBox', s => s.replace('<rect x="200" y="470" width="136"', '<rect x="200" y="1470" width="136"')],
+    ['a class the persona animation drives is renamed', s => s.replace('class="pz2"', 'class="pzXX"')],
   ];
   let ok = true;
   for (const [name, mutate] of cases) {
@@ -95,5 +106,5 @@ if (process.argv.includes('--selftest')) {
 } else {
   const bad = checkDeck(src);
   if (bad.length) { console.log('FAIL:\n  ' + bad.join('\n  ')); process.exitCode = 1; }
-  else console.log('PASS - geometry, step references, token stops, markers, both themes, key bindings, script');
+  else console.log(`PASS - ${svgCount(src)} figure(s): geometry, animated classes, step references, token stops, markers, both themes, key bindings, script`);
 }
