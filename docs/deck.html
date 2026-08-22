@@ -243,6 +243,14 @@ h2.sub{
 
 /* -- workflow rows: a divider splits detail from the cost it avoids,
       so the right column can never run into the left one ------------- */
+#wf .ph.warn.on rect{stroke:var(--ask);stroke-width:2.5}
+#wf .ph.warn.on .pl{fill:var(--ask)}
+.stepbar__t .inv{font-family:var(--f-mono);font-style:normal;font-size:11px;font-weight:500;
+  letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:99px;margin-right:8px;
+  border:1px solid currentColor;white-space:nowrap}
+.stepbar__t .inv--A{color:var(--ask)}
+.stepbar__t .inv--B{color:var(--verified)}
+.stepbar__t .inv--C{color:var(--claim)}
 #wf .pk{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;fill:var(--ink-muted)}
 #wf .pv{font-family:var(--f-mono);font-size:19px;font-weight:500;fill:var(--claim)}
 #wf .ph.on .pv{fill:var(--claim)}
@@ -646,6 +654,7 @@ table.tight td,table.tight th{padding:7px 12px;font-size:12.4px}
             <path class="pathAsk" d="M200,136 H100 V512" stroke="var(--ask)" stroke-width="2.5" fill="none" marker-end="url(#ah-ask)"/>
             <path class="pathDeny" d="M760,336 H860 V512" stroke="var(--claim)" stroke-width="2.5" fill="none" marker-end="url(#ah-deny)"/>
 
+            <rect class="halo haloA" x="194" y="90" width="572" height="92" rx="6" fill="none" stroke="var(--ask)" stroke-width="3"/>
             <rect class="halo haloB" x="194" y="190" width="572" height="92" rx="6" fill="none" stroke="var(--ask)" stroke-width="3"/>
             <rect class="halo haloF" x="194" y="290" width="572" height="92" rx="6" fill="none" stroke="var(--claim)" stroke-width="3"/>
 
@@ -683,7 +692,7 @@ table.tight td,table.tight th{padding:7px 12px;font-size:12.4px}
               <button class="ghost" id="wff" type="button">next → N</button>
             </div>
           </div>
-          <figcaption>Press <b>N</b> to advance, <b>B</b> to go back. Check 3 finds the duplicate <strong>only because check 2 resolved the vendor first</strong>.</figcaption>
+          <figcaption>Press <b>N</b> to advance, <b>B</b> to go back. Three invoices, three outcomes: <strong>A</strong> cannot be checked and comes back as a <strong>comment</strong>, <strong>B</strong> passes all four and is <strong>approved</strong>, <strong>C</strong> was already paid and is <strong>denied</strong> — found only because check 2 resolved the vendor first.</figcaption>
         </figure>
 
         <div class="sowhat">
@@ -1091,14 +1100,33 @@ table.tight td,table.tight th{padding:7px 12px;font-size:12.4px}
   // -- workflow: a step machine, not a timer --------------------------------
   // Ten steps. Each names what it just checked, so the reader always knows
   // which claim is on screen. B goes back -- a timed reveal cannot.
+  // Three invoices, three verdicts. `reset` starts a fresh invoice so lit checks
+  // from the previous one do not carry over. `warn` marks a check that could not
+  // be evaluated; `hit` marks one that failed outright.
   var WF = [
-    {t:'An invoice arrives, already carrying its purchase order. Nothing has been checked yet.'},
-    {on:['ph1'], tok:50, t:'<b>Check 1 &middot; intake</b> The document is readable and every required field is present. Safe to check.'},
-    {on:['ph2'], tok:150, halo:'haloB', t:'<u>Check 2 &middot; vendor</u> Two vendor records match this name. <u>Resolve first</u> &mdash; check 3 is only as good as this.'},
-    {on:['ph2'], tok:150, t:'<b>Check 2 &middot; vendor</b> Resolved to one entity. Both spellings were the same company.'},
-    {on:['ph3'], tok:250, halo:'haloF', hit:'ph3', t:'<i>Check 3 &middot; paid before</i> Searched <i>every</i> spelling &mdash; already paid <i>$340,000</i> on 14 July. Found only because check 2 resolved it.'},
-    {on:['ph4'], tok:350, hit:'ph3', t:'<b>Check 4 &middot; job status</b> Runs anyway &mdash; the job is <i>Complete</i> in the ERP. <b>Every check reports, so the receipt is whole.</b>'},
-    {on:[], tok:350, hit:'ph3', path:'pathDeny', term:'termDeny',
+    {inv:'', t:'Three invoices are waiting. Each one takes a different path.'},
+
+    {inv:'A', reset:1, on:['ph1'], warn:'ph1', tok:50, halo:'haloA',
+     t:'<u>Check 1 &middot; intake</u> The scan is missing its purchase order and the amount is unreadable. <u>This cannot be checked.</u>'},
+    {inv:'A', on:['ph1'], warn:'ph1', tok:50, path:'pathAsk', term:'termAsk',
+     t:'<u>COMMENT</u> It does not guess and it does not refuse &mdash; it names the two missing fields and sends it back. <b>Confidence: 0 of 4 checks could run.</b>'},
+
+    {inv:'B', reset:1, on:['ph1'], tok:50, t:'<b>Check 1 &middot; intake</b> Complete and readable. Safe to check.'},
+    {inv:'B', on:['ph2'], tok:150, t:'<b>Check 2 &middot; vendor</b> Exactly one vendor record matches. Resolved.'},
+    {inv:'B', on:['ph3'], tok:250, t:'<b>Check 3 &middot; paid before</b> Searched every spelling. No prior payment on this PO, amount and period.'},
+    {inv:'B', on:['ph4'], tok:350, t:'<b>Check 4 &middot; job status</b> The job is <b>In-Progress</b> in the ERP. The budget line still accepts charges.'},
+    {inv:'B', on:[], tok:350, path:'pathOk', term:'termOk',
+     t:'<b>APPROVE</b> Four of four checks passed and the total ties out. <b>Confidence 1.00</b> &mdash; and the receipt carries the query that produced it.'},
+
+    {inv:'C', reset:1, on:['ph1'], tok:50, t:'<b>Check 1 &middot; intake</b> Complete and readable.'},
+    {inv:'C', on:['ph2'], tok:150, halo:'haloB',
+     t:'<u>Check 2 &middot; vendor</u> Two vendor records match this name. <u>Resolve first</u> &mdash; check 3 is only as good as this.'},
+    {inv:'C', on:['ph2'], tok:150, t:'<b>Check 2 &middot; vendor</b> Resolved to one entity. Both spellings were the same company.'},
+    {inv:'C', on:['ph3'], tok:250, halo:'haloF', hit:'ph3',
+     t:'<i>Check 3 &middot; paid before</i> Already paid <i>$340,000</i> on 14 July &mdash; found <i>only</i> because check 2 resolved the two records into one.'},
+    {inv:'C', on:['ph4'], tok:350, hit:'ph3',
+     t:'<b>Check 4 &middot; job status</b> Runs anyway &mdash; the job is <i>Complete</i>. <b>Every check reports, so the receipt is whole.</b>'},
+    {inv:'C', on:[], tok:350, hit:'ph3', path:'pathDeny', term:'termDeny',
      t:'<i>DENY &middot; confidence 1.00</i> Two checks failed: already paid, and the job is closed. The receipt names both, with the query that ran.'}
   ];
   var wfStep = 0;
@@ -1106,13 +1134,19 @@ table.tight td,table.tight th{padding:7px 12px;font-size:12.4px}
   function wfRender(){
     var w = document.getElementById('wf');
     if (!w) return;
-    var st = WF[wfStep], seen = {};
-    for (var k = 1; k <= wfStep; k++) (WF[k].on || []).forEach(function(c){ seen[c] = 1; });
+    var st = WF[wfStep];
+
+    // accumulate only from the current invoice's first step
+    var from = 1;
+    for (var k = wfStep; k >= 1; k--) if (WF[k].reset){ from = k; break; }
+    var seen = {};
+    for (var k2 = from; k2 <= wfStep; k2++) (WF[k2].on || []).forEach(function(c){ seen[c] = 1; });
 
     Array.prototype.forEach.call(w.querySelectorAll('.ph'), function(g){
       var cls = g.getAttribute('class').split(/\s+/)[1];
       g.classList.toggle('on', !!seen[cls]);
       g.classList.toggle('hit', cls === st.hit);
+      g.classList.toggle('warn', cls === st.warn);
     });
     Array.prototype.forEach.call(w.querySelectorAll('.halo'), function(h){
       h.classList.toggle('on', !!st.halo && h.classList.contains(st.halo));
@@ -1131,8 +1165,9 @@ table.tight td,table.tight th{padding:7px 12px;font-size:12.4px}
       tok.style.transform = 'translateY(' + (st.tok || 0) + 'px)';
     }
     w.setAttribute('data-step', String(wfStep));
+    var badge = st.inv ? '<em class="inv inv--' + st.inv + '">Invoice ' + st.inv + '</em> ' : '';
     document.getElementById('wfn').textContent = wfStep + ' / ' + (WF.length - 1);
-    document.getElementById('wft').innerHTML = st.t;
+    document.getElementById('wft').innerHTML = badge + st.t;
     document.getElementById('wfb').disabled = wfStep === 0;
     document.getElementById('wff').disabled = wfStep === WF.length - 1;
   }

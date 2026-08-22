@@ -67,6 +67,17 @@ export function checkDeck(s) {
       bad.push(`phase .${d} is drawn in #wf but no step ever activates it`);
   }
 
+  // 2c. All three verdicts must be REACHABLE. A terminal drawn but never routed to
+  //     is a promise the walkthrough silently fails to keep.
+  if (wf) {
+    for (const term of ['termAsk', 'termOk', 'termDeny']) {
+      if (!b.includes(`class="term ${term}"`)) { bad.push(`terminal .${term} is not drawn in #wf`); continue; }
+      if (!wf[1].includes(`'${term}'`)) bad.push(`terminal .${term} is drawn but no step routes to it`);
+    }
+    for (const path of ['pathAsk', 'pathOk', 'pathDeny'])
+      if (!wf[1].includes(`'${path}'`)) bad.push(`path .${path} is drawn but no step activates it`);
+  }
+
   // 3. the token stops on the spine must land on real phase centres
   // Derive the spine's geometry from the markup, never from constants that go stale
   // when the figure is redrawn. An empty centre set is itself a failure.
@@ -116,8 +127,14 @@ if (process.argv.includes('--selftest')) {
     ['the N key binding is removed', s => s.replace("e.key === 'n'", "e.key === 'Q'")],
     ['the script is broken', s => s.replace('function wfGo(d){', 'function wfGo(d){ {{')],
     ['a shape leaves the persona diagram viewBox', s => s.replace('<rect x="344" y="196" width="104"', '<rect x="344" y="1196" width="104"')],
+    // Derived: rewrite every reference to the LAST drawn phase so it stays drawn
+    // and unreached, whatever the step table's current shape happens to be.
     ['a drawn phase is never reached by any step',
-     s => s.replace(/\{on:\['ph4'\][^}]*\},\n/, '')],
+     s => { const ids = [...s.matchAll(/class="ph (ph\d)"/g)].map(m => m[1]);
+            const last = ids[ids.length - 1];
+            return s.replace(new RegExp(`'${last}'`, 'g'), "'ph1'"); }],
+    ['a verdict is drawn but never routed to',
+     s => s.replace("term:'termOk'", "term:'termDeny'")],
     ['a class the persona animation drives is renamed', s => s.replace('class="wave"', 'class="waveXX"')],
   ];
   // A control whose replace() matches nothing is a NO-OP, and a no-op is
