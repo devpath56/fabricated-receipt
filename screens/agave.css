@@ -67,9 +67,20 @@
   --ag-track-display:-.025em;    /* negative tracking on DISPLAY SIZES ONLY */
 
   /* ── MOTION. Everything is .2s. The easing is ease-out-circ: fast departure, soft landing. ── */
-  --ag-dur:.2s;
+  --ag-dur:.2s;                  /* MEASURED. This is Agave's INTERACTION time — a hover
+                                    answering a mouse, where anything slower feels broken. */
   --ag-ease:cubic-bezier(.075,.82,.165,1);
-  --ag-stagger:90ms;
+  --ag-stagger:90ms;             /* MEASURED. */
+
+  /* DERIVED, for NARRATIVE reveals — and the distinction is the point. .2s is a response time,
+     not a beat. Reused for a reveal in a room it is finished before anyone has looked up, so the
+     aha never registers: the screen simply already says the answer. These are slow enough to be
+     followed, on the same easing so they still read as Agave. */
+  --ag-dur-reveal:.55s;
+  --ag-stagger-reveal:200ms;
+  --ag-hold:900ms;               /* the SILENCE before the reveal. Nothing moves, the check is
+                                    visibly working, and the answer lands into a held room
+                                    rather than arriving with the page. */
 
   --ag-r:0;                      /* THERE IS NO RADIUS. The only non-zero value on the whole
                                     page was 50% on avatars. Buttons, cards, inputs: square. */
@@ -204,28 +215,28 @@ body{
 
 /* 1 · FIELD-FILL CASCADE — rows land one at a time, the beat that says
        "extraction became structure". translateY + opacity, .2s, staggered 90ms. */
-.ag-cascade > *{opacity:0;transform:translateY(6px);
-  animation:agIn var(--ag-dur) var(--ag-ease) forwards}
-.ag-cascade > *:nth-child(1){animation-delay:calc(var(--ag-stagger)*1)}
-.ag-cascade > *:nth-child(2){animation-delay:calc(var(--ag-stagger)*2)}
-.ag-cascade > *:nth-child(3){animation-delay:calc(var(--ag-stagger)*3)}
-.ag-cascade > *:nth-child(4){animation-delay:calc(var(--ag-stagger)*4)}
-.ag-cascade > *:nth-child(5){animation-delay:calc(var(--ag-stagger)*5)}
-.ag-cascade > *:nth-child(6){animation-delay:calc(var(--ag-stagger)*6)}
-.ag-cascade > *:nth-child(7){animation-delay:calc(var(--ag-stagger)*7)}
-.ag-cascade > *:nth-child(8){animation-delay:calc(var(--ag-stagger)*8)}
+.ag-cascade > *{opacity:0;transform:translateY(10px);
+  animation:agIn var(--ag-dur-reveal) var(--ag-ease) forwards}
+.ag-cascade > *:nth-child(1){animation-delay:calc(var(--ag-stagger-reveal)*1)}
+.ag-cascade > *:nth-child(2){animation-delay:calc(var(--ag-stagger-reveal)*2)}
+.ag-cascade > *:nth-child(3){animation-delay:calc(var(--ag-stagger-reveal)*3)}
+.ag-cascade > *:nth-child(4){animation-delay:calc(var(--ag-stagger-reveal)*4)}
+.ag-cascade > *:nth-child(5){animation-delay:calc(var(--ag-stagger-reveal)*5)}
+.ag-cascade > *:nth-child(6){animation-delay:calc(var(--ag-stagger-reveal)*6)}
+.ag-cascade > *:nth-child(7){animation-delay:calc(var(--ag-stagger-reveal)*7)}
+.ag-cascade > *:nth-child(8){animation-delay:calc(var(--ag-stagger-reveal)*8)}
 @keyframes agIn{to{opacity:1;transform:none}}
 
 /* The green bar that arrives BEFORE the value resolves — Agave's AI card, exactly. */
 .ag-bar{display:block;height:.5rem;background:var(--ag-green);transform-origin:left center;
-  transform:scaleX(0);animation:agBar .28s var(--ag-ease) forwards}
+  transform:scaleX(0);animation:agBar var(--ag-dur-reveal) var(--ag-ease) forwards}
 @keyframes agBar{to{transform:scaleX(1)}}
 
 /* 2 · FLOW LINE — a green curve that draws itself from the artifact to the answer.
        It is what makes a result feel CAUSED rather than displayed. */
 .ag-flow__path{fill:none;stroke:var(--ag-green);stroke-width:1.5;
   stroke-dasharray:var(--len,300);stroke-dashoffset:var(--len,300);
-  animation:agDraw .6s var(--ag-ease) forwards}
+  animation:agDraw 1.1s var(--ag-ease) forwards}
 @keyframes agDraw{to{stroke-dashoffset:0}}
 
 /* 3 · PROGRESS-DRIVEN ADVANCE — Agave's tabsProgress, 7s linear. */
@@ -257,3 +268,28 @@ body{
       state-matrix drives (el.hidden = el.getAttribute('data-state') !== s). No class, no script.
       A second mechanism is how a state renders under the gate and stays blank in a browser. ── */
 .ag-state[hidden]{display:none}
+
+/* ══ THE HOLD — silence before the reveal ═══════════════════════════════════
+   A verdict that appears at the same instant as the screen is information. A verdict that lands
+   after a beat of visible work is an ANSWER, and a room reads the two differently. The hold is
+   that beat: the panel is quiet, one line says what is running, and only then does the evidence
+   cascade in. It costs --ag-hold and it is the difference between showing a result and landing one. */
+/* DESCENDANT, not child. `.ag-held > .ag-state` never matched: the states sit inside
+   .ag-band > .ag-wrap, so the rule was dead and the content stayed visible under the overlay.
+   Measured: contentVisible read "visible" through the whole hold. The opaque overlay hid it
+   anyway, which is exactly why a dead rule like this survives — it is only load-bearing the day
+   someone makes the overlay translucent. */
+.ag-held .ag-state:not([hidden]){visibility:hidden}
+.ag-hold{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:1rem;z-index:2;background:var(--ag-navy)}
+.ag-hold__t{font-family:var(--ag-mono);font-size:var(--ag-t-micro);letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ag-ink-dark-mute)}
+.ag-hold__r{width:min(18rem,44vw);height:2px;background:var(--ag-line-dark);overflow:hidden}
+.ag-hold__f{display:block;height:100%;width:100%;background:var(--ag-green);
+  transform-origin:left center;transform:scaleX(0);
+  animation:agHold var(--ag-hold) var(--ag-ease) forwards}
+@keyframes agHold{to{transform:scaleX(1)}}
+@media (prefers-reduced-motion:reduce){
+  .ag-held .ag-state:not([hidden]){visibility:visible!important}
+  .ag-hold{display:none!important}
+}

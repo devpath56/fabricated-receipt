@@ -73,17 +73,41 @@
   --ag-track-display:-.025em;    /* negative tracking on DISPLAY SIZES ONLY */
 
   /* ── MOTION. Everything is .2s. The easing is ease-out-circ: fast departure, soft landing. ── */
-  --ag-dur:.2s;
+  --ag-dur:.2s;                  /* MEASURED. This is Agave's INTERACTION time — a hover
+                                    answering a mouse, where anything slower feels broken. */
   --ag-ease:cubic-bezier(.075,.82,.165,1);
-  --ag-stagger:90ms;
+  --ag-stagger:90ms;             /* MEASURED. */
+
+  /* DERIVED, for NARRATIVE reveals — and the distinction is the point. .2s is a response time,
+     not a beat. Reused for a reveal in a room it is finished before anyone has looked up, so the
+     aha never registers: the screen simply already says the answer. These are slow enough to be
+     followed, on the same easing so they still read as Agave. */
+  --ag-dur-reveal:.55s;
+  --ag-stagger-reveal:200ms;
+  --ag-hold:900ms;               /* the SILENCE before the reveal. Nothing moves, the check is
+                                    visibly working, and the answer lands into a held room
+                                    rather than arriving with the page. */
 
   --ag-r:0;                      /* THERE IS NO RADIUS. The only non-zero value on the whole
                                     page was 50% on avatars. Buttons, cards, inputs: square. */
 }
+
+html{font-size:13.2034px}
 @media (min-width:1100px){html{font-size:15px}}
 @media (min-width:1500px){html{font-size:16px}}
 
 *{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--ag-navy);
+  color:var(--ag-ink-dark);
+  font-family:var(--ag-font);
+  font-weight:400;
+  font-size:var(--ag-t-body);
+  line-height:var(--ag-lh);
+  -webkit-font-smoothing:antialiased;
+  -webkit-text-size-adjust:100%;
+}
 
 /* THE MOTION KILL-SWITCH. Every animation here is decoration; the values are the content. Under
    reduced motion each one collapses to its END state — never to its start, which would hide data. */
@@ -197,28 +221,28 @@
 
 /* 1 · FIELD-FILL CASCADE — rows land one at a time, the beat that says
        "extraction became structure". translateY + opacity, .2s, staggered 90ms. */
-.ag-cascade > *{opacity:0;transform:translateY(6px);
-  animation:agIn var(--ag-dur) var(--ag-ease) forwards}
-.ag-cascade > *:nth-child(1){animation-delay:calc(var(--ag-stagger)*1)}
-.ag-cascade > *:nth-child(2){animation-delay:calc(var(--ag-stagger)*2)}
-.ag-cascade > *:nth-child(3){animation-delay:calc(var(--ag-stagger)*3)}
-.ag-cascade > *:nth-child(4){animation-delay:calc(var(--ag-stagger)*4)}
-.ag-cascade > *:nth-child(5){animation-delay:calc(var(--ag-stagger)*5)}
-.ag-cascade > *:nth-child(6){animation-delay:calc(var(--ag-stagger)*6)}
-.ag-cascade > *:nth-child(7){animation-delay:calc(var(--ag-stagger)*7)}
-.ag-cascade > *:nth-child(8){animation-delay:calc(var(--ag-stagger)*8)}
+.ag-cascade > *{opacity:0;transform:translateY(10px);
+  animation:agIn var(--ag-dur-reveal) var(--ag-ease) forwards}
+.ag-cascade > *:nth-child(1){animation-delay:calc(var(--ag-stagger-reveal)*1)}
+.ag-cascade > *:nth-child(2){animation-delay:calc(var(--ag-stagger-reveal)*2)}
+.ag-cascade > *:nth-child(3){animation-delay:calc(var(--ag-stagger-reveal)*3)}
+.ag-cascade > *:nth-child(4){animation-delay:calc(var(--ag-stagger-reveal)*4)}
+.ag-cascade > *:nth-child(5){animation-delay:calc(var(--ag-stagger-reveal)*5)}
+.ag-cascade > *:nth-child(6){animation-delay:calc(var(--ag-stagger-reveal)*6)}
+.ag-cascade > *:nth-child(7){animation-delay:calc(var(--ag-stagger-reveal)*7)}
+.ag-cascade > *:nth-child(8){animation-delay:calc(var(--ag-stagger-reveal)*8)}
 @keyframes agIn{to{opacity:1;transform:none}}
 
 /* The green bar that arrives BEFORE the value resolves — Agave's AI card, exactly. */
 .ag-bar{display:block;height:.5rem;background:var(--ag-green);transform-origin:left center;
-  transform:scaleX(0);animation:agBar .28s var(--ag-ease) forwards}
+  transform:scaleX(0);animation:agBar var(--ag-dur-reveal) var(--ag-ease) forwards}
 @keyframes agBar{to{transform:scaleX(1)}}
 
 /* 2 · FLOW LINE — a green curve that draws itself from the artifact to the answer.
        It is what makes a result feel CAUSED rather than displayed. */
 .ag-flow__path{fill:none;stroke:var(--ag-green);stroke-width:1.5;
   stroke-dasharray:var(--len,300);stroke-dashoffset:var(--len,300);
-  animation:agDraw .6s var(--ag-ease) forwards}
+  animation:agDraw 1.1s var(--ag-ease) forwards}
 @keyframes agDraw{to{stroke-dashoffset:0}}
 
 /* 3 · PROGRESS-DRIVEN ADVANCE — Agave's tabsProgress, 7s linear. */
@@ -251,26 +275,56 @@
       A second mechanism is how a state renders under the gate and stays blank in a browser. ── */
 .ag-state[hidden]{display:none}
 
+/* ══ THE HOLD — silence before the reveal ═══════════════════════════════════
+   A verdict that appears at the same instant as the screen is information. A verdict that lands
+   after a beat of visible work is an ANSWER, and a room reads the two differently. The hold is
+   that beat: the panel is quiet, one line says what is running, and only then does the evidence
+   cascade in. It costs --ag-hold and it is the difference between showing a result and landing one. */
+/* DESCENDANT, not child. `.ag-held > .ag-state` never matched: the states sit inside
+   .ag-band > .ag-wrap, so the rule was dead and the content stayed visible under the overlay.
+   Measured: contentVisible read "visible" through the whole hold. The opaque overlay hid it
+   anyway, which is exactly why a dead rule like this survives — it is only load-bearing the day
+   someone makes the overlay translucent. */
+.ag-held .ag-state:not([hidden]){visibility:hidden}
+.ag-hold{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:1rem;z-index:2;background:var(--ag-navy)}
+.ag-hold__t{font-family:var(--ag-mono);font-size:var(--ag-t-micro);letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ag-ink-dark-mute)}
+.ag-hold__r{width:min(18rem,44vw);height:2px;background:var(--ag-line-dark);overflow:hidden}
+.ag-hold__f{display:block;height:100%;width:100%;background:var(--ag-green);
+  transform-origin:left center;transform:scaleX(0);
+  animation:agHold var(--ag-hold) var(--ag-ease) forwards}
+@keyframes agHold{to{transform:scaleX(1)}}
+@media (prefers-reduced-motion:reduce){
+  .ag-held .ag-state:not([hidden]){visibility:visible!important}
+  .ag-hold{display:none!important}
+}
+
 
 /* ── REVIEW SHELL ───────────────────────────────────────────────────────────
-   The state switcher lives HERE and never in the product screens. This is a
-   review surface: the whole argument is that a check has more states than
-   pass/fail, so a reviewer must be able to step through them. A person using
-   the actual product sees one state, driven by one invoice. */
-/* agave.css's own html/body rules were stripped along with the screens' leaked ones — they
-   carried margin, font-family, line-height and the fluid root size, so the page fell back to a
-   serif at 16px. Restated here, where the shell owns them. */
+   STEPPING LIVES HERE AND NEVER IN THE PRODUCT SCREENS. This page is a review surface, where
+   walking every state a check can reach IS the job. Someone using the actual product sees one
+   state, driven by one invoice; a state picker there would be the interface describing its own
+   internals to the person using it.
+
+   AND THE STATE NAMES ARE NOT SHOWN. `partial`, `unresolved`, `near` are internal vocabulary, and
+   putting them on screen asks the reader to learn the implementation to read the design. There is
+   Back and Next, nothing else -- each screen already says what it is in its own verdict. */
+
+/* BUG 3: agave.css's own html/body rules were stripped along with the screens' leaked copies.
+   They carried margin, font-family, line-height and the fluid root size. Restated here. */
 html{font-size:13.2034px}
 @media (min-width:1100px){html{font-size:15px}}
 @media (min-width:1500px){html{font-size:16px}}
 body{margin:0;background:var(--ag-navy);color:var(--ag-ink-dark);min-height:100vh;
   font-family:var(--ag-font);font-weight:400;font-size:var(--ag-t-body);
   line-height:var(--ag-lh);-webkit-font-smoothing:antialiased}
+
 .shell{display:grid;grid-template-columns:15rem 1fr;min-height:100vh}
 @media (max-width:820px){.shell{grid-template-columns:1fr}}
 
-.rail{border-right:1px solid var(--ag-line-dark);padding:1.5rem 0;
-  background:var(--ag-nav);position:sticky;top:0;align-self:start;max-height:100vh;overflow:auto}
+.rail{border-right:1px solid var(--ag-line-dark);padding:1.5rem 0;background:var(--ag-nav);
+  position:sticky;top:0;align-self:start;max-height:100vh;overflow:auto}
 @media (max-width:820px){.rail{position:static;max-height:none;border-right:0;
   border-bottom:1px solid var(--ag-line-dark)}}
 .rail__m{display:flex;align-items:center;gap:.55rem;padding:0 1.25rem 1.25rem;
@@ -279,8 +333,8 @@ body{margin:0;background:var(--ag-navy);color:var(--ag-ink-dark);min-height:100v
 .rail__d{width:.45rem;height:.45rem;background:var(--ag-green);flex:0 0 auto}
 .nav{display:flex;flex-direction:column}
 @media (max-width:820px){.nav{flex-direction:row;overflow-x:auto}}
-.nav__i{display:flex;flex-direction:column;gap:.15rem;text-align:left;background:none;
-  border:0;border-left:2px solid transparent;padding:.7rem 1.25rem;cursor:pointer;
+.nav__i{display:flex;flex-direction:column;gap:.15rem;text-align:left;background:none;border:0;
+  border-left:2px solid transparent;padding:.7rem 1.25rem;cursor:pointer;
   font-family:var(--ag-font);color:var(--ag-ink-dark-mid);white-space:nowrap;
   transition:background-color var(--ag-dur),color var(--ag-dur)}
 .nav__i:hover{background:rgba(255,255,255,.04);color:var(--ag-ink-dark)}
@@ -294,41 +348,57 @@ body{margin:0;background:var(--ag-navy);color:var(--ag-ink-dark);min-height:100v
 .nav__i[aria-current="true"] .nav__n{color:var(--ag-green)}
 
 .main{min-width:0;display:flex;flex-direction:column}
-.states{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;
-  padding:.75rem 1.5rem;border-bottom:1px solid var(--ag-line-dark);
-  background:var(--ag-nav);position:sticky;top:0;z-index:5}
-.states__l{font-family:var(--ag-mono);font-size:var(--ag-t-micro);letter-spacing:.12em;
-  text-transform:uppercase;color:var(--ag-ink-dark-mute);margin-right:.5rem}
-.st-b{font-family:var(--ag-mono);font-size:var(--ag-t-micro);letter-spacing:.06em;
-  background:none;border:1px solid var(--ag-line-dark-2);color:var(--ag-ink-dark-mid);
-  padding:.3rem .7rem;cursor:pointer;transition:background-color var(--ag-dur),color var(--ag-dur)}
-.st-b:hover{border-color:var(--ag-ink-dark-mute);color:var(--ag-ink-dark)}
-.st-b[aria-pressed="true"]{background:var(--ag-green);color:#000;border-color:var(--ag-green)}
-.st-b:focus-visible,.nav__i:focus-visible{outline:2px solid var(--ag-green);outline-offset:2px}
-.panel[hidden]{display:none}
-.panel{flex:1}
-
-/* The opening screen is a presentation; inside the shell it is a panel, not a viewport. */
-#s-opening .stage{position:relative;inset:auto;min-height:34rem;padding:3rem 2rem}
-/* .mark, .bar and .hud are SIBLINGS of .stage in the source screen, not children. Standalone
-   they resolve against the viewport, which is right for a full-screen presentation and wrong
-   inside a panel — they spanned 1280px at left:0 and slid under the rail. This makes the panel
-   their containing block. */
-#s-opening{overflow:hidden;position:relative}
-#s-opening .hud,#s-opening .mark,#s-opening .bar{position:absolute}
-#s-opening .beat{display:none}
-#s-opening .beat[data-on]{display:block}
 .note-bar{padding:.6rem 1.5rem;border-bottom:1px solid var(--ag-line-dark);
   font-size:var(--ag-t-micro);font-family:var(--ag-mono);color:var(--ag-ink-dark-mute);
   letter-spacing:.04em}
 .note-bar b{color:var(--ag-ink-dark-mid);font-weight:400}
+
+/* ── THE STEPPER. Two controls and a position, no vocabulary. ─────────────── */
+.step{display:flex;align-items:center;gap:.5rem;padding:.75rem 1.5rem;
+  border-bottom:1px solid var(--ag-line-dark);background:var(--ag-nav);
+  position:sticky;top:0;z-index:5}
+.step__b{display:flex;align-items:center;gap:.5rem;font-family:var(--ag-mono);
+  font-size:var(--ag-t-micro);letter-spacing:.08em;text-transform:uppercase;
+  background:none;border:1px solid var(--ag-line-dark-2);color:var(--ag-ink-dark-mid);
+  padding:.4rem .85rem;cursor:pointer;
+  transition:background-color var(--ag-dur),color var(--ag-dur),border-color var(--ag-dur)}
+.step__b:hover:not(:disabled){border-color:var(--ag-ink-dark-mute);color:var(--ag-ink-dark)}
+.step__b:disabled{opacity:.35;cursor:default}
+.step__b:focus-visible{outline:2px solid var(--ag-green);outline-offset:2px}
+
+/* THE KEY PRESS PRESSES THE BUTTON. A keystroke that silently changed the screen would leave the
+   viewer unable to see what they did; this makes N and B visibly actuate the same control a mouse
+   would, so the keyboard is a shortcut to the interface rather than a second, hidden one. */
+.step__b[data-fired]{background:var(--ag-green);border-color:var(--ag-green);color:#000}
+
+.step__k{font-family:var(--ag-mono);font-size:.9em;border:1px solid currentColor;
+  padding:0 .3rem;opacity:.7;border-radius:0}
+.step__pos{display:flex;gap:.3rem;margin-left:.4rem}
+.step__dot{width:1.1rem;height:2px;background:var(--ag-line-dark-2)}
+.step__dot[data-on]{background:var(--ag-green)}
+.step__c{margin-left:auto;font-family:var(--ag-mono);font-size:var(--ag-t-micro);
+  color:var(--ag-ink-dark-mute);font-variant-numeric:tabular-nums}
+
+.panel[hidden]{display:none}
+.panel{flex:1;position:relative}
+
+/* The opening screen is a presentation; inside the shell it is a panel, not a viewport.
+   BUG 4: .mark/.bar/.hud are siblings of .stage, so the panel must be their containing block. */
+#s-opening{overflow:hidden;position:relative}
+#s-opening .stage{position:relative;inset:auto;min-height:32rem;padding:3rem 2rem}
+#s-opening .hud,#s-opening .mark,#s-opening .bar{position:absolute}
+#s-opening .beat{display:none}
+#s-opening .beat[data-on]{display:block}
+/* The standalone screen carries its own key legend and auto-advance bar; the shell owns both now. */
+#s-opening .hud,#s-opening .bar{display:none}
+
 </style>
 
 <div class="shell">
   <aside class="rail">
     <div class="rail__m"><span class="rail__d"></span><span>Fabricated receipt</span></div>
     <nav class="nav" aria-label="screens">
-            <button class="nav__i" data-go="opening"><span class="nav__n">Opening</span><span class="nav__t">Hands up</span></button>
+      <button class="nav__i" data-go="opening"><span class="nav__n">Opening</span><span class="nav__t">Hands up</span></button>
       <button class="nav__i" data-go="c1"><span class="nav__n">Check 1</span><span class="nav__t">Intake</span></button>
       <button class="nav__i" data-go="c2"><span class="nav__n">Check 2</span><span class="nav__t">Vendor resolution</span></button>
       <button class="nav__i" data-go="c3"><span class="nav__n">Check 3</span><span class="nav__t">Paid before?</span></button>
@@ -336,10 +406,15 @@ body{margin:0;background:var(--ag-navy);color:var(--ag-ink-dark);min-height:100v
     </nav>
   </aside>
   <div class="main">
-    <div class="note-bar">Secondary surface &mdash; static design reference. The <b>primary</b> product
-      surface is the Streamlit app in the repo.</div>
-    <div class="states" id="states" role="group" aria-label="state"></div>
-    <style>
+    <div class="note-bar">Secondary surface &mdash; static design reference. The <b>primary</b>
+      product surface is the Streamlit app in the repo.</div>
+    <div class="step">
+      <button class="step__b" id="back"><span class="step__k">B</span>Back</button>
+      <button class="step__b" id="next"><span class="step__k">N</span>Next</button>
+      <span class="step__pos" id="pos" aria-hidden="true"></span>
+      <span class="step__c" id="count"></span>
+    </div>
+<style>
   body{background:var(--ag-navy);overflow:hidden}
 
   .stage{position:fixed;inset:0;display:grid;place-items:center;padding:4vmin 6vmin}
@@ -358,13 +433,15 @@ body{margin:0;background:var(--ag-navy);color:var(--ag-ink-dark);min-height:100v
      mask and rises into place—the type appears to be dealt rather than faded. Agave's easing
      does the work: fast departure, long soft landing. */
   .kin{display:block;overflow:hidden;line-height:.94}
+  /* A line of display type is a NARRATIVE beat, not a hover response. .42s with a 90ms
+     stagger read as one simultaneous flash from more than a metre away. */
   .kin > span{display:block;transform:translateY(105%);
-    animation:kinUp .42s var(--ag-ease) forwards}
+    animation:kinUp .75s var(--ag-ease) forwards}
   @keyframes kinUp{to{transform:translateY(0)}}
-  .beat[data-on] .kin:nth-of-type(1) > span{animation-delay:.04s}
-  .beat[data-on] .kin:nth-of-type(2) > span{animation-delay:.13s}
-  .beat[data-on] .kin:nth-of-type(3) > span{animation-delay:.22s}
-  .beat[data-on] .kin:nth-of-type(4) > span{animation-delay:.31s}
+  .beat[data-on] .kin:nth-of-type(1) > span{animation-delay:.05s}
+  .beat[data-on] .kin:nth-of-type(2) > span{animation-delay:.30s}
+  .beat[data-on] .kin:nth-of-type(3) > span{animation-delay:.55s}
+  .beat[data-on] .kin:nth-of-type(4) > span{animation-delay:.80s}
 
   .xxl{font-size:clamp(3.2rem,13vw,11rem);font-weight:600;letter-spacing:-.04em;margin:0}
   .xl {font-size:clamp(2rem,6.4vw,5rem);font-weight:600;letter-spacing:-.03em;margin:0}
@@ -373,17 +450,8 @@ body{margin:0;background:var(--ag-navy);color:var(--ag-ink-dark);min-height:100v
   .green{color:var(--ag-green)}
   .lime{color:var(--ag-lime)}
 
-  .lede{margin-top:1.6rem;opacity:0;animation:agIn .3s var(--ag-ease) .5s forwards}
-  .lede--late{animation-delay:1.5s}
-
-  /* ── BEAT 3 · the confidence number, and the cascade that undoes it ────── */
-  .score{display:flex;align-items:center;gap:clamp(1rem,3vw,2.5rem);flex-wrap:wrap}
-  .score__n{font-size:clamp(4rem,15vw,12rem);font-weight:600;letter-spacing:-.05em;
-    line-height:.9;font-variant-numeric:tabular-nums;position:relative;display:inline-block}
-  /* The strike is a scaled bar, not text-decoration—it can be TIMED. */
-  .score__n::after{content:"";position:absolute;left:-2%;right:-2%;top:52%;height:.06em;
-    background:var(--ag-deny);transform:scaleX(0);transform-origin:left center}
-  .beat[data-on] .score__n--struck::after{animation:agBar .34s var(--ag-ease) 1.1s forwards}
+  .lede{margin-top:1.6rem;opacity:0;animation:agIn .6s var(--ag-ease) 1.15s forwards}
+  .lede--late{animation-delay:2.1s}
 
   .rows{width:min(30rem,100%);border-top:1px solid var(--ag-line-dark)}
   .row{display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:center;
@@ -399,9 +467,6 @@ body{margin:0;background:var(--ag-navy);color:var(--ag-ink-dark);min-height:100v
   .lbl{font-size:.72em;letter-spacing:.1em;text-transform:uppercase}
   .lbl--ran{color:var(--ag-green)}
   .lbl--never{color:var(--ag-ink-dark-mid)}
-
-  /* ── The drawn flow line—Agave's green curve, the "this CAUSED that" beat ── */
-  .flow{display:block;width:min(26rem,60vw);height:5rem;margin:.5rem 0 0}
 
   /* ── CHROME ─────────────────────────────────────────────────────────────── */
   .hud{position:fixed;left:0;right:0;bottom:0;z-index:3;
@@ -433,13 +498,6 @@ body{margin:0;background:var(--ag-navy);color:var(--ag-ink-dark);min-height:100v
   }
 </style>
 <section class="panel" id="s-opening" data-screen="opening" hidden>
-
-
-
-
-
-
-
 <div class="mark"><span class="mark__d" aria-hidden="true"></span><span>Fabricated receipt</span></div>
 <div class="bar"><div class="bar__f" id="bar"></div></div>
 
@@ -465,67 +523,8 @@ body{margin:0;background:var(--ag-navy);color:var(--ag-ink-dark);min-height:100v
       <em style="font-style:normal">“I verified it”</em>.</p>
   </section>
 
-  
-  <section class="beat" data-beat="3">
-    <span class="ag-micro">Invoice INV-00021 · $102,369.19 · approved in 1.2s</span>
-    <div class="score">
-      <div>
-        <span class="score__n score__n--struck">0.94</span>
-        <span class="ag-micro" style="margin-top:.6rem">confidence, as shipped</span>
-      </div>
-      <div class="rows ag-cascade" role="table" aria-label="what the four checks actually did">
-        <div class="row" role="row">
-          <span class="row__k" role="cell">1 · intake</span>
-          <span class="row__v" role="cell"><span class="tick"></span><span class="lbl lbl--ran">ran</span></span>
-        </div>
-        <div class="row" role="row">
-          <span class="row__k" role="cell">2 · vendor</span>
-          <span class="row__v" role="cell"><span class="tick"></span><span class="lbl lbl--ran">ran</span></span>
-        </div>
-        <div class="row row--never" role="row">
-          <span class="row__k" role="cell">3 · paid before</span>
-          <span class="row__v" role="cell"><span class="tick tick--never"></span><span class="lbl lbl--never">never ran</span></span>
-        </div>
-        <div class="row row--never" role="row">
-          <span class="row__k" role="cell">4 · job status</span>
-          <span class="row__v" role="cell"><span class="tick tick--never"></span><span class="lbl lbl--never">never ran</span></span>
-        </div>
-      </div>
-    </div>
-    <p class="md lede lede--late">Two of the four checks never ran. The score was averaged over
-      <em style="font-style:normal" class="lime">the two that did</em>.</p>
-  </section>
 
-  
-  <section class="beat" data-beat="4">
-    <h2 class="xl">
-      <span class="kin"><span>A check that could not run</span></span>
-      <span class="kin"><span>was counted as a check</span></span>
-      <span class="kin"><span class="green">that passed.</span></span>
-    </h2>
-    <svg class="flow" viewBox="0 0 420 80" aria-hidden="true">
-      <path class="ag-flow__path" style="--len:460"
-            d="M4 8 C 4 62, 150 20, 240 46 S 380 70, 412 70"/>
-      <path d="M404 64 l10 6 -10 6" fill="none" stroke="var(--ag-green)" stroke-width="1.5"/>
-    </svg>
-    <p class="md lede lede--late">That is not a bug in a model. It is a
-      <em style="font-style:normal">missing distinction</em>—between
-      <em style="font-style:normal" class="green">“I checked, it is fine”</em> and
-      <em style="font-style:normal" class="lime">“I could not check”</em>.</p>
-  </section>
 
-  
-  <section class="beat" data-beat="5">
-    <span class="ag-micro">What we built</span>
-    <h2 class="xl">
-      <span class="kin"><span>Four checks that each</span></span>
-      <span class="kin"><span>say <em style="font-style:normal" class="lime">“I could not</em></span></span>
-      <span class="kin"><span><em style="font-style:normal" class="lime">run”</em> out loud.</span></span>
-    </h2>
-    <p class="md lede lede--late">On <strong style="color:var(--ag-ink-dark);font-weight:600">5,801 real
-      NYC capital-project records</strong>—96 purchase orders whose status contradicts itself,
-      502 jobs already closed. None of it invented.</p>
-  </section>
 
 </main>
 
@@ -551,12 +550,6 @@ body{margin:0;background:var(--ag-navy);color:var(--ag-ink-dark);min-height:100v
   .why{color:var(--ag-ink-dark-mute);font-size:.92em}
 </style>
 <section class="panel" id="s-c1" data-screen="c1" hidden>
-
-
-
-
-
-
 <main class="ag-band ag-band--navy" style="min-height:100vh">
 <div class="ag-wrap">
 
@@ -733,12 +726,6 @@ body{margin:0;background:var(--ag-navy);color:var(--ag-ink-dark);min-height:100v
   .cand{color:var(--ag-ink-dark-mid)}
 </style>
 <section class="panel" id="s-c2" data-screen="c2" hidden>
-
-
-
-
-
-
 <main class="ag-band ag-band--navy" style="min-height:100vh">
 <div class="ag-wrap">
 
@@ -914,12 +901,6 @@ body{margin:0;background:var(--ag-navy);color:var(--ag-ink-dark);min-height:100v
     font-variant-numeric:tabular-nums;line-height:1;color:var(--ag-deny);display:block;margin:.25rem 0 .5rem}
 </style>
 <section class="panel" id="s-c3" data-screen="c3" hidden>
-
-
-
-
-
-
 <main class="ag-band ag-band--navy" style="min-height:100vh">
 <div class="ag-wrap">
 
@@ -1083,12 +1064,6 @@ body{margin:0;background:var(--ag-navy);color:var(--ag-ink-dark);min-height:100v
   .lit{color:var(--ag-ink-dark-mid)}
 </style>
 <section class="panel" id="s-c4" data-screen="c4" hidden>
-
-
-
-
-
-
 <main class="ag-band ag-band--navy" style="min-height:100vh">
 <div class="ag-wrap">
 
@@ -1241,82 +1216,112 @@ body{margin:0;background:var(--ag-navy);color:var(--ag-ink-dark);min-height:100v
 
 <script>
 (function () {
-  var STATES = {"opening": [], "c1": ["loading", "empty", "error", "success", "partial"], "c2": ["loading", "empty", "error", "success", "partial", "unresolved"], "c3": ["loading", "empty", "error", "success", "duplicate", "near"], "c4": ["loading", "empty", "error", "success", "partial", "dead"]};
-  var BEATS  = ['1','2','3','4','5'];
-  var cur = 'opening', beat = 0;
-  var bar = document.getElementById('states');
+  var STEPS = {"opening": {"n": 2, "kind": "beat", "names": []}, "c1": {"n": 5, "kind": "state", "names": ["loading", "empty", "error", "success", "partial"]}, "c2": {"n": 6, "kind": "state", "names": ["loading", "empty", "error", "success", "partial", "unresolved"]}, "c3": {"n": 6, "kind": "state", "names": ["loading", "empty", "error", "success", "duplicate", "near"]}, "c4": {"n": 6, "kind": "state", "names": ["loading", "empty", "error", "success", "partial", "dead"]}};
+  var cur = 'opening', idx = 0;
+  var LABEL = { c1: 'reading the document', c2: 'matching 986 vendor clusters',
+                c3: 'searching prior payments', c4: 'looking up the ERP' };
+  var back = document.getElementById('back');
+  var next = document.getElementById('next');
+  var pos  = document.getElementById('pos');
+  var count = document.getElementById('count');
 
-  function showScreen(k) {
-    cur = k; beat = 0;
+  function panel() { return document.querySelector('.panel[data-screen="' + cur + '"]'); }
+
+  /* CSS animations do not restart on a class toggle, and the entrance IS what is under review.
+     Replacing the node is the only reliable way to replay it. */
+  function replay(el) {
+    if (!el) return;
+    el.parentNode.replaceChild(el.cloneNode(true), el);
+  }
+
+  /* THE HOLD. The panel goes quiet, one line names what is running, and the evidence arrives
+     afterwards. Without it the verdict is simply already on screen when the screen appears, and a
+     room reads that as information rather than as an answer.
+     The loading state is exempt: holding before a skeleton is a wait before a wait. */
+  var holdT = null;
+  function hold(p, label) {
+    clearTimeout(holdT);
+    var old = p.querySelector('.ag-hold'); if (old) old.remove();
+    p.classList.remove('ag-held');
+    if (STEPS[cur].names[idx] === 'loading') return;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var el = document.createElement('div');
+    el.className = 'ag-hold';
+    el.innerHTML = '<span class="ag-hold__t">' + label + '</span>' +
+                   '<span class="ag-hold__r"><span class="ag-hold__f"></span></span>';
+    p.appendChild(el);
+    p.classList.add('ag-held');
+    var ms = parseInt(getComputedStyle(document.documentElement)
+               .getPropertyValue('--ag-hold'), 10) || 900;
+    holdT = setTimeout(function () {
+      el.remove();
+      p.classList.remove('ag-held');
+      /* Replay AFTER the hold, so the cascade plays into a held room rather than behind the cover. */
+      replay(p.querySelector('[data-state]:not([hidden])'));
+    }, ms);
+  }
+
+  function render() {
+    var s = STEPS[cur], p = panel();
+    if (s.kind === 'beat') {
+      p.querySelectorAll('.beat').forEach(function (el, n) {
+        if (n === idx) el.setAttribute('data-on', ''); else el.removeAttribute('data-on');
+      });
+      replay(p.querySelector('.beat[data-on]'));
+    } else {
+      var want = s.names[idx];
+      p.querySelectorAll('[data-state]').forEach(function (el) {
+        el.hidden = el.getAttribute('data-state') !== want;
+      });
+      replay(p.querySelector('[data-state]:not([hidden])'));
+      hold(p, LABEL[cur] || 'running check');
+    }
+    pos.innerHTML = Array.from({ length: s.n }, function (_, i) {
+      return '<span class="step__dot"' + (i === idx ? ' data-on' : '') + '></span>';
+    }).join('');
+    count.textContent = (idx + 1) + ' / ' + s.n;
+    back.disabled = idx === 0;
+    next.disabled = idx === s.n - 1;
+  }
+
+  function go(d) {
+    var n = STEPS[cur].n;
+    idx = Math.min(Math.max(idx + d, 0), n - 1);
+    render();
+  }
+
+  function screen(k) {
+    cur = k; idx = 0;
     document.querySelectorAll('.panel').forEach(function (p) {
       p.hidden = p.getAttribute('data-screen') !== k;
     });
     document.querySelectorAll('.nav__i').forEach(function (b) {
       b.setAttribute('aria-current', b.getAttribute('data-go') === k ? 'true' : 'false');
     });
-    buildBar();
-    if (k === 'opening') showBeat(0); else showState(STATES[k][0]);
+    render();
   }
 
-  function buildBar() {
-    var list = cur === 'opening' ? BEATS : STATES[cur];
-    var label = cur === 'opening' ? 'Beat' : 'State';
-    bar.innerHTML = '<span class="states__l">' + label + '</span>' +
-      list.map(function (s, i) {
-        return '<button class="st-b" data-s="' + s + '" data-i="' + i + '">' + s + '</button>';
-      }).join('');
+  /* A key press ACTUATES the button rather than bypassing it, so the viewer sees which control
+     they used. 160ms is long enough to register and short enough not to lag the transition. */
+  function fire(btn) {
+    if (btn.disabled) return;
+    btn.setAttribute('data-fired', '');
+    setTimeout(function () { btn.removeAttribute('data-fired'); }, 160);
+    btn.click();
   }
 
-  /* Re-running the entrance animations needs the node replaced — CSS animations do not
-     restart on a class toggle, and the cascade IS the thing under review here. */
-  function replay(el) {
-    if (!el) return;
-    var c = el.cloneNode(true);
-    el.parentNode.replaceChild(c, el);
-    return c;
-  }
-
-  function showState(s) {
-    var panel = document.querySelector('.panel[data-screen="' + cur + '"]');
-    panel.querySelectorAll('[data-state]').forEach(function (el) {
-      el.hidden = el.getAttribute('data-state') !== s;
-    });
-    var on = panel.querySelector('[data-state="' + s + '"]');
-    replay(on);
-    mark(s);
-  }
-
-  function showBeat(i) {
-    beat = (i + BEATS.length) % BEATS.length;
-    var panel = document.querySelector('.panel[data-screen="opening"]');
-    panel.querySelectorAll('.beat').forEach(function (el, n) {
-      if (n === beat) el.setAttribute('data-on', ''); else el.removeAttribute('data-on');
-    });
-    replay(panel.querySelector('.beat[data-on]'));
-    mark(BEATS[beat]);
-  }
-
-  function mark(s) {
-    bar.querySelectorAll('.st-b').forEach(function (b) {
-      b.setAttribute('aria-pressed', b.getAttribute('data-s') === String(s) ? 'true' : 'false');
-    });
-  }
-
+  back.addEventListener('click', function () { go(-1); });
+  next.addEventListener('click', function () { go(1); });
   document.querySelectorAll('.nav__i').forEach(function (b) {
-    b.addEventListener('click', function () { showScreen(b.getAttribute('data-go')); });
-  });
-  bar.addEventListener('click', function (e) {
-    var b = e.target.closest('.st-b'); if (!b) return;
-    if (cur === 'opening') showBeat(+b.getAttribute('data-i')); else showState(b.getAttribute('data-s'));
+    b.addEventListener('click', function () { screen(b.getAttribute('data-go')); });
   });
   document.addEventListener('keydown', function (e) {
-    var k = e.key.toLowerCase(), list = cur === 'opening' ? BEATS : STATES[cur];
-    if (k !== 'n' && k !== 'b') return;
-    if (cur === 'opening') { showBeat(beat + (k === 'n' ? 1 : -1)); return; }
-    var i = list.indexOf(bar.querySelector('[aria-pressed="true"]').getAttribute('data-s'));
-    showState(list[(i + (k === 'n' ? 1 : -1) + list.length) % list.length]);
+    var k = e.key.toLowerCase();
+    if (k === 'n' || k === 'arrowright') { e.preventDefault(); fire(next); }
+    else if (k === 'b' || k === 'arrowleft') { e.preventDefault(); fire(back); }
   });
 
-  showScreen('opening');
+  screen('opening');
 })();
 </script>
