@@ -184,11 +184,23 @@ def load_reference_data():
             [],
         ).append(row)
 
+    # Typing a po_id must find the REAL invoice sitting on that PO. Without
+    # this index the fallback had nothing to look up and supplied a
+    # placeholder vendor and amount instead -- three checks answering
+    # questions about an invoice nobody submitted.
+    invoices_by_po: dict[str, list] = {}
+    for inv in invoices:
+        invoices_by_po.setdefault(
+            inv.po_id,
+            [],
+        ).append(inv)
+
     return (
         resolver,
         invoices,
         valid_fms_ids,
         erp_by_fms,
+        invoices_by_po,
     )
 
 
@@ -199,6 +211,7 @@ try:
         existing_invoices,
         valid_fms_ids,
         erp_by_fms,
+        invoices_by_po,
     ) = load_reference_data()
 
 except Exception as exc:
@@ -295,8 +308,30 @@ def build_invoice_llm_context(result: dict) -> dict:
             "period": getattr(invoice, "period", None),
             "submitted_at": getattr(invoice, "submitted_at", None),
         }
+    # A null check in this payload must not read to the model as "nothing
+    # to report". Name the checks that never ran, so the chat cannot round
+    # a missing result up into a pass.
+    not_run = [
+        name
+        for name, value in (
+            ("intake_check", result.get("intake")),
+            ("vendor_check", result.get("vendor")),
+            ("payment_duplication_check", result.get("duplicate")),
+            ("job_status_check", result.get("job_status")),
+        )
+        if value is None
+    ]
+
     return {
+        "mode": result.get("mode"),
+        "po_id": result.get("po_id"),
         "invoice": invoice_context,
+        "checks_not_run": not_run,
+        "checks_not_run_note": (
+            "These checks had no input and were never attempted. They are "
+            "absent from the confidence denominator. Do not describe them "
+            "as passed, clean or clear -- say they could not run."
+        ),
         "extracted_fields": {
             k: v for k, v in fields.items() if k != "raw_text"
         },
@@ -742,9 +777,20 @@ def run_duplicate_check(
         invoice.invoice_id in orphans
     )
 
-    # Compare against historical invoices
+    # Compare against historical invoices.
+    #
+    # A row read straight out of the ledger is still IN that ledger, so
+    # comparing it against the unfiltered history matches it against
+    # itself -- same vendor, same amount, same period, same po_id, scored
+    # as an exact duplicate. Drop the row under test before comparing.
+    history = [
+        row
+        for row in existing_invoices
+        if row.invoice_id != invoice.invoice_id
+    ]
+
     combined = (
-        existing_invoices
+        history
         + [invoice]
     )
 
@@ -772,6 +818,7 @@ def run_duplicate_check(
         "passed": passed,
         "is_orphan": is_orphan,
         "duplicate": duplicate,
+        "history_count": len(history),
     }
 
 
@@ -846,7 +893,15 @@ def make_decision(
 
 def run_invoice_checks(
     fields: dict[str, Any],
+    invoice: Invoice | None = None,
 ):
+    """
+    `invoice` is supplied when the row came out of data/invoices.csv rather
+    than out of OCR. Passing it through keeps the ledger's own status --
+    make_invoice() hardcodes status="pending", which would silently turn an
+    already-paid invoice into a pending one and change what check 3 does
+    with it (block vs clawback).
+    """
 
     # ---- CHECK 1 GATES EVERYTHING ---------------------------------------
     # If the document cannot be trusted as an invoice, the later checks are
@@ -858,6 +913,7 @@ def run_invoice_checks(
     if intake.outcome != "APPROVE":
 
         return {
+            "mode": "invoice",
             "invoice": None,
             "fields": fields,
             "intake": intake,
@@ -873,9 +929,10 @@ def run_invoice_checks(
             "applicable_count": 1,
         }
 
-    invoice = make_invoice(
-        fields
-    )
+    if invoice is None:
+        invoice = make_invoice(
+            fields
+        )
 
     vendor_result = run_vendor_check(
         invoice
@@ -912,6 +969,7 @@ def run_invoice_checks(
     )
 
     return {
+        "mode": "invoice",
         "invoice": invoice,
         "fields": fields,
         "intake": intake,
@@ -929,13 +987,233 @@ def run_invoice_checks(
     }
 
 
+def run_po_lookup(
+    po_id: str,
+) -> dict:
+    """
+    A po_id that exists in the ERP but carries no invoice in
+    data/invoices.csv.
+
+    There is no document to intake, no vendor string to resolve and no
+    payment to compare against, so checks 1, 2 and 3 are NOT RUN. Handing
+    them a placeholder vendor and amount so that they have something to
+    grade is precisely the fabricated receipt this project is named after:
+    confident verdicts about an invoice nobody submitted.
+
+    Check 4 is the only check whose sole input IS the po_id, so it is the
+    only one that can answer here.
+    """
+
+    result = check_job_status(
+        po_id,
+        erp_by_fms.get(
+            po_id,
+            [],
+        ),
+    )
+
+    job = {
+        "passed": result.outcome == "APPROVE",
+        "applicable": result.applicable,
+        "outcome": result.outcome,
+        "reason": result.reason,
+        "rows": result.rows,
+    }
+
+    # Only check 4 was ever applicable. A check that could not run leaves
+    # the denominator -- it is never scored as a pass.
+    applicable = (
+        [job["passed"]]
+        if job["applicable"]
+        else []
+    )
+
+    passed_count = sum(
+        1 for a in applicable if a
+    )
+
+    # A live job is NOT an approval. Three of the four checks never ran, so
+    # nothing here establishes that this PO may be paid -- only that the
+    # job behind it is not dead. That is a COMMENT, not an APPROVE.
+    decision = (
+        "DENY"
+        if job["outcome"] == "DENY"
+        else "COMMENT"
+    )
+
+    return {
+        "mode": "po_only",
+        "po_id": po_id,
+        "invoice": None,
+        "fields": {},
+        "intake": None,
+        "vendor": None,
+        "duplicate": None,
+        "job_status": job,
+        "decision": decision,
+        "confidence": (
+            passed_count / len(applicable)
+            if applicable
+            else None
+        ),
+        "passed_count": passed_count,
+        "applicable_count": len(applicable),
+    }
+
+
+def render_job_status_card(
+    job_status: dict,
+):
+    """check 4 evidence. Shared by the invoice path and the PO-only path."""
+
+    st.markdown(
+        '<div class="check-card">',
+        unsafe_allow_html=True,
+    )
+
+    st.markdown(
+        '<div class="check-title">Job status</div>',
+        unsafe_allow_html=True,
+    )
+    st.caption("Is the job behind this PO still live?")
+
+    if job_status["outcome"] == "APPROVE":
+        st.markdown(
+            '<span class="pass">✓ job open for charges</span>',
+            unsafe_allow_html=True,
+        )
+    elif job_status["outcome"] == "DENY":
+        st.markdown(
+            '<span class="fail">✕ job is dead</span>',
+            unsafe_allow_html=True,
+        )
+    else:
+        st.markdown(
+            '<span class="warning">⚠ could not establish</span>',
+            unsafe_allow_html=True,
+        )
+
+    st.write(job_status["reason"])
+
+    if job_status["rows"]:
+        st.caption(
+            f"the {len(job_status['rows'])} ERP row(s) this was read from:"
+        )
+        st.dataframe(
+            [
+                {
+                    "pid": row.pid or "(null)",
+                    "current_phase": row.current_phase,
+                    "agency_project_name": (
+                        row.agency_project_name or "(none)"
+                    ),
+                }
+                for row in job_status["rows"]
+            ],
+            hide_index=True,
+            width="stretch",
+        )
+
+    st.markdown(
+        "</div>",
+        unsafe_allow_html=True,
+    )
+
+
+
 # ---------------------------------------------------------------------
 # RENDER RESULT
 # ---------------------------------------------------------------------
 
+def render_po_lookup(
+    result: dict,
+):
+    """
+    A PO with no invoice behind it. Three checks had no input, so they are
+    shown as NOT RUN rather than left blank -- an empty space reads as
+    "fine", and a green tick would be a lie.
+    """
+
+    job_status = result["job_status"]
+
+    st.markdown(
+        f"### PO `{result['po_id']}`"
+    )
+    st.caption(
+        "No invoice in data/invoices.csv carries this PO, so there is no "
+        "document to check — only the job behind it."
+    )
+
+    st.divider()
+
+    for n, name, why in (
+        (1, "Intake check",
+         "no document was submitted, so there were no fields to read"),
+        (2, "Vendor entity check",
+         "no invoice means no vendor string to resolve"),
+        (3, "Payment duplication check",
+         "no invoice means no amount or period to match on"),
+    ):
+        st.markdown(f"#### {n}. {name}")
+        st.markdown(
+            '<span class="dim">— NOT RUN</span>',
+            unsafe_allow_html=True,
+        )
+        st.caption(why)
+
+    st.divider()
+
+    st.markdown("#### 4. Job status check")
+    render_job_status_card(job_status)
+
+    if result["decision"] == "DENY":
+        st.markdown(
+            f"""
+            <div class="decision decision-block">
+                <div class="decision-title">✕ DENY</div>
+                <div class="decision-subtitle">
+                    {job_status["reason"]}
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+    else:
+        st.markdown(
+            """
+            <div class="decision decision-hold">
+                <div class="decision-title">⚠ COMMENT</div>
+                <div class="decision-subtitle">
+                    Only the job status could be checked. Nothing here
+                    establishes that this PO may be paid.
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    if result["confidence"] is not None:
+        st.caption(
+            f"confidence = {result['passed_count']}/"
+            f"{result['applicable_count']} = "
+            f"{result['confidence']:.2f}   ·   checks 1–3 had no input, so "
+            "they are absent from the denominator rather than counted as "
+            "passes"
+        )
+    else:
+        st.caption(
+            "confidence = n/a   ·   no check could run on this PO, so there "
+            "is nothing to score"
+        )
+
+
 def render_result(
     result: dict,
 ):
+
+    if result.get("mode") == "po_only":
+        render_po_lookup(result)
+        return
 
     intake = result["intake"]
 
@@ -1146,7 +1424,7 @@ def render_result(
 
         st.write(
             f"Checked against "
-            f"**{len(existing_invoices):,}** historical invoices."
+            f"**{duplicate['history_count']:,}** historical invoices."
         )
 
         st.write(
@@ -1201,59 +1479,7 @@ def render_result(
 
     job_status = result["job_status"]
 
-    # ---- check 4 evidence, before the verdict ------------------------
-    st.markdown(
-        '<div class="check-card">',
-        unsafe_allow_html=True,
-    )
-
-    st.markdown(
-        '<div class="check-title">Job status</div>',
-        unsafe_allow_html=True,
-    )
-    st.caption("Is the job behind this PO still live?")
-
-    if job_status["outcome"] == "APPROVE":
-        st.markdown(
-            '<span class="pass">✓ job open for charges</span>',
-            unsafe_allow_html=True,
-        )
-    elif job_status["outcome"] == "DENY":
-        st.markdown(
-            '<span class="fail">✕ job is dead</span>',
-            unsafe_allow_html=True,
-        )
-    else:
-        st.markdown(
-            '<span class="warning">⚠ could not establish</span>',
-            unsafe_allow_html=True,
-        )
-
-    st.write(job_status["reason"])
-
-    if job_status["rows"]:
-        st.caption(
-            f"the {len(job_status['rows'])} ERP row(s) this was read from:"
-        )
-        st.dataframe(
-            [
-                {
-                    "pid": row.pid or "(null)",
-                    "current_phase": row.current_phase,
-                    "agency_project_name": (
-                        row.agency_project_name or "(none)"
-                    ),
-                }
-                for row in job_status["rows"]
-            ],
-            hide_index=True,
-            width="stretch",
-        )
-
-    st.markdown(
-        "</div>",
-        unsafe_allow_html=True,
-    )
+    render_job_status_card(job_status)
 
     # ---- the verdict -------------------------------------------------
     if decision == "APPROVE":
@@ -1423,18 +1649,49 @@ if chat_submission:
             })
 
         else:
-            # Keep the repository's PO-id fallback for testing without a PDF.
+            # PO-id fallback, for driving the checks without a PDF.
+            #
+            # This branch used to hand checks 2 and 3 a hardcoded vendor,
+            # amount and period so that they always had something to grade.
+            # They duly graded an invoice nobody submitted: on CO80ROOF2 it
+            # named the wrong vendor and reported "no duplicate" against a
+            # PO carrying an exact one -- and both counted as applicable
+            # PASSES, padding the score to 3/4. That is the fabricated
+            # receipt this project exists to catch, built by this project.
+            #
+            # Read the real row instead; when there is no real row, run only
+            # the check that has an input.
             candidate = typed.upper()
-            if candidate in erp_by_fms:
-                result = run_invoice_checks({
-                    "invoice_id": f"TYPED-{candidate}",
-                    "po_id": candidate,
-                    "vendor_name": "Brooklyn Public Library",
-                    "amount": 50000.00,
-                    "period": "202605",
-                    "date": "2026-05-15",
-                    "raw_text": "(typed po_id — no PDF, so no OCR text)",
-                })
+            ledger = invoices_by_po.get(candidate, [])
+
+            result = None
+
+            if ledger:
+                # Several invoices on one PO IS the duplicate case. The one
+                # awaiting a decision is the latest to arrive.
+                ledger_invoice = max(
+                    ledger,
+                    key=lambda inv: inv.submitted_at,
+                )
+                result = run_invoice_checks(
+                    {
+                        "invoice_id": ledger_invoice.invoice_id,
+                        "po_id": ledger_invoice.po_id,
+                        "vendor_name": ledger_invoice.vendor_name,
+                        "amount": ledger_invoice.amount,
+                        "period": ledger_invoice.period,
+                        "date": ledger_invoice.submitted_at,
+                        "raw_text": (
+                            "(typed po_id — read from data/invoices.csv, "
+                            "so there is no OCR text)"
+                        ),
+                    },
+                    invoice=ledger_invoice,
+                )
+            elif candidate in erp_by_fms:
+                result = run_po_lookup(candidate)
+
+            if result is not None:
                 st.session_state.invoice_context = build_invoice_llm_context(result)
                 st.session_state.chat_history = []
                 st.session_state.messages.append({
@@ -1454,13 +1711,28 @@ if chat_submission:
                         "Upload an invoice PDF first, or type a po_id. "
                         "Once an invoice is verified, you can ask natural-language questions about it."
                     )
+                    st.caption(
+                        "534 POs carry an invoice in data/invoices.csv. "
+                        "Those run all four checks:"
+                    )
                     st.code(
-                        "CA202HS04   APPROVE   live phase, agency record on file\n"
-                        "BX024-011   DENY      the job is (Completed)\n"
-                        "HWK973      DENY      one dead record among live ones\n"
-                        "52CHAMELV   COMMENT   (Inactive) -- on hold\n"
-                        "ACSPDF      COMMENT   (Pending) -- NYC defines it nowhere\n"
-                        "ACECUN211   COMMENT   no agency record to verify against",
+                        "P-3RV105L   APPROVE   4/4 — vendor resolves, no duplicate, job live\n"
+                        "BED-807     COMMENT   duplicate found, but the job is still live\n"
+                        "CO80ROOF2   DENY      duplicate of INV-00055, and the job is (Completed)",
+                        language="text",
+                    )
+                    st.caption(
+                        "The other 5,074 POs carry no invoice, so checks 1–3 have no "
+                        "input and do not run. Below is what check 4 alone returns — "
+                        "the overall decision is COMMENT unless the job is dead:"
+                    )
+                    st.code(
+                        "CA202HS04   check 4 APPROVE   live phase, agency record on file\n"
+                        "BX024-011   check 4 DENY      the job is (Completed)\n"
+                        "HWK973      check 4 DENY      one dead record among live ones\n"
+                        "52CHAMELV   check 4 COMMENT   (Inactive) -- on hold\n"
+                        "ACSPDF      check 4 COMMENT   (Pending) -- NYC defines it nowhere\n"
+                        "ACECUN211   check 4 COMMENT   no agency record to verify against",
                         language="text",
                     )
 
