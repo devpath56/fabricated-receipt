@@ -1,78 +1,209 @@
+<!-- CHECK 2—VENDOR RESOLUTION.  "Which vendor is this, actually?"
+     ══════════════════════════════════════════════════════════════════════════════════════════════
+     CONTRACT—read from checks/vendor_resolution.py.
+
+       IN   input_name : str        the vendor string OCR read off the document
+            vendors.csv             986 clusters; every spelling in them is a REAL published payee
+       OUT  Resolution
+              input_name       str
+              vendor_id        str | None
+              canonical_name   str | None
+              score            float
+              method           "exact" | "fuzzy" | "unresolved"
+              status           "merged" | "review"
+
+       THRESHOLDS, from the module:
+              FUZZY_THRESHOLD  = 0.90   auto-merge floor
+              REVIEW_THRESHOLD = 0.75   below this, do not even SUGGEST a candidate
+
+     WHY A WRONG ANSWER HERE IS INVISIBLE. Check 3 asks "have we paid this before?"—and it can
+     only ask that of a vendor_id. If two spellings of one company resolve to two ids, the duplicate
+     search runs, finds nothing, and returns a clean result. The failure does not look like a
+     failure; it looks like a pass. That is why this check runs SECOND and why check 3 refuses to
+     run on a `review` verdict rather than proceeding on a guess.
+
+     THE DIFFICULTY IS MEASURED, NOT ASSUMED: only 48 of 986 clusters carry more than one spelling.
+     Those 48 are the entire job. 165 of 600 invoices arrive non-canonical.
+
+     `vendor_id` EXISTS ON THE INVOICE ROW AND IS NEVER READ AS INPUT. A resolver that reads it
+     scores 100% and proves nothing. It is the answer key, used only to score. -->
+<html lang="en">
 <meta charset="utf-8">
-<title>Check 2 — Vendor</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="ui-states" content="loading,empty,error,success,partial,unresolved">
+<title>Check 2—Vendor</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="shell.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono:wght@400&display=swap">
+<link rel="stylesheet" href="agave.css">
+<style>
+  .hd{border-bottom:1px solid var(--ag-line-dark);padding-bottom:1rem;margin-bottom:2rem;
+    display:flex;justify-content:space-between;align-items:flex-end;gap:1.5rem;flex-wrap:wrap}
+  .hd__q{color:var(--ag-ink-dark-mid);margin:0;max-width:34ch;text-align:right;font-size:var(--ag-t-sm)}
 
-<main class="app">
-  <header class="bar">
+  /* THE RESOLUTION BEAT—read string on the left, entity on the right, a green curve drawing
+     itself between them. Agave's flow line: it is what makes the match feel CAUSED. */
+  .res{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:1rem;
+    margin:0 0 1.5rem;padding:1.25rem;background:var(--ag-surface);
+    border:1px solid var(--ag-line-dark)}
+  .res__side{min-width:0}
+  .res__lab{font-family:var(--ag-mono);font-size:var(--ag-t-micro);letter-spacing:.12em;
+    text-transform:uppercase;color:var(--ag-ink-dark-mute);display:block;margin-bottom:.4rem}
+  .res__v{font-size:var(--ag-t-lg);font-weight:600;letter-spacing:-.01em;word-break:break-word}
+  .res__id{font-family:var(--ag-mono);font-size:var(--ag-t-sm);color:var(--ag-green);
+    margin-top:.25rem;display:block}
+  .res__arrow{width:5rem;height:2.5rem;flex:0 0 auto}
+  @media (max-width:640px){.res{grid-template-columns:1fr}.res__arrow{transform:rotate(90deg)}}
+
+  /* Score meter. The two thresholds are DRAWN, not described—a number floating without its
+     decision boundary is a number the reader has to be told how to judge. */
+  .meter{margin:0 0 1.5rem}
+  .meter__track{position:relative;height:.5rem;background:var(--ag-surface-2)}
+  .meter__fill{height:100%;background:var(--ag-green);transform-origin:left center;
+    transform:scaleX(0);animation:agBar .4s var(--ag-ease) .2s forwards}
+  .meter__fill--review{background:var(--ag-comment)}
+  .meter__fill--none{background:var(--ag-unknown)}
+  .meter__mark{position:absolute;top:-.3rem;bottom:-.3rem;width:1px;background:var(--ag-ink-dark-mid)}
+  .meter__mark::after{content:attr(data-l);position:absolute;top:100%;left:0;transform:translateX(-50%);
+    margin-top:.35rem;font-family:var(--ag-mono);font-size:var(--ag-t-micro);
+    color:var(--ag-ink-dark-mute);white-space:nowrap}
+  .meter__legend{display:flex;justify-content:space-between;margin-top:1.6rem;
+    font-family:var(--ag-mono);font-size:var(--ag-t-micro);color:var(--ag-ink-dark-mute)}
+  .cand{color:var(--ag-ink-dark-mid)}
+</style>
+
+<main class="ag-band ag-band--navy" style="min-height:100vh">
+<div class="ag-wrap">
+
+  <header class="hd">
     <div>
-      <span class="bar__k">Check 2 of 4</span>
-      <h1 class="bar__t">Vendor</h1>
+      <span class="ag-micro">Check 2 of 4 · check 3 depends on it</span>
+      <h1 class="ag-h2">Vendor resolution</h1>
     </div>
-    <p class="bar__q">Is this the correct vendor? Exactly one, or halt.</p>
+    <p class="hd__q">Which vendor is this, actually?</p>
   </header>
 
-  <section data-state="loading" class="st">
-    <div class="sk sk--lg" aria-hidden="true"></div>
-    <div class="sk" aria-hidden="true"></div>
-    <div class="sk sk--sm" aria-hidden="true"></div>
-    <p class="st__say" role="status">Resolving the payee name against 986 vendor records…</p>
+  <section data-state="loading" class="ag-state">
+    <div class="ag-sk ag-sk--lg" aria-hidden="true"></div>
+    <div class="ag-sk" aria-hidden="true"></div>
+    <div class="ag-sk ag-sk--sm" aria-hidden="true"></div>
+    <p class="ag-p ag-p--mid" role="status" style="margin-top:1rem">Matching against 986 vendor clusters…</p>
   </section>
 
-  <section data-state="empty" class="st">
-    <h2 class="st__h">No vendor name to resolve</h2>
-    <p class="st__p">Check 1 found no readable payee on this document, so there is nothing to match.
-      Resolve intake first.</p>
-    <p class="mono st__hint">986 vendors · 48 carry more than one real spelling</p>
+  <section data-state="empty" class="ag-state" hidden>
+    <h2 class="ag-h3">Nothing to resolve</h2>
+    <p class="ag-p ag-p--mid">Intake has not produced a vendor name yet.</p>
+    <p class="ag-micro">986 clusters · 48 carry more than one spelling · those 48 are the whole job</p>
   </section>
 
-  <section data-state="error" class="st">
-    <h2 class="st__h st__h--bad">The vendor master could not be read</h2>
-    <p class="st__p"><span class="mono">data/vendors.csv</span> is absent. Nothing was matched, and
-      no vendor was chosen — this is a missing input, not a verdict.</p>
-    <p class="st__p mono dim">regenerate with: node scripts/gen-csv.mjs</p>
-    <button class="btn" type="button">Retry</button>
+  <section data-state="error" class="ag-state" hidden>
+    <div class="ag-verdict ag-verdict--unrun">
+      <span class="ag-verdict__k">Could not run</span>
+      <span class="ag-verdict__n">no vendor_name from intake</span>
+    </div>
+    <p class="ag-p ag-p--mid">Check 1 could not read a vendor from the document, so there is no
+      string to resolve. <strong style="color:var(--ag-ink-dark)">This is not "vendor unknown"</strong>
+     —it is a check that never ran, and check 3 is blocked behind it.</p>
   </section>
 
-  <section data-state="success" class="st">
-    <div class="verdict verdict--ok">
-      <span class="verdict__k">Resolved</span>
-      <span class="verdict__n">candidate set = 1</span>
+  <!-- ── success · exact match, auto-merged ──────────────────────────────── -->
+  <section data-state="success" class="ag-state" hidden>
+    <div class="ag-verdict ag-verdict--approve">
+      <span class="ag-verdict__k">Merged</span>
+      <span class="ag-verdict__n">method exact · score 1.00</span>
     </div>
-    <div class="tw">
-      <table class="tbl">
-        <caption class="tbl__cap">On the invoice: <span class="mono">Brighter Choice Community School</span></caption>
-        <thead><tr><th scope="col">Vendor</th><th scope="col">Canonical name</th><th scope="col">Spellings</th></tr></thead>
-        <tbody>
-          <tr><th scope="row">V0560</th><td>Brighter Choice Community School</td><td class="num">1</td></tr>
-        </tbody>
-      </table>
+    <div class="res">
+      <div class="res__side">
+        <span class="res__lab">Read from document</span>
+        <span class="res__v ag-mono">Public School 44</span>
+      </div>
+      <svg class="res__arrow" viewBox="0 0 80 40" aria-hidden="true">
+        <path class="ag-flow__path" style="--len:90" d="M2 20 C 30 20, 44 20, 70 20"/>
+        <path d="M64 14 l8 6 -8 6" fill="none" stroke="var(--ag-green)" stroke-width="1.5"/>
+      </svg>
+      <div class="res__side">
+        <span class="res__lab">Resolved to</span>
+        <span class="res__v">Public School 44</span>
+        <span class="res__id">V0150 · 2 known spellings</span>
+      </div>
     </div>
-    <p class="note">One record, one spelling. Check 3 can now search this vendor's whole payment
-      history rather than one string.</p>
+    <p class="ag-note">The string matched a known spelling exactly after normalisation. Check 3 may
+      now ask <em>“have we paid <strong>V0150</strong> this amount before?”</em>—a question it
+      cannot ask of a string.</p>
   </section>
 
-  <section data-state="partial" class="st">
-    <div class="verdict verdict--ask">
-      <span class="verdict__k">Comment</span>
-      <span class="verdict__n">candidate set = 2 — halted</span>
+  <!-- ── partial · fuzzy, above review but below auto-merge ──────────────── -->
+  <section data-state="partial" class="ag-state" hidden>
+    <div class="ag-verdict ag-verdict--comment">
+      <span class="ag-verdict__k">Review</span>
+      <span class="ag-verdict__n">method fuzzy · score 0.86 · below the 0.90 merge floor</span>
     </div>
-    <div class="tw">
-      <table class="tbl">
-        <caption class="tbl__cap">On the invoice: <span class="mono">PUBLIC SCHOOL 44</span></caption>
-        <thead><tr><th scope="col">Vendor</th><th scope="col">Spelling on file</th><th scope="col">Paid to date</th></tr></thead>
-        <tbody>
-          <tr><th scope="row">V0150</th><td>Public School 44</td><td class="mono num">130,899.15</td></tr>
-          <tr><th scope="row">V0150</th><td>PUBLIC SCHOOL 44</td><td class="mono num">0.00</td></tr>
-        </tbody>
-      </table>
+    <div class="res">
+      <div class="res__side">
+        <span class="res__lab">Read from document</span>
+        <span class="res__v ag-mono">PS 770-The New American Academy</span>
+      </div>
+      <svg class="res__arrow" viewBox="0 0 80 40" aria-hidden="true">
+        <path class="ag-flow__path" style="--len:90" d="M2 20 C 30 20, 44 20, 70 20"
+              stroke="var(--ag-comment)" stroke-dasharray="4 4"/>
+        <path d="M64 14 l8 6 -8 6" fill="none" stroke="var(--ag-comment)" stroke-width="1.5"/>
+      </svg>
+      <div class="res__side">
+        <span class="res__lab">Best candidate—not accepted</span>
+        <span class="res__v cand">PS 770, The New American Academy</span>
+        <span class="res__id" style="color:var(--ag-comment)">V0155 · 3 known spellings</span>
+      </div>
     </div>
-    <p class="note note--ask"><strong>Two records match this name and the system will not pick.</strong>
-      It asks which, because guessing here is the $340,000 error. Resolve them and check 3 sees a
-      payment history a literal match would have missed.</p>
-    <p class="mono st__hint">48 of 986 vendors carry more than one spelling · $40,767,000 across them</p>
+
+    <div class="meter">
+      <div class="meter__track">
+        <span class="meter__fill meter__fill--review" style="transform:scaleX(.86)"></span>
+        <span class="meter__mark" data-l="0.75 suggest" style="left:75%"></span>
+        <span class="meter__mark" data-l="0.90 merge" style="left:90%"></span>
+      </div>
+      <div class="meter__legend"><span>0.00</span><span>score 0.86</span><span>1.00</span></div>
+    </div>
+
+    <p class="ag-note ag-note--comment"><strong>Close is not the same as certain.</strong> 0.86 clears
+      the 0.75 floor, so a candidate is worth showing—and sits under the 0.90 floor, so it is not
+      merged. <strong>Check 3 does not run on a candidate.</strong> Resolving this to the wrong id
+      would make the duplicate search return a clean result for a question it never actually asked.</p>
   </section>
+
+  <!-- ── unresolved · below the suggest floor ────────────────────────────── -->
+  <section data-state="unresolved" class="ag-state" hidden>
+    <div class="ag-verdict ag-verdict--unrun">
+      <span class="ag-verdict__k">Unresolved</span>
+      <span class="ag-verdict__n">method unresolved · best score 0.61</span>
+    </div>
+    <div class="res">
+      <div class="res__side">
+        <span class="res__lab">Read from document</span>
+        <span class="res__v ag-mono">Cnty Hlth Ntwk</span>
+      </div>
+      <svg class="res__arrow" viewBox="0 0 80 40" aria-hidden="true">
+        <path d="M2 20 C 30 20, 44 20, 70 20" fill="none" stroke="var(--ag-unknown)"
+              stroke-width="1.5" stroke-dasharray="2 5"/>
+      </svg>
+      <div class="res__side">
+        <span class="res__lab">Resolved to</span>
+        <span class="res__v ag-mute">—</span>
+        <span class="res__id ag-mute">no candidate offered</span>
+      </div>
+    </div>
+    <div class="meter">
+      <div class="meter__track">
+        <span class="meter__fill meter__fill--none" style="transform:scaleX(.61)"></span>
+        <span class="meter__mark" data-l="0.75 suggest" style="left:75%"></span>
+        <span class="meter__mark" data-l="0.90 merge" style="left:90%"></span>
+      </div>
+      <div class="meter__legend"><span>0.00</span><span>best 0.61</span><span>1.00</span></div>
+    </div>
+    <p class="ag-note ag-note--unrun"><strong>No candidate is shown, on purpose.</strong> Below 0.75
+      the module will not even suggest one—a plausible-looking wrong name is worse than a blank,
+      because a reviewer under time pressure will accept it. This goes to a human with the string
+      as read and nothing added.</p>
+  </section>
+
+</div>
 </main>
-<script src="shell.js"></script>
