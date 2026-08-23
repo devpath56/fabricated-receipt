@@ -346,6 +346,8 @@ body{margin:0;background:var(--ag-navy);color:var(--ag-ink-dark);min-height:100v
   text-transform:uppercase;color:var(--ag-ink-dark-mute)}
 .nav__t{font-size:var(--ag-t-sm);font-weight:600}
 .nav__i[aria-current="true"] .nav__n{color:var(--ag-green)}
+.nav__i[data-fired]{background:var(--ag-green);color:#000}
+.nav__i[data-fired] .nav__n{color:#000}
 
 .main{min-width:0;display:flex;flex-direction:column}
 .note-bar{padding:.6rem 1.5rem;border-bottom:1px solid var(--ag-line-dark);
@@ -378,6 +380,9 @@ body{margin:0;background:var(--ag-navy);color:var(--ag-ink-dark);min-height:100v
 .step__dot[data-on]{background:var(--ag-green)}
 .step__c{margin-left:auto;font-family:var(--ag-mono);font-size:var(--ag-t-micro);
   color:var(--ag-ink-dark-mute);font-variant-numeric:tabular-nums}
+.step__hint{display:flex;align-items:center;gap:.35rem;font-family:var(--ag-mono);
+  font-size:var(--ag-t-micro);letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ag-ink-dark-mute)}
 
 .panel[hidden]{display:none}
 .panel{flex:1;position:relative}
@@ -413,6 +418,7 @@ body{margin:0;background:var(--ag-navy);color:var(--ag-ink-dark);min-height:100v
       <button class="step__b" id="next"><span class="step__k">N</span>Next</button>
       <span class="step__pos" id="pos" aria-hidden="true"></span>
       <span class="step__c" id="count"></span>
+      <span class="step__hint"><span class="step__k">&uarr;</span><span class="step__k">&darr;</span>feature</span>
     </div>
 <style>
   body{background:var(--ag-navy);overflow:hidden}
@@ -1216,7 +1222,7 @@ body{margin:0;background:var(--ag-navy);color:var(--ag-ink-dark);min-height:100v
 
 <script>
 (function () {
-  var STEPS = {"opening": {"n": 2, "kind": "beat", "names": []}, "c1": {"n": 5, "kind": "state", "names": ["loading", "empty", "error", "success", "partial"]}, "c2": {"n": 6, "kind": "state", "names": ["loading", "empty", "error", "success", "partial", "unresolved"]}, "c3": {"n": 6, "kind": "state", "names": ["loading", "empty", "error", "success", "duplicate", "near"]}, "c4": {"n": 6, "kind": "state", "names": ["loading", "empty", "error", "success", "partial", "dead"]}};
+  var STEPS = {"opening": {"n": 2, "kind": "beat", "names": []}, "c1": {"n": 2, "kind": "state", "names": ["success", "partial"]}, "c2": {"n": 2, "kind": "state", "names": ["success", "partial"]}, "c3": {"n": 2, "kind": "state", "names": ["success", "duplicate"]}, "c4": {"n": 2, "kind": "state", "names": ["success", "dead"]}};
   var cur = 'opening', idx = 0;
   var LABEL = { c1: 'reading the document', c2: 'matching 986 vendor clusters',
                 c3: 'searching prior payments', c4: 'looking up the ERP' };
@@ -1316,10 +1322,28 @@ body{margin:0;background:var(--ag-navy);color:var(--ag-ink-dark);min-height:100v
   document.querySelectorAll('.nav__i').forEach(function (b) {
     b.addEventListener('click', function () { screen(b.getAttribute('data-go')); });
   });
+  /* TWO AXES, TWO PAIRS OF KEYS. Up/Down moves between FEATURES, Left/Right (and N/B) moves
+     between STEPS within one. Collapsing both onto one axis is what made this deck need the mouse:
+     reaching check 4's second slide meant clicking the rail, because no key crossed screens. */
+  var ORDER = ['opening', 'c1', 'c2', 'c3', 'c4'];
+  function hopScreen(d) {
+    var i = ORDER.indexOf(cur);
+    var k = ORDER[(i + d + ORDER.length) % ORDER.length];
+    var btn = document.querySelector('.nav__i[data-go="' + k + '"]');
+    /* Same rule as Next/Back: the key ACTUATES the visible control rather than bypassing it, so
+       the viewer sees which feature they moved to instead of the page silently changing. */
+    btn.setAttribute('data-fired', '');
+    setTimeout(function () { btn.removeAttribute('data-fired'); }, 160);
+    btn.click();   /* the control's own click, NOT screen(k) -- one path, so a listener that gets
+                      deleted breaks the key too instead of the key hiding a dead button */
+  }
+
   document.addEventListener('keydown', function (e) {
     var k = e.key.toLowerCase();
     if (k === 'n' || k === 'arrowright') { e.preventDefault(); fire(next); }
     else if (k === 'b' || k === 'arrowleft') { e.preventDefault(); fire(back); }
+    else if (k === 'arrowdown') { e.preventDefault(); hopScreen(1); }
+    else if (k === 'arrowup') { e.preventDefault(); hopScreen(-1); }
   });
 
   screen('opening');

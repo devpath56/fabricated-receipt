@@ -37,6 +37,27 @@ SCREENS = [
     ('c4',      'check-4-job-status.html',  'Check 4',  'Job status'),
 ]
 
+# TWO STEPS PER CHECK, NOT SIX. The screens still DECLARE every state -- loading, empty, error and
+# the rest are real, they are gated by state-matrix, and they are what a designer needs. But a
+# demo is not a state inventory. Walking six states per check is six times the clicking to reach
+# the one beat that matters, and the interesting states are drowned by the ordinary ones.
+#
+# So the stepper shows the happy path first, then the failure THIS CHECK HANDLES GRACEFULLY:
+#
+#   c1  success   -> partial     5/5 fields, then 3/5 with checks 2-4 reported NOT RUN
+#   c2  success   -> partial     exact merge at 1.00, then a 0.86 candidate it refuses to merge
+#   c3  success   -> duplicate   a genuinely clean search, then the twin already paid
+#   c4  success   -> dead        a live job, then one the ERP closed
+#
+# Each pair is chosen so the second slide is the check DOING ITS JOB, not merely erroring. A demo
+# that only ever shows success proves nothing, and one that shows every state proves it slowly.
+DEMO_STEPS = {
+    'c1': ['success', 'partial'],
+    'c2': ['success', 'partial'],
+    'c3': ['success', 'duplicate'],
+    'c4': ['success', 'dead'],
+}
+
 
 def parse(fn):
     """Return (own <style> css, body markup, ordered state names, beat count)."""
@@ -68,9 +89,14 @@ for key, fn, label, name in SCREENS:
     css, body, states, beats = parse(fn)
     # A screen is stepped by its STATES, or -- for the presentation -- by its BEATS. The shell
     # never needs to know which; it only needs how many steps there are.
-    steps[key] = {'n': beats if key == 'opening' else len(states),
+    shown = states if key == 'opening' else DEMO_STEPS.get(key, states)
+    missing = [s for s in shown if s not in states]
+    if missing:
+        raise SystemExit(f'{fn}: DEMO_STEPS names {missing}, which the screen does not declare. '
+                         'A stepper pointing at a state that does not exist renders a blank panel.')
+    steps[key] = {'n': beats if key == 'opening' else len(shown),
                   'kind': 'beat' if key == 'opening' else 'state',
-                  'names': states}
+                  'names': shown}
     panels.append(f'<style>{css}</style>\n'
                   f'<section class="panel" id="s-{key}" data-screen="{key}" hidden>\n{body}\n</section>')
     nav.append(f'<button class="nav__i" data-go="{key}">'
@@ -122,6 +148,8 @@ body{margin:0;background:var(--ag-navy);color:var(--ag-ink-dark);min-height:100v
   text-transform:uppercase;color:var(--ag-ink-dark-mute)}
 .nav__t{font-size:var(--ag-t-sm);font-weight:600}
 .nav__i[aria-current="true"] .nav__n{color:var(--ag-green)}
+.nav__i[data-fired]{background:var(--ag-green);color:#000}
+.nav__i[data-fired] .nav__n{color:#000}
 
 .main{min-width:0;display:flex;flex-direction:column}
 .note-bar{padding:.6rem 1.5rem;border-bottom:1px solid var(--ag-line-dark);
@@ -154,6 +182,9 @@ body{margin:0;background:var(--ag-navy);color:var(--ag-ink-dark);min-height:100v
 .step__dot[data-on]{background:var(--ag-green)}
 .step__c{margin-left:auto;font-family:var(--ag-mono);font-size:var(--ag-t-micro);
   color:var(--ag-ink-dark-mute);font-variant-numeric:tabular-nums}
+.step__hint{display:flex;align-items:center;gap:.35rem;font-family:var(--ag-mono);
+  font-size:var(--ag-t-micro);letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ag-ink-dark-mute)}
 
 .panel[hidden]{display:none}
 .panel{flex:1;position:relative}
@@ -271,10 +302,28 @@ JS = """
   document.querySelectorAll('.nav__i').forEach(function (b) {
     b.addEventListener('click', function () { screen(b.getAttribute('data-go')); });
   });
+  /* TWO AXES, TWO PAIRS OF KEYS. Up/Down moves between FEATURES, Left/Right (and N/B) moves
+     between STEPS within one. Collapsing both onto one axis is what made this deck need the mouse:
+     reaching check 4's second slide meant clicking the rail, because no key crossed screens. */
+  var ORDER = ['opening', 'c1', 'c2', 'c3', 'c4'];
+  function hopScreen(d) {
+    var i = ORDER.indexOf(cur);
+    var k = ORDER[(i + d + ORDER.length) %% ORDER.length];
+    var btn = document.querySelector('.nav__i[data-go="' + k + '"]');
+    /* Same rule as Next/Back: the key ACTUATES the visible control rather than bypassing it, so
+       the viewer sees which feature they moved to instead of the page silently changing. */
+    btn.setAttribute('data-fired', '');
+    setTimeout(function () { btn.removeAttribute('data-fired'); }, 160);
+    btn.click();   /* the control's own click, NOT screen(k) -- one path, so a listener that gets
+                      deleted breaks the key too instead of the key hiding a dead button */
+  }
+
   document.addEventListener('keydown', function (e) {
     var k = e.key.toLowerCase();
     if (k === 'n' || k === 'arrowright') { e.preventDefault(); fire(next); }
     else if (k === 'b' || k === 'arrowleft') { e.preventDefault(); fire(back); }
+    else if (k === 'arrowdown') { e.preventDefault(); hopScreen(1); }
+    else if (k === 'arrowup') { e.preventDefault(); hopScreen(-1); }
   });
 
   screen('opening');
@@ -306,6 +355,7 @@ doc = f"""<title>Redline</title>
       <button class="step__b" id="next"><span class="step__k">N</span>Next</button>
       <span class="step__pos" id="pos" aria-hidden="true"></span>
       <span class="step__c" id="count"></span>
+      <span class="step__hint"><span class="step__k">&uarr;</span><span class="step__k">&darr;</span>feature</span>
     </div>
 {chr(10).join(panels)}
   </div>
