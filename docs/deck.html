@@ -438,6 +438,25 @@ table.tight td,table.tight th{padding:7px 12px;font-size:12.4px}
   .topbar,.panes{padding-left:22px;padding-right:22px}
   h1.lede{max-width:none}
 }
+
+    /* FLOW — the pipeline as boxes and rules, not a fenced text diagram: a fence
+       cannot reflow, so a narrow pane shreds every row. */
+    .flow{display:flex;flex-direction:column;align-items:stretch;gap:0;margin:1.4rem 0 1.1rem}
+    .flow__row{display:grid;grid-template-columns:1fr;gap:.6rem}
+    .flow__row--3{grid-template-columns:repeat(3,1fr)}
+    @media(max-width:820px){.flow__row--3{grid-template-columns:1fr}}
+    .fbox{border:1px solid var(--hairline-strong);border-radius:var(--r);padding:.7rem .85rem;background:var(--surface)}
+    .fbox--io{background:var(--surface-2)}
+    .fbox--llm{border-color:var(--claim);background:var(--claim-dim)}
+    .fbox--det{border-color:var(--ask)}
+    .fbox--out{border-color:var(--verified);background:var(--verified-dim)}
+    .fbox__t{font:600 .82rem/1.3 var(--f-body);margin:0 0 .2rem;letter-spacing:.01em}
+    .fbox__d{font:400 .74rem/1.45 var(--f-body);color:var(--ink-mid);margin:0}
+    .fbox__d + .fbox__d{margin-top:.25rem}
+    .flow__arrow{align-self:center;color:var(--ink-muted);font:400 .8rem/1 var(--f-mono);padding:.3rem 0}
+    .legend{display:flex;flex-wrap:wrap;gap:.5rem 1.1rem;margin:.2rem 0 1rem;font:400 .74rem/1.4 var(--f-body);color:var(--ink-mid)}
+    .legend b{display:inline-block;width:.7rem;height:.7rem;border-radius:2px;vertical-align:-1px;margin-right:.35rem;border:1px solid var(--hairline-strong)}
+
 </style>
 
 <div class="shell">
@@ -740,6 +759,76 @@ table.tight td,table.tight th{padding:7px 12px;font-size:12.4px}
         <p class="footnote"><strong>Basis.</strong> $10,000,000 and $68,000 are named incidents in published contractor case studies — a project linked to the wrong job and run off-book for months, and a double-billed material order caught by hand. <strong>$272,000/yr</strong> is 4 × the $68,000 unit at the upper end of a 1–4-per-year rate. <strong>$340,000</strong> is the invoice on this demo. <strong>$25,000/yr</strong> is manual error-resolution time — a reported 5–10 hours per week across an accounting team, at a loaded rate. Everything except the two named incidents is an estimate.</p>
       </section>
 
+
+      <!-- SYSTEM DESIGN ────────────────────────────────── -->
+      <section class="pane" data-title="System design" data-group="Project">
+        <p class="eyebrow">Decision 05 — How it runs</p>
+        <h1 class="lede">A model reads the document. <b>It does not decide.</b></h1>
+
+        <p>Two Mistral calls sit at the ends of this pipeline and nothing in the middle. Extraction is a language problem; a verdict is not. Everything between them is <span class="mono">checks/</span> — plain Python over four CSV tables, and the same input returns the same answer every time.</p>
+
+        <div class="legend">
+          <span><b style="background:var(--claim-dim);border-color:var(--claim)"></b>model call</span>
+          <span><b style="border-color:var(--ask)"></b>deterministic check</span>
+          <span><b style="background:var(--verified-dim);border-color:var(--verified)"></b>output</span>
+          <span><b style="background:var(--surface-2)"></b>data in flight</span>
+        </div>
+
+        <div class="flow">
+          <div class="flow__row"><div class="fbox fbox--io"><p class="fbox__t">Invoice PDF</p><p class="fbox__d">uploaded in chat · <span class="mono">docs/invoices/</span></p></div></div>
+          <div class="flow__arrow">↓</div>
+          <div class="flow__row"><div class="fbox fbox--llm"><p class="fbox__t">Mistral OCR</p><p class="fbox__d"><span class="mono">mistral-ocr-latest</span> · JSON schema, header and footer</p><p class="fbox__d">The <strong>only</strong> place a model touches the document.</p></div></div>
+          <div class="flow__arrow">↓</div>
+          <div class="flow__row"><div class="fbox fbox--io"><p class="fbox__t">Extracted fields</p><p class="fbox__d"><span class="mono">invoice_id · vendor_name · amount · date · po_id</span></p></div></div>
+          <div class="flow__arrow">↓</div>
+          <div class="flow__row"><div class="fbox fbox--det"><p class="fbox__t">1 · Intake — and it gates</p><p class="fbox__d">All <strong>5 of 5</strong> required fields present? If not, checks 2–4 are <span class="mono">NOT RUN</span> — never "passed".</p><p class="fbox__d">Running them on garbage produces three confident answers about a document nobody read. That is the fabricated receipt.</p></div></div>
+          <div class="flow__arrow">↓</div>
+          <div class="flow__row flow__row--3">
+            <div class="fbox fbox--det"><p class="fbox__t">2 · Vendor</p><p class="fbox__d">Must resolve to <strong>exactly one</strong> vendor across <strong>48</strong> real alias clusters. Ambiguous halts and asks.</p></div>
+            <div class="fbox fbox--det"><p class="fbox__t">3 · Paid before?</p><p class="fbox__d">PO + amount + period, against <strong>every spelling</strong> check 2 resolved. A prior <span class="mono">paid</span> row is a hard deny.</p></div>
+            <div class="fbox fbox--det"><p class="fbox__t">4 · Job status</p><p class="fbox__d"><strong>8</strong> dead phases, matched on <span class="mono">current_phase_norm</span>. Unruled is not a pass.</p></div>
+          </div>
+          <div class="flow__arrow">↓</div>
+          <div class="flow__row"><div class="fbox fbox--io"><p class="fbox__t">confidence = passed ÷ applicable</p><p class="fbox__d">A check that <em>could not run</em> leaves the denominator — never scored as a pass, never as a failure.</p></div></div>
+          <div class="flow__arrow">↓</div>
+          <div class="flow__row"><div class="fbox fbox--out"><p class="fbox__t">Decision — APPROVE · COMMENT · DENY</p><p class="fbox__d"><strong>Deterministic, not the model.</strong> <span class="mono">make_decision()</span> is three branches over three booleans.</p></div></div>
+          <div class="flow__arrow">↓</div>
+          <div class="flow__row"><div class="fbox fbox--llm"><p class="fbox__t">Follow-up questions</p><p class="fbox__d"><span class="mono">mistral-small-latest</span> · grounded on the decision, <strong>cannot change it</strong></p></div></div>
+        </div>
+
+        <h2 class="sub">Why the verdict is not a model call</h2>
+        <div class="tw">
+          <table class="tight">
+            <thead><tr><th>Word</th><th>Fires when</th><th>Counts against confidence?</th></tr></thead>
+            <tbody>
+              <tr><th scope="row"><span class="pill pill--ok">APPROVE</span></th><td>every applicable check ran <em>and</em> passed</td><td>—</td></tr>
+              <tr><th scope="row"><span class="pill pill--ask">COMMENT</span></th><td>a check <strong>could not run</strong>, or a soft check failed — an unruled status, a hold, a missing agency record</td><td><strong>No.</strong> It leaves the denominator</td></tr>
+              <tr><th scope="row"><span class="pill pill--claim">DENY</span></th><td>a check <strong>ran and failed</strong>. The job no longer accepts charges</td><td>Yes</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="sowhat sowhat--claim">
+          <span class="sowhat__k">The distinction the third word buys</span>
+          <p>Collapsing <span class="mono">DENY</span> into <span class="mono">COMMENT</span> tells a reviewer that a cancelled job and an undefined status are the same fact. Measured on <span class="mono">data/erp.csv</span>: <strong>512</strong> POs are dead; <strong>2,096</strong> are merely unestablished. Two very different conversations with a contractor.</p>
+        </div>
+
+        <h2 class="sub">Where a model is allowed, and where it is not</h2>
+        <div class="tw">
+          <table class="tight">
+            <thead><tr><th>Stage</th><th>Who runs it</th><th>Why</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Read the document</th><td><span class="mono">mistral-ocr-latest</span></td><td>A scan is a language problem. Nothing else in the pipeline can do it</td></tr>
+              <tr><th scope="row">Checks 1–4</th><td><span class="mono">checks/*.py</span></td><td>Same input, same answer, every time — and each verdict names the row it came from</td></tr>
+              <tr><th scope="row">The decision</th><td><span class="mono">make_decision()</span></td><td>Three branches over three booleans. A reviewer can read the rule in full</td></tr>
+              <tr><th scope="row">Answer questions about it</th><td><span class="mono">mistral-small-latest</span></td><td>Grounded on the finished result. It explains the verdict; it cannot move it</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="footnote"><strong>Reproduce.</strong> <span class="mono">python -m checks.run_checks</span> runs the four checks over <span class="mono">data/invoices.csv</span> with no API key and no network. The two Mistral calls are the demo's ends, not its spine — pull them out and every verdict on this page is unchanged.</p>
+      </section>
+
       <!-- DATA ─────────────────────────────────────────── -->
       <section class="pane" data-title="The data" data-group="Project">
         <p class="eyebrow">Decision 05 — What we have, and what we must build</p>
@@ -827,42 +916,73 @@ table.tight td,table.tight th{padding:7px 12px;font-size:12.4px}
           </table>
         </div>
 
-        <h2 class="sub">The generated layer — every foreign key points at a real row</h2>
+        <h2 class="sub">The four tables, as built</h2>
+        <p>Every number below is from <span class="mono">docs/DATA-MODEL.md</span>, which the generator writes. The deck previously described a <span class="mono">documents</span> table; it does not exist — its one useful column became <span class="mono">invoices.missing_field</span>.</p>
         <div class="tw">
           <table class="tight">
-            <thead><tr><th>Table</th><th>Field</th><th>Source</th></tr></thead>
+            <thead><tr><th>File</th><th>Rows</th><th>What is real</th><th>What is not</th></tr></thead>
             <tbody>
-              <tr><th scope="row" rowspan="8"><span class="mono">invoices</span></th><td><span class="mono">invoice_id</span></td><td>generated, unique</td></tr>
-              <tr><td><span class="mono">po_id</span></td><td><strong>real</strong> <span class="mono">fms_id</span> from the spine</td></tr>
-              <tr><td><span class="mono">vendor_name</span></td><td><strong>real</strong> spelling from an alias cluster</td></tr>
-              <tr><td><span class="mono">amount</span></td><td>generated, ≤ the line's real budget</td></tr>
-              <tr><td><span class="mono">period</span></td><td>within the project's <strong>real</strong> schedule dates</td></tr>
-              <tr><td><span class="mono">status</span></td><td><span class="mono">paid</span> · <span class="mono">denied</span> · <span class="mono">pending</span></td></tr>
-              <tr><td><span class="mono">submitted_at</span></td><td>generated</td></tr>
-              <tr><td><span class="mono">doc_uri</span></td><td>rendered PDF, for check 1</td></tr>
-              <tr><th scope="row" rowspan="3"><span class="mono">vendors</span></th><td><span class="mono">vendor_id</span></td><td>derived</td></tr>
-              <tr><td><span class="mono">canonical_name</span></td><td>derived from the real corpus</td></tr>
-              <tr><td><span class="mono">aliases[]</span></td><td><strong>real</strong></td></tr>
-              <tr><th scope="row" rowspan="3"><span class="mono">documents</span></th><td><span class="mono">doc_id</span></td><td>generated</td></tr>
-              <tr><td><span class="mono">invoice_id</span></td><td>FK</td></tr>
-              <tr><td><span class="mono">missing_field</span></td><td>ground truth — which field was removed, or <span class="mono">none</span></td></tr>
+              <tr><th scope="row"><span class="mono">data/erp.csv</span></th><td class="num">5,801</td><td><strong>all of it</strong> — <span class="mono">fb86-vt7u</span>, project view</td><td><span class="mono">job_open_for_charges</span> is <em>derived</em>, not generated</td></tr>
+              <tr><th scope="row"><span class="mono">data/contracts.csv</span></th><td class="num">5,801</td><td><strong>all of it</strong> — <span class="mono">fb86-vt7u</span>, finance view</td><td><span class="mono">vendor_ids</span> — the one edge no public dataset supplies</td></tr>
+              <tr><th scope="row"><span class="mono">data/vendors.csv</span></th><td class="num">986</td><td>every spelling — from <span class="mono">n6ej-pebd</span> payees</td><td>the clustering and the ids</td></tr>
+              <tr><th scope="row"><span class="mono">data/invoices.csv</span></th><td class="num">600</td><td><span class="mono">po_id</span>, <span class="mono">vendor_name</span></td><td>the row itself</td></tr>
             </tbody>
           </table>
         </div>
 
-        <h2 class="sub">Rates the generator must declare</h2>
+        <h2 class="sub">The join map — one real join, and it is not one-to-one</h2>
         <div class="tw">
           <table class="tight">
-            <thead><tr><th>Knob</th><th>Why it is declared, not discovered</th></tr></thead>
+            <thead><tr><th>From</th><th>To</th><th>Matched on</th></tr></thead>
             <tbody>
-              <tr><th scope="row">duplicate rate</th><td>Check 3's precision and recall mean nothing without a known planted count</td></tr>
-              <tr><th scope="row">alias rate</th><td>How often an invoice uses a non-canonical spelling — check 2's difficulty dial</td></tr>
-              <tr><th scope="row">missing-field rate</th><td>Check 1's positive class</td></tr>
-              <tr><th scope="row">dead-job rate</th><td>Not needed — <strong>the real data already supplies 502</strong></td></tr>
-              <tr><th scope="row">ground-truth label per row</th><td><strong>The whole point.</strong> A generated set with no labels is a demo prop, not an eval</td></tr>
+              <tr><th scope="row"><span class="mono">invoices.po_id</span></th><td><span class="mono">contracts.fms_id</span> · <span class="mono">erp.fms_id</span></td><td><strong>real key, 1:N</strong> — 5,608 distinct across 5,801 rows; <strong>96</strong> return conflicting phases</td></tr>
+              <tr><th scope="row"><span class="mono">invoices.vendor_name</span></th><td><span class="mono">vendors.aliases[]</span></td><td><span class="mono">norm()</span>, <strong>never equality</strong> — this is check 2</td></tr>
+              <tr><th scope="row"><span class="mono">invoices.vendor_id</span></th><td><span class="mono">vendors.vendor_id</span></td><td>only <em>after</em> check 2 resolves</td></tr>
+              <tr><th scope="row"><span class="mono">contracts.vendor_ids</span></th><td><span class="mono">vendors.vendor_id</span></td><td>the generated edge, 1–3 per line</td></tr>
+              <tr><th scope="row"><span class="mono">invoices.doc_uri</span></th><td>the rendered PDF</td><td>check 1</td></tr>
             </tbody>
           </table>
         </div>
+        <p><strong>There is no invoice→budget join to get wrong.</strong> The invoice carries <span class="mono">po_id</span>, which <em>is</em> <span class="mono">fms_id</span> — so checks 1–3 need no join at all.</p>
+
+        <h2 class="sub">The ground truth, and the one column a resolver may never read</h2>
+        <div class="tw">
+          <table class="tight">
+            <thead><tr><th>Column</th><th>Source</th><th>What it is for</th></tr></thead>
+            <tbody>
+              <tr><th scope="row"><span class="mono">po_id</span></th><td><strong>real</strong> <span class="mono">fb86-vt7u.fms_id</span></td><td>FK → <span class="mono">contracts</span> and <span class="mono">erp</span></td></tr>
+              <tr><th scope="row"><span class="mono">vendor_name</span></th><td><strong>real</strong> spelling from <span class="mono">n6ej-pebd</span></td><td><strong>35%</strong> non-canonical by design — check 2's input</td></tr>
+              <tr><th scope="row"><span class="mono">vendor_id</span></th><td>generated</td><td><strong>The answer check 2 must find. Never read it as input</strong> — a resolver that reads it scores 100% and proves nothing</td></tr>
+              <tr><th scope="row"><span class="mono">amount</span></th><td>generated</td><td>≤ <strong>7%</strong> of that line's real <span class="mono">total_budget</span></td></tr>
+              <tr><th scope="row"><span class="mono">period</span></th><td>generated</td><td>inside the project's <strong>real</strong> schedule window</td></tr>
+              <tr><th scope="row"><span class="mono">missing_field</span></th><td>generated</td><td>ground truth for <strong>check 1</strong> — which field was blanked, or <span class="mono">none</span></td></tr>
+              <tr><th scope="row"><span class="mono">label_is_duplicate</span></th><td>generated</td><td>ground truth for <strong>check 3</strong></td></tr>
+              <tr><th scope="row"><span class="mono">label_dead_job</span></th><td><strong>derived</strong></td><td>ground truth for <strong>check 4</strong> — from the row's real phase</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="sowhat sowhat--claim">
+          <span class="sowhat__k">The planted duplicate — this is the demo</span>
+          <p><span class="mono">INV-00012 · BED-807 · paid · $130,899.15 · Public School 44</span><br>
+             <span class="mono">INV-00013 · BED-807 · pending · $130,899.15 · PUBLIC SCHOOL 44</span></p>
+          <p>Same PO, same amount, same period. <strong>A literal name match finds nothing.</strong> Check 2 resolves both to <span class="mono">V0150</span>; only then does check 3 see it. <strong>48 of 986</strong> vendors carry more than one spelling, and those 48 are check 2's whole difficulty.</p>
+        </div>
+
+        <h2 class="sub">Declared rates, and the assertion that guards them</h2>
+        <div class="tw">
+          <table class="tight">
+            <thead><tr><th>Planted</th><th>Declared</th><th>Achieved at <span class="mono">--seed 42 --invoices 600</span></th></tr></thead>
+            <tbody>
+              <tr><th scope="row">duplicates</th><td class="num">0.08</td><td class="num">41</td></tr>
+              <tr><th scope="row">missing field</th><td class="num">0.10</td><td class="num">72</td></tr>
+              <tr><th scope="row">dead job</th><td class="num">0.12</td><td class="num">79</td></tr>
+              <tr><th scope="row">non-canonical spelling</th><td class="num">0.35</td><td class="num">165</td></tr>
+              <tr><th scope="row">conflicting phases</th><td>—</td><td><strong>96 — real, not planted</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><span class="mono">gen-csv.mjs</span> <strong>asserts every achieved rate within 35% relative and exits non-zero on a miss.</strong> The first run planted <strong>one</strong> duplicate against a declared <span class="mono">0.08</span> — only 48 of 986 vendors can alias, so the branch almost never fired. A stated rate nobody verified gives every downstream eval a wrong denominator, which is the failure this whole project is about.</p>
 
         <div class="sowhat">
           <span class="sowhat__k">Why this is defensible on stage</span>
