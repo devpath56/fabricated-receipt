@@ -1,4 +1,4 @@
-# The Fabricated Receipt — handoff
+# Redline — handoff
 
 > **You need nothing outside this repo.** No transcript, no prior context, no links.
 > Last updated 2026-08-22, after the morning sync. Supersedes anything you were told earlier.

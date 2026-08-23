@@ -12,7 +12,7 @@ through reads:
 
 Every downstream check answered a question about a document nobody read. The
 answers are not wrong so much as meaningless, and the confidence number built
-from them is the fabricated receipt this project is named after.
+from them is the fabricated receipt this product exists to catch.
 
 OUTCOME VOCABULARY matches screens/check-1-intake.html: Approve / Comment.
 Intake never DENIES -- a missing field is not evidence of fraud, it is the

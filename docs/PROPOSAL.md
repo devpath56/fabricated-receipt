@@ -1,4 +1,4 @@
-# The Fabricated Receipt — project proposal
+# Redline — project proposal
 
 > Nine decisions and three appendices. Each is one decision that was actually made, with the
 > evidence it rested on. Nothing advances on its own.

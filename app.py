@@ -39,7 +39,7 @@ from checks.intake import run_intake_check  # noqa: E402
 # ---------------------------------------------------------------------
 
 st.set_page_config(
-    page_title="Invoice Verification",
+    page_title="Redline",
     page_icon="🧾",
     layout="centered",
 )
@@ -127,7 +127,7 @@ st.markdown(
 # HEADER
 # ---------------------------------------------------------------------
 
-st.title("🧾 Invoice Verification")
+st.title("🧾 Redline")
 
 st.caption(
     "Upload an incoming invoice. "
@@ -727,7 +727,7 @@ def run_invoice_checks(
     # If the document cannot be trusted as an invoice, the later checks are
     # NOT RUN -- not "passed". Running them on garbage fields produces three
     # confident answers about a document nobody read, which is exactly the
-    # fabricated receipt this project is named after.
+    # fabricated receipt this product exists to catch.
     intake = run_intake_check(fields)
 
     if intake.outcome != "APPROVE":

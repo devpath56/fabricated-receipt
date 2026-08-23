@@ -34,7 +34,7 @@ does return two phases, `SEQ200509` really is `(Completed)`.
 - the check **could not run** and has no finding — **grey and dashed, never a warning colour**
 
 A warning colour on an absent finding makes absence of evidence look like evidence. That is the
-failure this whole project is named after.
+failure this whole product exists to catch.
 
 ## Design system
 

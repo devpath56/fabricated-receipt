@@ -281,7 +281,7 @@ JS = """
 })();
 """ % {'steps': json.dumps(steps)}
 
-doc = f"""<title>Fabricated Receipt</title>
+doc = f"""<title>Redline</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono:wght@400&display=swap">
@@ -293,7 +293,7 @@ doc = f"""<title>Fabricated Receipt</title>
 
 <div class="shell">
   <aside class="rail">
-    <div class="rail__m"><span class="rail__d"></span><span>Fabricated receipt</span></div>
+    <div class="rail__m"><span class="rail__d"></span><span>Redline</span></div>
     <nav class="nav" aria-label="screens">
 {chr(10).join('      ' + n for n in nav)}
     </nav>
