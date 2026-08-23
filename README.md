@@ -9,6 +9,16 @@ query — so the receipt is written by the suspect. Nothing errors. Nothing turn
 We don't grade the answer. **We grade the receipt against the query that actually executed** —
 join keys, filters, and what got dropped — and we refuse to answer when it doesn't tie back.
 
+## Surfaces, in order
+
+| | surface | what it is |
+|---|---|---|
+| **1 — primary** | `app.py` · `app_with_mistral_chat.py` | the Streamlit app. Runs the real checks on real invoices. **Show this first.** |
+| 2 — secondary | `screens/` | static design reference — every state each check can reach, on Agave's design system. Runs nothing. [Live](https://claude.ai/code/artifact/f84497a4-ffc6-410d-8fa8-03c244b7da15) · [`screens/README.md`](screens/README.md) |
+
+The screens exist because the app cannot show a contradictory PO or a 0.86 vendor score on demand —
+those need the right invoice in front of you. There they are one click apart.
+
 Deck: <https://claude.ai/code/artifact/a9063930-ee09-4792-9de3-f3199ac819a3>
 
 ---
