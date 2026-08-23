@@ -1,3 +1,5 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Redline</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -457,6 +459,41 @@ table.tight td,table.tight th{padding:7px 12px;font-size:12.4px}
     .legend{display:flex;flex-wrap:wrap;gap:.5rem 1.1rem;margin:.2rem 0 1rem;font:400 .74rem/1.4 var(--f-body);color:var(--ink-mid)}
     .legend b{display:inline-block;width:.7rem;height:.7rem;border-radius:2px;vertical-align:-1px;margin-right:.35rem;border:1px solid var(--hairline-strong)}
 
+    /* OPENER — the one pane that is a room, not a document.
+       Type is the whole design here: nothing to read, one thing to feel. */
+    .opener{display:flex;flex-direction:column;justify-content:center;min-height:min(68vh,620px);
+      position:relative;isolation:isolate;padding:2.2rem 0}
+    /* the diagonal ground, drawn in CSS so it costs no asset and follows the theme */
+    .opener::before{content:"";position:absolute;inset:-2rem -2rem;z-index:-1;border-radius:var(--r);
+      background:
+        repeating-linear-gradient(135deg,transparent 0 22px,color-mix(in srgb,var(--ink) 4%,transparent) 22px 23px),
+        linear-gradient(160deg,var(--surface) 0%,var(--ground-deep) 100%)}
+    .opener__k{font:600 .72rem/1 var(--f-mono);letter-spacing:.22em;text-transform:uppercase;
+      color:var(--ink-muted);margin:0 0 1.1rem}
+    .opener__h{font:800 clamp(3.4rem,13vw,9.5rem)/0.92 var(--f-display);letter-spacing:-.035em;
+      color:var(--ink);margin:0;display:flex;flex-wrap:wrap;gap:0 .12em}
+    .opener__w{display:inline-block;white-space:nowrap}
+    .opener__sub{font:400 clamp(1rem,2.5vw,1.85rem)/1.35 var(--f-body);color:var(--ink-mid);
+      margin:1.5rem 0 0;max-width:22ch;max-width:min(100%,34ch)}
+    .opener__hit{color:var(--ask);font-weight:600}
+    .opener__foot{margin:2.2rem 0 0;font:400 .8rem/1.5 var(--f-body);color:var(--ink-muted)}
+    /* the reveal: each word rises on its own beat, then the line under it.
+       A single fade would land as a slide transition; the stagger is what makes a room look up. */
+    .pane[data-active="true"] .opener__w{animation:opRise .62s cubic-bezier(.16,.9,.3,1) both}
+    .pane[data-active="true"] .opener__w:nth-child(2){animation-delay:.12s}
+    .pane[data-active="true"] .opener__sub{animation:opFade .7s ease-out .42s both}
+    .pane[data-active="true"] .opener__k{animation:opFade .5s ease-out both}
+    .pane[data-active="true"] .opener__foot{animation:opFade .7s ease-out .72s both}
+    @keyframes opRise{from{opacity:0;transform:translateY(.42em) rotate(-1.2deg)}to{opacity:1;transform:none}}
+    @keyframes opFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+    @media (prefers-reduced-motion:reduce){
+      .pane[data-active="true"] .opener__w,
+      .pane[data-active="true"] .opener__k,
+      .pane[data-active="true"] .opener__sub,
+      .pane[data-active="true"] .opener__foot{animation:none}
+    }
+
+
 </style>
 
 <div class="shell">
@@ -484,6 +521,14 @@ table.tight td,table.tight th{padding:7px 12px;font-size:12.4px}
     <div class="panes" id="panes">
 
       <!-- 01 ───────────────────────────────────────────── -->
+      <!-- OPENER ──────────────────────────────────────── -->
+      <section class="pane opener" data-title="Hands up" data-group="Project">
+        <p class="opener__k">The Fabricated Receipt</p>
+        <h1 class="opener__h"><span class="opener__w">HANDS</span> <span class="opener__w">UP</span></h1>
+        <p class="opener__sub">if you have ever shipped a number <span class="opener__hit">you could not defend.</span></p>
+        <p class="opener__foot">Everyone in this room has. The question is whether the next one is checkable.</p>
+      </section>
+
       <section class="pane" data-title="Angela" data-group="Project">
         <p class="eyebrow">Decision 01 — Who this is for</p>
         <h1 class="lede">Angela approves the money. She <em>can't see</em> whether it's right.</h1>
