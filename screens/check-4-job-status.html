@@ -1,98 +1,206 @@
+<!-- CHECK 4—JOB STATUS.  "Is the job behind this PO still live?"
+     ══════════════════════════════════════════════════════════════════════════════════════════════
+     CONTRACT—read from checks/job_status.py.
+
+       IN   po_id     : str | None       from intake. NEEDS NOTHING ELSE—no join to invent.
+            erp_rows  : list             every ERP row whose fms_id == po_id
+       OUT  JobStatusResult
+              po_id, applicable, outcome "APPROVE" | "COMMENT" | "DENY", reason, rows[]
+
+     `applicable` IS NOT `outcome`. A COMMENT can mean two different things, and the screen must
+     never spell them the same way:
+          applicable=True   the check RAN and reached a verdict
+          applicable=False  the check COULD NOT RUN—there is no finding to report
+     Everything in this project turns on that distinction.
+
+     THE BRANCH ORDER IS LOAD-BEARING and each position was measured. This screen's states are that
+     order, one to one:
+       1 orphan       no ERP record at all              COMMENT · could not run
+       2 DEAD         tested BEFORE any disagreement logic—one dead record blocks the charge even
+                      when live siblings outnumber it. A live sibling does not make cancelled work
+                      billable.                          DENY · ran
+       3 held         tested BEFORE evidence, so the operator switch reaches every held PO rather
+                      than only those that happen to carry an agency record.
+                                                         COMMENT (HELD_OUTCOME, one line to reverse)
+       4 unruled      NYC defines the word nowhere       COMMENT · could not run
+       5 no evidence  no pid + agency_project_name       COMMENT · could not run
+       6 APPROVE      live phase, agency record present  APPROVE · ran
+
+     TWO REAL DEFECTS LIVE IN THIS TABLE AND NEITHER WAS PLANTED:
+       · the phase enum is ALIASED—Design / (Design), (On-hold) / (On-Hold). 36 raw values
+         normalise to 31. Compare on the normalised phase, never on the literal.
+       · 96 of 5,608 keys return CONFLICTING phases, carrying $60,366,832,689. OFFSHRWND is both
+         (Pending) and (Pre-Design). The system does not pick one.
+
+     EVIDENCE IS TWO COLUMNS, NOT THREE: current_phase_start was tried and rejected—it is NULL on
+     100% of Pre-Design and Close-out rows, so requiring it would mark 43% of legitimate rows
+     unverifiable. -->
+<html lang="en">
 <meta charset="utf-8">
-<title>Check 4 — Job status</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="ui-states" content="loading,empty,error,success,partial,dead">
+<title>Check 4—Job status</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="shell.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono:wght@400&display=swap">
+<link rel="stylesheet" href="agave.css">
+<style>
+  .hd{border-bottom:1px solid var(--ag-line-dark);padding-bottom:1rem;margin-bottom:2rem;
+    display:flex;justify-content:space-between;align-items:flex-end;gap:1.5rem;flex-wrap:wrap}
+  .hd__q{color:var(--ag-ink-dark-mid);margin:0;max-width:34ch;text-align:right;font-size:var(--ag-t-sm)}
+  .money{font-size:clamp(2rem,7vw,3.6rem);font-weight:600;letter-spacing:-.03em;
+    font-variant-numeric:tabular-nums;line-height:1;display:block;margin:.25rem 0 .5rem}
+  .money--deny{color:var(--ag-deny)}
+  .money--comment{color:var(--ag-comment)}
+  /* The normalisation beat: literal on the left, normalised on the right. Check 4's whole
+     difficulty is that these two columns disagree, so they are always shown together. */
+  .norm{color:var(--ag-green)}
+  .lit{color:var(--ag-ink-dark-mid)}
+</style>
 
-<main class="app">
-  <header class="bar">
+<main class="ag-band ag-band--navy" style="min-height:100vh">
+<div class="ag-wrap">
+
+  <header class="hd">
     <div>
-      <span class="bar__k">Check 4 of 4</span>
-      <h1 class="bar__t">Job status</h1>
+      <span class="ag-micro">Check 4 of 4 · needs only po_id</span>
+      <h1 class="ag-h2">Job status</h1>
     </div>
-    <p class="bar__q">Is the job behind this PO still live?</p>
+    <p class="hd__q">Is the job behind this PO still open for charges?</p>
   </header>
 
-  <section data-state="loading" class="st">
-    <div class="sk sk--lg" aria-hidden="true"></div>
-    <div class="sk" aria-hidden="true"></div>
-    <div class="sk sk--sm" aria-hidden="true"></div>
-    <p class="st__say" role="status">Looking up the PO's phase in the ERP…</p>
+  <section data-state="loading" class="ag-state">
+    <div class="ag-sk ag-sk--lg" aria-hidden="true"></div>
+    <div class="ag-sk" aria-hidden="true"></div>
+    <div class="ag-sk ag-sk--sm" aria-hidden="true"></div>
+    <p class="ag-p ag-p--mid" role="status" style="margin-top:1rem">Looking up the PO's phase in the ERP…</p>
   </section>
 
-  <section data-state="empty" class="st">
-    <h2 class="st__h">This PO is in no project</h2>
-    <p class="st__p">The purchase order returns no row in the ERP. The money exists with no
-      sanctioned job behind it — that is a question for the owner, not a verdict here.</p>
-    <p class="mono st__hint">2,356 rows in the period carry no project at all · $64,836,845,710</p>
-  </section>
-
-  <section data-state="error" class="st">
-    <h2 class="st__h st__h--bad">The ERP could not be read</h2>
-    <p class="st__p">No phase was resolved. <strong>Absence of a status is not a live job</strong> —
-      the invoice is not approvable on a lookup that did not run.</p>
-    <p class="st__p mono dim">expected: data/erp.csv</p>
-    <button class="btn" type="button">Retry</button>
-  </section>
-
-  <section data-state="success" class="st">
-    <div class="verdict verdict--ok">
-      <span class="verdict__k">Approve</span>
-      <span class="verdict__n">job open for charges</span>
+  <!-- ── empty · BRANCH 1, orphan. COMMENT, applicable=False. ────────────── -->
+  <section data-state="empty" class="ag-state" hidden>
+    <div class="ag-verdict ag-verdict--unrun">
+      <span class="ag-verdict__k">Could not run</span>
+      <span class="ag-verdict__n">no ERP record for this PO</span>
     </div>
-    <div class="tw">
-      <table class="tbl">
-        <caption class="tbl__cap">PO <span class="mono">P-3RV105L</span> · one phase returned</caption>
-        <thead><tr><th scope="col">Phase, as published</th><th scope="col">Normalised</th><th scope="col">Charges</th></tr></thead>
+    <h2 class="ag-h3">This purchase order is in no project</h2>
+    <p class="ag-p ag-p--mid">The PO returns no row in the ERP. There is money with no sanctioned
+      job behind it—<strong style="color:var(--ag-ink-dark)">that is a question for the
+      owner, not a verdict here</strong>.</p>
+    <p class="ag-micro">2,356 rows in the period carry no project at all · $64,836,845,710</p>
+  </section>
+
+  <!-- ── error · BRANCH 5, no agency record. COMMENT, applicable=False. ──── -->
+  <section data-state="error" class="ag-state" hidden>
+    <div class="ag-verdict ag-verdict--unrun">
+      <span class="ag-verdict__k">Could not run</span>
+      <span class="ag-verdict__n">no agency record on 1 of 1 project record</span>
+    </div>
+    <p class="ag-p ag-p--mid">A phase is recorded, but the row carries no
+      <span class="ag-mono">pid</span> and no <span class="ag-mono">agency_project_name</span> —
+      <strong style="color:var(--ag-ink-dark)">there is nothing to verify the work against</strong>.</p>
+    <p class="ag-note ag-note--unrun">Evidence is two columns, not three.
+      <span class="ag-mono">current_phase_start</span> was tried and rejected: it is NULL on 100% of
+      Pre-Design and Close-out rows, so requiring it would have marked 43% of legitimate rows
+      unverifiable. A gate that red on arrival gets waved through, not satisfied.</p>
+    <button class="ag-btn ag-btn--ghost" type="button" style="margin-top:1rem">Retry</button>
+  </section>
+
+  <!-- ── success · BRANCH 6, APPROVE. ────────────────────────────────────── -->
+  <section data-state="success" class="ag-state" hidden>
+    <div class="ag-verdict ag-verdict--approve">
+      <span class="ag-verdict__k">Approve</span>
+      <span class="ag-verdict__n">the job is live and carries an agency record</span>
+    </div>
+    <div class="ag-tw">
+      <table class="ag-tbl ag-cascade">
+        <caption class="ag-tbl__cap">PO P-3RV105L · one project record returned</caption>
+        <thead><tr>
+          <th scope="col">Phase, as published</th><th scope="col">Normalised</th>
+          <th scope="col">Agency record</th><th scope="col">Charges</th>
+        </tr></thead>
         <tbody>
-          <tr><th scope="row">Construction</th><td class="mono">construction</td><td><span class="pill pill--ok">open</span></td></tr>
+          <tr><th scope="row" class="lit">Construction</th>
+              <td class="ag-mono norm">construction</td>
+              <td class="ag-mono">pid 4821 · present</td>
+              <td><span class="ag-pill ag-pill--ok">open</span></td></tr>
         </tbody>
       </table>
     </div>
-    <p class="note">Compared on the <strong>normalised</strong> phase. The published enum writes the
-      same phase more than one way — <span class="mono">Design</span> and <span class="mono">(Design)</span>
-      are one job, and a literal comparison would read them as two.</p>
+    <p class="ag-note">Compared on the <strong>normalised</strong> phase. The published enum writes
+      the same phase more than one way—<span class="ag-mono">Design</span> and
+      <span class="ag-mono">(Design)</span> are one job, 36 raw values collapsing to 31, and a
+      literal comparison would read them as two.</p>
   </section>
 
-  <section data-state="partial" class="st">
-    <div class="verdict verdict--ask">
-      <span class="verdict__k">Comment</span>
-      <span class="verdict__n">one key, two answers</span>
+  <!-- ── partial · the 96. One key, two answers. The system will not pick. ── -->
+  <section data-state="partial" class="ag-state" hidden>
+    <div class="ag-verdict ag-verdict--comment">
+      <span class="ag-verdict__k">Comment</span>
+      <span class="ag-verdict__n">one key, two answers—the check ran and found a contradiction</span>
     </div>
-    <div class="tw">
-      <table class="tbl">
-        <caption class="tbl__cap">PO <span class="mono">OFFSHRWND</span> · <strong>2 phases returned</strong></caption>
-        <thead><tr><th scope="col">Phase, as published</th><th scope="col">Normalised</th><th scope="col">Charges</th></tr></thead>
+
+    <span class="ag-micro">Carried by the 96 keys that contradict themselves</span>
+    <span class="money money--comment ag-num">$60,366,832,689</span>
+
+    <div class="ag-tw">
+      <table class="ag-tbl ag-cascade">
+        <caption class="ag-tbl__cap">PO OFFSHRWND · Offshore Wind—Development and Manufacturing · <strong>2 records returned</strong></caption>
+        <thead><tr>
+          <th scope="col">Phase, as published</th><th scope="col">Normalised</th>
+          <th scope="col">Agency record</th><th scope="col">Charges</th>
+        </tr></thead>
         <tbody>
-          <tr><th scope="row">(Pending)</th><td class="mono">pending</td><td><span class="pill pill--ask">unknown</span></td></tr>
-          <tr><th scope="row">Pre-Design</th><td class="mono">pre-design</td><td><span class="pill pill--ask">unknown</span></td></tr>
+          <tr><th scope="row" class="lit">(Pending)</th>
+              <td class="ag-mono norm">pending</td>
+              <td class="ag-mono ag-mute">pid null</td>
+              <td><span class="ag-pill ag-pill--unknown">unknown</span></td></tr>
+          <tr><th scope="row" class="lit">(Pre-Design)</th>
+              <td class="ag-mono norm">pre-design</td>
+              <td class="ag-mono ag-mute">pid null</td>
+              <td><span class="ag-pill ag-pill--unknown">unknown</span></td></tr>
         </tbody>
       </table>
     </div>
-    <p class="note note--ask"><strong>The system will not pick one.</strong> "What is the status of
-      this PO" has no single answer here, and choosing would manufacture certainty the data does not
-      carry. It comments and names both.</p>
-    <p class="mono st__hint">96 of 5,608 keys return more than one phase · $60,366,832,689 across them</p>
+
+    <p class="ag-note ag-note--comment"><strong>The system will not pick one.</strong> “What is the
+      status of this PO” has no single answer here, and choosing would manufacture certainty the
+      data does not carry. It names both and comments.</p>
+    <p class="ag-micro" style="margin-top:1rem">96 of 5,608 keys return more than one phase—real,
+      measured, not planted</p>
   </section>
 
-  <section data-state="dead" class="st">
-    <div class="verdict verdict--bad">
-      <span class="verdict__k">Deny</span>
-      <span class="verdict__n">confidence 1.00 — job closed</span>
+  <!-- ── dead · BRANCH 2, DENY. Tested BEFORE disagreement logic. ────────── -->
+  <section data-state="dead" class="ag-state" hidden>
+    <div class="ag-verdict ag-verdict--deny">
+      <span class="ag-verdict__k">Deny</span>
+      <span class="ag-verdict__n">the job is (Completed)—it no longer accepts charges</span>
     </div>
-    <div class="tw">
-      <table class="tbl">
-        <caption class="tbl__cap">PO <span class="mono">CA202HS04</span> · one phase returned</caption>
-        <thead><tr><th scope="col">Phase, as published</th><th scope="col">Normalised</th><th scope="col">Charges</th></tr></thead>
+
+    <span class="ag-micro">Invoice INV-00021 · Office of the Brooklyn Borough President</span>
+    <span class="money money--deny ag-num">$102,369.19</span>
+
+    <div class="ag-tw">
+      <table class="ag-tbl ag-cascade">
+        <caption class="ag-tbl__cap">PO SEQ200509 · STORM SEWER IN Rockaway Bch Blvd bet B60 St &amp; B59 St</caption>
+        <thead><tr>
+          <th scope="col">Phase, as published</th><th scope="col">Normalised</th>
+          <th scope="col">Agency record</th><th scope="col">Charges</th>
+        </tr></thead>
         <tbody>
-          <tr><th scope="row">(Completed)</th><td class="mono">completed</td><td><span class="pill pill--bad">closed</span></td></tr>
+          <tr><th scope="row" class="lit">(Completed)</th>
+              <td class="ag-mono norm">completed</td>
+              <td class="ag-mono">present</td>
+              <td><span class="ag-pill ag-pill--deny">closed</span></td></tr>
         </tbody>
       </table>
     </div>
-    <p class="note note--bad">The ERP closed this job. A payment approved against it lands on a
-      budget line that no longer accepts charges — the $10,000,000 mis-coding, in one row.</p>
-    <p class="mono st__hint">502 rows in the period are Completed or Cancelled · $11,616,084,685</p>
+
+    <p class="ag-note ag-note--deny">The ERP closed this job. A payment approved against it lands on
+      a budget line that no longer accepts charges. <strong>Dead is tested before any disagreement
+      logic</strong>—one dead record blocks the charge even when live siblings outnumber it,
+      because a live sibling does not make cancelled work billable.</p>
+    <p class="ag-micro" style="margin-top:1rem">502 rows in the period are Completed or Cancelled · $11,616,084,685</p>
   </section>
+
+</div>
 </main>
-<script src="shell.js"></script>

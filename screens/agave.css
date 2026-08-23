@@ -1,0 +1,259 @@
+/* agave.css — the shared shell for every screen in this project.
+ *
+ * TOKENS ARE MEASURED, NOT CHOSEN. Every value in the "measured" block below was read out of
+ * https://useagave.com with getComputedStyle across the whole DOM and ranked by frequency, on
+ * 2026-08-22. The full system, its provenance and its checklist live at
+ * ~/.claude/skills/references/design-systems/design-md/agave/DESIGN.md
+ *
+ * THE ONE RULE THAT DECIDES WHETHER THIS READS AS AGAVE:
+ * Agave is a LIGHT product with DARK NAVY PRODUCT SURFACES. Marketing is white and mint; the
+ * application UI sits on navy. These screens ARE application UI, so they are navy — and the
+ * opening screen, which is marketing, is paper.
+ */
+
+:root{
+  /* ── MEASURED on useagave.com ─────────────────────────────────────────── */
+  --ag-green:#17CF60;            /* rgb(23,207,96)   — primary fill, data bars, flow lines */
+  --ag-green-10:rgba(23,207,96,.1);
+  --ag-mint:#D1F5DF;             /* rgb(209,245,223) — soft band, badge fill */
+  --ag-lime:#E8F6A0;             /* rgb(232,246,160) — the rarest accent */
+  --ag-navy:#0F1B2E;             /* rgb(15,27,46)    — product ground */
+  --ag-navy-deep:#0C1B31;
+  --ag-nav:#050F1D;
+  --ag-paper:#F3F7F4;            /* rgb(243,247,244) — green-tinted off-white, never #F5F5F5 */
+  --ag-white:#FFFFFF;
+  --ag-ink:#000000;              /* body text is PURE BLACK, not a soft grey */
+  --ag-ink-2:#222222;
+  --ag-line:rgba(0,0,0,.1);      /* one width, one style, everywhere */
+  --ag-line-solid:#E5E5E5;
+
+  /* ── DERIVED for product use (the marketing page has no tables and no failure state) ── */
+  --ag-surface:#16243B;
+  --ag-surface-2:#1D2E48;
+  --ag-line-dark:rgba(255,255,255,.10);
+  --ag-line-dark-2:rgba(255,255,255,.18);
+  --ag-ink-dark:#FFFFFF;
+  --ag-ink-dark-mid:#A8B4C6;
+  --ag-ink-dark-mute:#8395B4;   /* RAISED from #6B7A93, which measured 3.97:1 on navy and
+                                   3.14:1 on --ag-surface-2 — below AA for the mono micro-labels
+                                   and table headers that use it. #8395B4 measures 5.69 and 4.51.
+                                   This is a DERIVED token, not one of Agave's own, so raising it
+                                   costs nothing in fidelity. */
+
+  /* Verdict roles. See DESIGN.md §6 — "could not run" is GREY ON PURPOSE: a check that did not
+     execute has no finding, and a warning colour makes absence of evidence look like evidence. */
+  --ag-ok:#17CF60;
+  --ag-ok-dim:rgba(23,207,96,.12);
+  --ag-deny:#FF5C4D;             /* tuned against navy, not against white */
+  --ag-deny-dim:rgba(255,92,77,.12);
+  --ag-comment:#E8F6A0;
+  --ag-comment-dim:rgba(232,246,160,.12);
+  --ag-unknown:#6B7A93;
+  --ag-unknown-dim:rgba(107,122,147,.14);
+
+  /* ── TYPE. Root is fluid: Agave measured 13.2034px, not 16, and sizes everything in rem so
+        the page breathes as one unit. Weights 400 and 600 ONLY. ─────────── */
+  --ag-font:"Geist","Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --ag-mono:"Geist Mono","JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --ag-t-micro:.75rem;
+  --ag-t-sm:.875rem;
+  --ag-t-body:1rem;
+  --ag-t-lg:1.25rem;
+  --ag-t-h2:2.4rem;
+  --ag-t-h1:2.75rem;
+  --ag-t-display:3rem;
+  --ag-lh:1.40;                  /* 18.48/13.20 — tight. Do not relax to 1.6 */
+  --ag-lh-tight:1.20;
+  --ag-track-display:-.025em;    /* negative tracking on DISPLAY SIZES ONLY */
+
+  /* ── MOTION. Everything is .2s. The easing is ease-out-circ: fast departure, soft landing. ── */
+  --ag-dur:.2s;
+  --ag-ease:cubic-bezier(.075,.82,.165,1);
+  --ag-stagger:90ms;
+
+  --ag-r:0;                      /* THERE IS NO RADIUS. The only non-zero value on the whole
+                                    page was 50% on avatars. Buttons, cards, inputs: square. */
+}
+
+html{font-size:13.2034px}
+@media (min-width:1100px){html{font-size:15px}}
+@media (min-width:1500px){html{font-size:16px}}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--ag-navy);
+  color:var(--ag-ink-dark);
+  font-family:var(--ag-font);
+  font-weight:400;
+  font-size:var(--ag-t-body);
+  line-height:var(--ag-lh);
+  -webkit-font-smoothing:antialiased;
+  -webkit-text-size-adjust:100%;
+}
+
+/* THE MOTION KILL-SWITCH. Every animation here is decoration; the values are the content. Under
+   reduced motion each one collapses to its END state — never to its start, which would hide data. */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms!important;animation-iteration-count:1!important;
+    transition-duration:.001ms!important;
+  }
+  .ag-cascade > *{opacity:1!important;transform:none!important}
+  .ag-flow__path{stroke-dashoffset:0!important}
+  .ag-bar{transform:scaleX(1)!important}
+}
+
+/* ── BANDS. Full-bleed, stacked, each owning its palette completely. ─────── */
+.ag-band{padding:3rem 1.5rem}
+.ag-band--navy{background:var(--ag-navy);color:var(--ag-ink-dark)}
+.ag-band--paper{background:var(--ag-paper);color:var(--ag-ink)}
+.ag-band--white{background:var(--ag-white);color:var(--ag-ink)}
+.ag-wrap{max-width:60rem;margin:0 auto}
+
+/* The diagonal hatch that fills Agave's page margins — their signature edge. */
+.ag-hatch{
+  background-image:repeating-linear-gradient(45deg,
+    var(--ag-line-dark) 0 1px, transparent 1px 7px);
+}
+
+/* ── TYPE ROLES ──────────────────────────────────────────────────────────── */
+.ag-micro{                       /* uppercase mono micro-label above a block */
+  font-family:var(--ag-mono);font-size:var(--ag-t-micro);font-weight:400;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--ag-ink-dark-mute);
+  display:block;margin:0 0 .5rem;
+}
+.ag-band--paper .ag-micro,.ag-band--white .ag-micro{color:var(--ag-ink-2)}
+.ag-h1{font-size:var(--ag-t-h1);font-weight:600;letter-spacing:var(--ag-track-display);
+  line-height:var(--ag-lh-tight);margin:0}
+.ag-h2{font-size:var(--ag-t-h2);font-weight:600;letter-spacing:var(--ag-track-display);
+  line-height:var(--ag-lh-tight);margin:0}
+.ag-h3{font-size:var(--ag-t-lg);font-weight:600;margin:0 0 .5rem;letter-spacing:-.01em}
+.ag-p{margin:0 0 1rem;max-width:62ch}
+.ag-p--mid{color:var(--ag-ink-dark-mid)}
+.ag-band--paper .ag-p--mid,.ag-band--white .ag-p--mid{color:var(--ag-ink-2)}
+.ag-mono{font-family:var(--ag-mono);font-size:.92em}
+.ag-num{font-variant-numeric:tabular-nums}
+.ag-mute{color:var(--ag-ink-dark-mute)}
+
+/* ── BUTTONS. Measured verbatim. Note black text ON green — green is a surface, not an ink. ── */
+.ag-btn{
+  display:inline-block;font-family:var(--ag-font);font-size:var(--ag-t-sm);font-weight:600;
+  border-radius:var(--ag-r);border:0;cursor:pointer;padding:1rem 2rem;
+  background:var(--ag-green);color:#000;transition:background-color var(--ag-dur);
+}
+.ag-btn:hover{background:#12b453}
+.ag-btn--ghost{background:transparent;color:var(--ag-ink-dark);
+  border:1px solid var(--ag-ink-dark);padding:.625rem 1rem}
+.ag-btn--ghost:hover{background:rgba(255,255,255,.1)}
+.ag-btn:focus-visible,.ag-key:focus-visible{outline:2px solid var(--ag-green);outline-offset:2px}
+
+/* ── VERDICT. Four roles, and one of them is deliberately colourless. ────── */
+.ag-verdict{
+  display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;
+  padding:1rem 1.25rem;border:1px solid;border-radius:var(--ag-r);margin:0 0 1.5rem;
+}
+.ag-verdict__k{font-size:var(--ag-t-lg);font-weight:600;letter-spacing:-.01em}
+.ag-verdict__n{font-family:var(--ag-mono);font-size:var(--ag-t-sm);color:var(--ag-ink-dark-mid);
+  font-variant-numeric:tabular-nums}
+.ag-verdict--approve{border-color:var(--ag-ok);background:var(--ag-ok-dim)}
+.ag-verdict--approve .ag-verdict__k{color:var(--ag-ok)}
+.ag-verdict--deny{border-color:var(--ag-deny);background:var(--ag-deny-dim)}
+.ag-verdict--deny .ag-verdict__k{color:var(--ag-deny)}
+.ag-verdict--comment{border-color:var(--ag-comment);background:var(--ag-comment-dim)}
+.ag-verdict--comment .ag-verdict__k{color:var(--ag-comment)}
+/* COULD NOT RUN: grey, hatched, and labelled in words. Never a warning colour. */
+.ag-verdict--unrun{border-color:var(--ag-unknown);border-style:dashed;
+  background:var(--ag-unknown-dim)}
+.ag-verdict--unrun .ag-verdict__k{color:var(--ag-ink-dark-mid)}
+
+.ag-pill{display:inline-block;font-family:var(--ag-mono);font-size:var(--ag-t-micro);
+  letter-spacing:.08em;text-transform:uppercase;padding:.15rem .5rem;border:1px solid;
+  border-radius:var(--ag-r);white-space:nowrap}
+.ag-pill--ok{color:var(--ag-ok);border-color:var(--ag-ok);background:var(--ag-ok-dim)}
+.ag-pill--deny{color:var(--ag-deny);border-color:var(--ag-deny);background:var(--ag-deny-dim)}
+.ag-pill--comment{color:var(--ag-comment);border-color:var(--ag-comment);background:var(--ag-comment-dim)}
+.ag-pill--unknown{color:var(--ag-ink-dark-mid);border-color:var(--ag-unknown);
+  border-style:dashed;background:var(--ag-unknown-dim)}
+
+/* ── TABLES ──────────────────────────────────────────────────────────────── */
+.ag-tw{overflow-x:auto}
+.ag-tbl{width:100%;border-collapse:collapse;font-size:var(--ag-t-sm);margin:0 0 1.25rem}
+.ag-tbl__cap{caption-side:top;text-align:left;font-family:var(--ag-mono);
+  font-size:var(--ag-t-micro);letter-spacing:.08em;color:var(--ag-ink-dark-mute);
+  padding:0 0 .625rem}
+.ag-tbl th,.ag-tbl td{text-align:left;padding:.625rem .875rem;
+  border-bottom:1px solid var(--ag-line-dark);vertical-align:top}
+.ag-tbl thead th{font-family:var(--ag-mono);font-size:var(--ag-t-micro);font-weight:400;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--ag-ink-dark-mute);
+  background:var(--ag-surface-2)}
+.ag-tbl tbody th{font-family:var(--ag-mono);font-weight:400;color:var(--ag-ink-dark);
+  white-space:nowrap}
+.ag-tbl td{color:var(--ag-ink-dark-mid)}
+
+.ag-card{background:var(--ag-surface);border:1px solid var(--ag-line-dark);
+  border-radius:var(--ag-r);padding:1.25rem}
+.ag-note{font-size:var(--ag-t-sm);color:var(--ag-ink-dark-mid);border-left:2px solid var(--ag-green);
+  background:var(--ag-green-10);padding:.75rem 1rem;margin:0;max-width:66ch}
+.ag-note--deny{border-left-color:var(--ag-deny);background:var(--ag-deny-dim)}
+.ag-note--comment{border-left-color:var(--ag-comment);background:var(--ag-comment-dim)}
+.ag-note--unrun{border-left-color:var(--ag-unknown);background:var(--ag-unknown-dim)}
+.ag-note strong{color:var(--ag-ink-dark);font-weight:600}
+
+/* ══ AHA MOTION — Agave's own three patterns. DESIGN.md §4. ═══════════════ */
+
+/* 1 · FIELD-FILL CASCADE — rows land one at a time, the beat that says
+       "extraction became structure". translateY + opacity, .2s, staggered 90ms. */
+.ag-cascade > *{opacity:0;transform:translateY(6px);
+  animation:agIn var(--ag-dur) var(--ag-ease) forwards}
+.ag-cascade > *:nth-child(1){animation-delay:calc(var(--ag-stagger)*1)}
+.ag-cascade > *:nth-child(2){animation-delay:calc(var(--ag-stagger)*2)}
+.ag-cascade > *:nth-child(3){animation-delay:calc(var(--ag-stagger)*3)}
+.ag-cascade > *:nth-child(4){animation-delay:calc(var(--ag-stagger)*4)}
+.ag-cascade > *:nth-child(5){animation-delay:calc(var(--ag-stagger)*5)}
+.ag-cascade > *:nth-child(6){animation-delay:calc(var(--ag-stagger)*6)}
+.ag-cascade > *:nth-child(7){animation-delay:calc(var(--ag-stagger)*7)}
+.ag-cascade > *:nth-child(8){animation-delay:calc(var(--ag-stagger)*8)}
+@keyframes agIn{to{opacity:1;transform:none}}
+
+/* The green bar that arrives BEFORE the value resolves — Agave's AI card, exactly. */
+.ag-bar{display:block;height:.5rem;background:var(--ag-green);transform-origin:left center;
+  transform:scaleX(0);animation:agBar .28s var(--ag-ease) forwards}
+@keyframes agBar{to{transform:scaleX(1)}}
+
+/* 2 · FLOW LINE — a green curve that draws itself from the artifact to the answer.
+       It is what makes a result feel CAUSED rather than displayed. */
+.ag-flow__path{fill:none;stroke:var(--ag-green);stroke-width:1.5;
+  stroke-dasharray:var(--len,300);stroke-dashoffset:var(--len,300);
+  animation:agDraw .6s var(--ag-ease) forwards}
+@keyframes agDraw{to{stroke-dashoffset:0}}
+
+/* 3 · PROGRESS-DRIVEN ADVANCE — Agave's tabsProgress, 7s linear. */
+.ag-progress{height:2px;background:var(--ag-line-dark);overflow:hidden}
+.ag-progress__fill{height:100%;background:var(--ag-green);transform-origin:left center;
+  transform:scaleX(0);animation:agProgress 7s linear forwards}
+@keyframes agProgress{to{transform:scaleX(1)}}
+
+/* 4 · MARQUEE — Agave's logosLoop, measured at 30s and 50s linear, two speeds running at once.
+      The only LINEAR animation on their site and the only one over a second: everything else is
+      .2s ease-out-circ. It reads as infrastructure ticking over rather than as an entrance. */
+.ag-marquee{overflow:hidden;display:flex;gap:0;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.ag-marquee__track{display:flex;flex:0 0 auto;gap:2.5rem;padding-right:2.5rem;
+  animation:agLoop 30s linear infinite}
+.ag-marquee--slow .ag-marquee__track{animation-duration:50s}
+.ag-marquee:hover .ag-marquee__track{animation-play-state:paused}
+@keyframes agLoop{to{transform:translateX(-100%)}}
+/* The track is duplicated in markup (aria-hidden on the copy) so -100% lands seamlessly. */
+
+/* Skeletons, for the loading state. */
+.ag-sk{height:.875rem;background:var(--ag-surface-2);margin-bottom:.75rem;
+  animation:agPulse 1.4s ease-in-out infinite}
+.ag-sk--lg{height:1.75rem;width:52%}
+.ag-sk--sm{width:34%}
+@keyframes agPulse{0%,100%{opacity:.45}50%{opacity:.9}}
+
+/* ── STATE VISIBILITY. ONE mechanism: the `hidden` attribute, which is what design-loop's
+      state-matrix drives (el.hidden = el.getAttribute('data-state') !== s). No class, no script.
+      A second mechanism is how a state renders under the gate and stays blank in a browser. ── */
+.ag-state[hidden]{display:none}

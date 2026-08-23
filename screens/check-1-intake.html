@@ -1,85 +1,194 @@
+<!-- CHECK 1—INTAKE.  "Is this invoice complete enough to check?"
+     ══════════════════════════════════════════════════════════════════════════════════════════════
+     CONTRACT—read from checks/intake.py, not invented.
+
+       IN   fields: dict            the five values OCR pulled off the document
+                                    invoice_id · vendor_name · amount · date · po_id
+       OUT  IntakeResult
+              outcome        "APPROVE" | "COMMENT"   -- NEVER "DENY". A missing field is the
+                                                        absence of evidence, not evidence of fraud.
+              applicable     bool
+              reason         str
+              missing        [{field, label, why}]   -- `why` names the DOWNSTREAM check that dies
+              present_count / required_count
+
+     WHY FIVE FIELDS AND NOT FOUR. The operator's original list omitted po_id. checks 3 and 4 are
+     BOTH keyed on it, so without it the duplicate search has nothing to match and the ERP lookup
+     has nothing to look up. This screen showed four fields until the backend landed; that was the
+     screen being wrong, not the backend.
+
+     WHY THIS SCREEN GATES. If intake COMMENTs, checks 2-4 do not run—and they are reported as
+     NOT RUN, never as passed. That distinction is the whole product. A pipeline without it reads:
+        bad PDF -> garbage fields -> vendor "matched" -> no duplicate found -> APPROVE
+     Every downstream answer is about a document nobody read. That is the fabricated receipt.
+
+     ANGELA (PM at a general contractor) is the reader. She is not debugging a parser; she is
+     deciding whether to put her name on a payment. So every absent field says which QUESTION it
+     makes unanswerable, not which parser rule failed. -->
+<html lang="en">
 <meta charset="utf-8">
-<title>Check 1 — Intake</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="ui-states" content="loading,empty,error,success,partial">
+<title>Check 1—Intake</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="shell.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono:wght@400&display=swap">
+<link rel="stylesheet" href="agave.css">
+<style>
+  .hd{border-bottom:1px solid var(--ag-line-dark);padding-bottom:1rem;margin-bottom:2rem;
+    display:flex;justify-content:space-between;align-items:flex-end;gap:1.5rem;flex-wrap:wrap}
+  .hd__q{color:var(--ag-ink-dark-mid);margin:0;max-width:34ch;text-align:right;
+    font-size:var(--ag-t-sm)}
+  .gate{margin-top:1.5rem;border-top:1px solid var(--ag-line-dark);padding-top:1rem}
+  .gate__row{display:flex;align-items:center;gap:.6rem;padding:.35rem 0;
+    font-family:var(--ag-mono);font-size:var(--ag-t-micro);letter-spacing:.04em}
+  .gate__hatch{width:3.5rem;height:.45rem;
+    background:repeating-linear-gradient(45deg,var(--ag-unknown) 0 2px,transparent 2px 5px);
+    outline:1px solid var(--ag-unknown)}
+  .gate__ok{width:3.5rem;height:.45rem;background:var(--ag-green)}
+  .why{color:var(--ag-ink-dark-mute);font-size:.92em}
+</style>
 
-<main class="app">
-  <header class="bar">
+<main class="ag-band ag-band--navy" style="min-height:100vh">
+<div class="ag-wrap">
+
+  <header class="hd">
     <div>
-      <span class="bar__k">Check 1 of 4</span>
-      <h1 class="bar__t">Intake</h1>
+      <span class="ag-micro">Check 1 of 4 · gates the rest</span>
+      <h1 class="ag-h2">Intake</h1>
     </div>
-    <p class="bar__q">Is this invoice complete enough to check?</p>
+    <p class="hd__q">Is this invoice complete enough to check?</p>
   </header>
 
-  <!-- STATE: loading -->
-  <section data-state="loading" class="st">
-    <div class="sk sk--lg" aria-hidden="true"></div>
-    <div class="sk" aria-hidden="true"></div>
-    <div class="sk sk--sm" aria-hidden="true"></div>
-    <p class="st__say" role="status">Reading the document…</p>
+  <!-- ── loading ─────────────────────────────────────────────────────────── -->
+  <section data-state="loading" class="ag-state">
+    <div class="ag-sk ag-sk--lg" aria-hidden="true"></div>
+    <div class="ag-sk" aria-hidden="true"></div>
+    <div class="ag-sk ag-sk--sm" aria-hidden="true"></div>
+    <p class="ag-p ag-p--mid" role="status" style="margin-top:1rem">Reading the document…</p>
   </section>
 
-  <!-- STATE: empty -->
-  <section data-state="empty" class="st">
-    <h2 class="st__h">No invoice selected</h2>
-    <p class="st__p">Pick an invoice from the queue to run intake against its scanned document.</p>
-    <p class="mono st__hint">600 invoices loaded · 72 carry a missing field</p>
+  <!-- ── empty ───────────────────────────────────────────────────────────── -->
+  <section data-state="empty" class="ag-state" hidden>
+    <h2 class="ag-h3">No invoice selected</h2>
+    <p class="ag-p ag-p--mid">Pick an invoice from the queue to run intake against its scanned
+      document.</p>
+    <p class="ag-micro">600 invoices loaded · 72 carry at least one unreadable field</p>
   </section>
 
-  <!-- STATE: error -->
-  <section data-state="error" class="st">
-    <h2 class="st__h st__h--bad">The document could not be read</h2>
-    <p class="st__p">OCR returned no text for <span class="mono">INV-00417</span>. This is not a
-      verdict on the invoice — nothing was checked.</p>
-    <ul class="st__list">
+  <!-- ── error ───────────────────────────────────────────────────────────── -->
+  <section data-state="error" class="ag-state" hidden>
+    <div class="ag-verdict ag-verdict--unrun">
+      <span class="ag-verdict__k">Could not run</span>
+      <span class="ag-verdict__n">0 of 5 fields read</span>
+    </div>
+    <p class="ag-p ag-p--mid">OCR returned no text for <span class="ag-mono">INV-00417</span>.
+      <strong style="color:var(--ag-ink-dark)">This is not a verdict on the invoice</strong> —
+      nothing was checked, so there is nothing to report about it.</p>
+    <ul class="ag-p ag-p--mid" style="padding-left:1.2rem">
       <li>The file may be a scan of a blank page</li>
-      <li>The file may be missing at <span class="mono">docs/invoices/INV-00417.pdf</span></li>
+      <li>The file may be missing at <span class="ag-mono">docs/invoices/INV-00417.pdf</span></li>
     </ul>
-    <button class="btn" type="button">Retry</button>
+    <button class="ag-btn ag-btn--ghost" type="button">Retry</button>
   </section>
 
-  <!-- STATE: success -->
-  <section data-state="success" class="st">
-    <div class="verdict verdict--ok">
-      <span class="verdict__k">Approve</span>
-      <span class="verdict__n">4 / 4 fields present</span>
+  <!-- ── success · APPROVE ───────────────────────────────────────────────────
+       THE AHA. The five rows land one at a time (ag-cascade, 90ms apart), each value arriving as
+       a green bar that resolves into text—Agave's own AI-card beat: extraction becoming
+       structure, in front of you. -->
+  <section data-state="success" class="ag-state" hidden>
+    <div class="ag-verdict ag-verdict--approve">
+      <span class="ag-verdict__k">Approve</span>
+      <span class="ag-verdict__n">5 / 5 required fields present</span>
     </div>
-    <table class="tbl">
-      <caption class="tbl__cap"><span class="mono">INV-00001</span> · read by OCR</caption>
-      <thead><tr><th scope="col">Required field</th><th scope="col">Read as</th><th scope="col">State</th></tr></thead>
-      <tbody>
-        <tr><th scope="row">po_id</th><td class="mono">P-3RV105L</td><td><span class="pill pill--ok">present</span></td></tr>
-        <tr><th scope="row">vendor_name</th><td>Brighter Choice Community School</td><td><span class="pill pill--ok">present</span></td></tr>
-        <tr><th scope="row">amount</th><td class="mono num">33,256.99</td><td><span class="pill pill--ok">present</span></td></tr>
-        <tr><th scope="row">period</th><td class="mono">202605</td><td><span class="pill pill--ok">present</span></td></tr>
-      </tbody>
-    </table>
-    <p class="note">Every field was read from the document, not from the database row. Intake
-      exists so no later check answers a question about a document nobody read.</p>
+    <div class="ag-tw">
+      <table class="ag-tbl ag-cascade">
+        <caption class="ag-tbl__cap">INV-00001 · read by OCR from the document, not the database</caption>
+        <thead><tr>
+          <th scope="col">Required field</th><th scope="col">Read as</th>
+          <th scope="col">Needed by</th><th scope="col">State</th>
+        </tr></thead>
+        <tbody>
+          <tr><th scope="row">invoice_id</th><td class="ag-mono">INV-00001</td>
+              <td class="why">check 3 keys the duplicate search on it</td>
+              <td><span class="ag-pill ag-pill--ok">present</span></td></tr>
+          <tr><th scope="row">vendor_name</th><td>Brighter Choice Community School</td>
+              <td class="why">check 2 resolves it to a canonical vendor</td>
+              <td><span class="ag-pill ag-pill--ok">present</span></td></tr>
+          <tr><th scope="row">amount</th><td class="ag-mono ag-num">33,256.99</td>
+              <td class="why">check 3 matches on PO + amount + period</td>
+              <td><span class="ag-pill ag-pill--ok">present</span></td></tr>
+          <tr><th scope="row">date</th><td class="ag-mono">2026-05-18</td>
+              <td class="why">the period is derived from it</td>
+              <td><span class="ag-pill ag-pill--ok">present</span></td></tr>
+          <tr><th scope="row">po_id</th><td class="ag-mono">P-3RV105L</td>
+              <td class="why">checks 3 and 4 are both keyed on it</td>
+              <td><span class="ag-pill ag-pill--ok">present</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="gate">
+      <span class="ag-micro">Because intake passed, the rest run</span>
+      <div class="gate__row"><span class="gate__ok"></span><span>2 · vendor resolution</span><span class="ag-mute">will run</span></div>
+      <div class="gate__row"><span class="gate__ok"></span><span>3 · paid before</span><span class="ag-mute">will run</span></div>
+      <div class="gate__row"><span class="gate__ok"></span><span>4 · job status</span><span class="ag-mute">will run</span></div>
+    </div>
+    <p class="ag-note" style="margin-top:1.5rem">Every field was read from the <strong>document</strong>,
+      not from the database row. Intake exists so that no later check answers a question about a
+      document nobody read.</p>
   </section>
 
-  <!-- STATE: partial — the low-confidence state the deck promised -->
-  <section data-state="partial" class="st">
-    <div class="verdict verdict--ask">
-      <span class="verdict__k">Comment</span>
-      <span class="verdict__n">2 / 4 fields present</span>
+  <!-- ── partial · COMMENT, and the gate closes ──────────────────────────── -->
+  <section data-state="partial" class="ag-state" hidden>
+    <div class="ag-verdict ag-verdict--comment">
+      <span class="ag-verdict__k">Comment</span>
+      <span class="ag-verdict__n">3 / 5 required fields present</span>
     </div>
-    <table class="tbl">
-      <caption class="tbl__cap"><span class="mono">INV-00417</span> · read by OCR</caption>
-      <thead><tr><th scope="col">Required field</th><th scope="col">Read as</th><th scope="col">State</th></tr></thead>
-      <tbody>
-        <tr><th scope="row">po_id</th><td class="mono dim">—</td><td><span class="pill pill--ask">absent</span></td></tr>
-        <tr><th scope="row">vendor_name</th><td>Brooklyn Bridge Park</td><td><span class="pill pill--ok">present</span></td></tr>
-        <tr><th scope="row">amount</th><td class="mono dim">unreadable</td><td><span class="pill pill--ask">absent</span></td></tr>
-        <tr><th scope="row">period</th><td class="mono">202605</td><td><span class="pill pill--ok">present</span></td></tr>
-      </tbody>
-    </table>
-    <p class="note note--ask"><strong>It does not guess and it does not refuse.</strong> Two fields
-      are named as absent and the invoice goes back. <span class="mono">confidence 0.50 — 2 of 4
-      checks could run</span></p>
+    <div class="ag-tw">
+      <table class="ag-tbl ag-cascade">
+        <caption class="ag-tbl__cap">INV-00417 · read by OCR</caption>
+        <thead><tr>
+          <th scope="col">Required field</th><th scope="col">Read as</th>
+          <th scope="col">Needed by</th><th scope="col">State</th>
+        </tr></thead>
+        <tbody>
+          <tr><th scope="row">invoice_id</th><td class="ag-mono">INV-00417</td>
+              <td class="why">check 3 keys the duplicate search on it</td>
+              <td><span class="ag-pill ag-pill--ok">present</span></td></tr>
+          <tr><th scope="row">vendor_name</th><td>Brooklyn Bridge Park</td>
+              <td class="why">check 2 resolves it to a canonical vendor</td>
+              <td><span class="ag-pill ag-pill--ok">present</span></td></tr>
+          <tr><th scope="row">amount</th><td class="ag-mono ag-mute">unreadable</td>
+              <td class="why">check 3 matches on PO + amount + period</td>
+              <td><span class="ag-pill ag-pill--unknown">absent</span></td></tr>
+          <tr><th scope="row">date</th><td class="ag-mono">2026-05-02</td>
+              <td class="why">the period is derived from it</td>
+              <td><span class="ag-pill ag-pill--ok">present</span></td></tr>
+          <tr><th scope="row">po_id</th><td class="ag-mono ag-mute">—</td>
+              <td class="why">checks 3 and 4 are both keyed on it</td>
+              <td><span class="ag-pill ag-pill--unknown">absent</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- THE GATE, DRAWN. This is the beat that separates this product from a confidence score:
+         the downstream checks are shown as NOT RUN, hatched and grey, never as green ticks. -->
+    <div class="gate">
+      <span class="ag-micro">Because two fields are absent, these did not run</span>
+      <div class="gate__row"><span class="gate__hatch"></span><span>2 · vendor resolution</span>
+        <span class="ag-mute">ran—vendor_name was readable</span></div>
+      <div class="gate__row"><span class="gate__hatch"></span><span>3 · paid before</span>
+        <span class="ag-mute">NOT RUN—needs po_id and amount</span></div>
+      <div class="gate__row"><span class="gate__hatch"></span><span>4 · job status</span>
+        <span class="ag-mute">NOT RUN—needs po_id</span></div>
+    </div>
+
+    <p class="ag-note ag-note--comment" style="margin-top:1.5rem">
+      <strong>It does not guess and it does not refuse.</strong> Two fields are named as absent, the
+      invoice goes back to the vendor, and the two checks that depend on them are reported as
+      <strong>not run</strong>—not as passed. There is no confidence score here, because averaging
+      over the checks that happened to run is exactly how a number gets fabricated.</p>
   </section>
+
+</div>
 </main>
-<script src="shell.js"></script>

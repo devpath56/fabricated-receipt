@@ -1,77 +1,230 @@
+<!-- CHECK 3—PAID BEFORE?  "Have we already paid this?"
+     ══════════════════════════════════════════════════════════════════════════════════════════════
+     CONTRACT—read from checks/duplicate_payment.py.
+
+       IN   invoices                the queue
+            resolver                check 2's VendorResolver—THIS CHECK CANNOT RUN WITHOUT IT
+       OUT  DuplicateFinding
+              invoice_id          str
+              matched_invoice_id  str
+              vendor_id           str
+              amount              float
+              period              str
+              kind                "exact" | "near"
+              action              "block" | "clawback" | "review"
+            + find_orphan_pos()   POs on invoices that exist in no contract at all
+
+     THE MATCH KEY IS PO + AMOUNT + PERIOD, RESOLVED BY vendor_id—never by vendor NAME.
+     This is the whole demo, and it is one real pair in the data:
+
+         INV-00012   BED-807   paid      $130,899.15   202605   "Public School 44"
+         INV-00013   BED-807   pending   $130,899.15   202605   "PUBLIC SCHOOL 44"
+
+     A literal name comparison finds NOTHING here. Both rows resolve to V0150 in check 2, and only
+     then does this check see them as the same payee. The failure mode it replaces does not look
+     like a failure—it looks like a clean pass on a question that was never really asked.
+
+     `action` IS DECIDED BY THE STATE OF THE MATCH, NOT BY THIS INVOICE:
+        block     the twin is still pending—stop it before money moves
+        clawback  the twin is ALREADY PAID—the money is gone, this is recovery
+        review    a NEAR match: same PO and period, amount differs. Could be a legitimate
+                  progress billing, so it is never auto-actioned.
+
+     WHY IT REFUSES ON A CHECK-2 `review`. Running a duplicate search against a vendor_id nobody
+     accepted would return "no duplicate found"—indistinguishable from a genuine clean result. -->
+<html lang="en">
 <meta charset="utf-8">
-<title>Check 3 — Paid before</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="ui-states" content="loading,empty,error,success,duplicate,near">
+<title>Check 3—Paid before</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="shell.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono:wght@400&display=swap">
+<link rel="stylesheet" href="agave.css">
+<style>
+  .hd{border-bottom:1px solid var(--ag-line-dark);padding-bottom:1rem;margin-bottom:2rem;
+    display:flex;justify-content:space-between;align-items:flex-end;gap:1.5rem;flex-wrap:wrap}
+  .hd__q{color:var(--ag-ink-dark-mid);margin:0;max-width:34ch;text-align:right;font-size:var(--ag-t-sm)}
 
-<main class="app">
-  <header class="bar">
+  /* THE PAIR. Two invoice cards side by side with the match key drawn BETWEEN them, so the reader
+     sees WHICH fields made them the same row—not just that something matched. */
+  .pair{display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:stretch;margin:0 0 1.5rem}
+  .inv{background:var(--ag-surface);border:1px solid var(--ag-line-dark);padding:1rem 1.15rem}
+  .inv--twin{border-color:var(--ag-deny)}
+  .inv__id{font-family:var(--ag-mono);font-size:var(--ag-t-lg);font-weight:600;display:block}
+  .inv__k{font-family:var(--ag-mono);font-size:var(--ag-t-micro);letter-spacing:.12em;
+    text-transform:uppercase;color:var(--ag-ink-dark-mute);display:block;margin-bottom:.35rem}
+  .inv__l{display:flex;justify-content:space-between;gap:.75rem;padding:.3rem 0;
+    font-family:var(--ag-mono);font-size:var(--ag-t-sm);border-bottom:1px solid var(--ag-line-dark)}
+  .inv__l:last-child{border-bottom:0}
+  .inv__l span:first-child{color:var(--ag-ink-dark-mute)}
+  .same{color:var(--ag-green)}
+  .diff{color:var(--ag-comment)}
+
+  /* The key that joined them, drawn as a spine between the cards. */
+  .key{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;
+    min-width:7.5rem;padding:.5rem}
+  .key__t{font-family:var(--ag-mono);font-size:var(--ag-t-micro);letter-spacing:.1em;
+    text-transform:uppercase;color:var(--ag-green);text-align:center}
+  .key__b{width:100%;height:.4rem;background:var(--ag-green);transform-origin:left center;
+    transform:scaleX(0);animation:agBar .3s var(--ag-ease) forwards}
+  /* The three bars sit at span positions 2, 4 and 6—key__t and key__n are spans too, so
+     nth-of-type counts them. nth-of-type(3) matched a label, not a bar, and two of the three
+     bars fired with no delay at all. The stagger IS the Agave signature; it has to land. */
+  .key__b:nth-of-type(4){animation-delay:.09s}
+  .key__b:nth-of-type(6){animation-delay:.18s}
+  .key__n{font-family:var(--ag-mono);font-size:var(--ag-t-micro);color:var(--ag-ink-dark-mute)}
+  @media (max-width:720px){.pair{grid-template-columns:1fr}}
+
+  .money{font-size:clamp(2rem,7vw,3.6rem);font-weight:600;letter-spacing:-.03em;
+    font-variant-numeric:tabular-nums;line-height:1;color:var(--ag-deny);display:block;margin:.25rem 0 .5rem}
+</style>
+
+<main class="ag-band ag-band--navy" style="min-height:100vh">
+<div class="ag-wrap">
+
+  <header class="hd">
     <div>
-      <span class="bar__k">Check 3 of 4</span>
-      <h1 class="bar__t">Paid before</h1>
+      <span class="ag-micro">Check 3 of 4 · needs check 2's vendor_id</span>
+      <h1 class="ag-h2">Paid before?</h1>
     </div>
-    <p class="bar__q">Has this vendor already been paid for this?</p>
+    <p class="hd__q">Have we already paid this invoice, under another spelling?</p>
   </header>
 
-  <section data-state="loading" class="st">
-    <div class="sk sk--lg" aria-hidden="true"></div>
-    <div class="sk" aria-hidden="true"></div>
-    <div class="sk sk--sm" aria-hidden="true"></div>
-    <p class="st__say" role="status">Searching every resolved spelling against PO, amount and period…</p>
+  <section data-state="loading" class="ag-state">
+    <div class="ag-sk ag-sk--lg" aria-hidden="true"></div>
+    <div class="ag-sk" aria-hidden="true"></div>
+    <div class="ag-sk ag-sk--sm" aria-hidden="true"></div>
+    <p class="ag-p ag-p--mid" role="status" style="margin-top:1rem">Searching on PO + amount + period, keyed by vendor_id…</p>
   </section>
 
-  <section data-state="empty" class="st">
-    <h2 class="st__h">Vendor not resolved yet</h2>
-    <p class="st__p">This check runs against <em>every</em> spelling check 2 collapses into one
-      vendor. Until that resolves, a search here would read one string and report clean.</p>
-    <p class="mono st__hint">That is exactly how the $68,000 duplicate was paid</p>
+  <section data-state="empty" class="ag-state" hidden>
+    <h2 class="ag-h3">Nothing to compare against</h2>
+    <p class="ag-p ag-p--mid">No prior invoice exists for this vendor.</p>
+    <p class="ag-micro">41 of 600 invoices in the queue are duplicates · $40,767,000 across 48 alias clusters</p>
   </section>
 
-  <section data-state="error" class="st">
-    <h2 class="st__h st__h--bad">The invoice ledger could not be read</h2>
-    <p class="st__p">No payment history was searched. <strong>This is not "no duplicate found"</strong>
-      — nothing was checked, and the difference is the whole product.</p>
-    <p class="st__p mono dim">expected: data/invoices.csv</p>
-    <button class="btn" type="button">Retry</button>
+  <!-- ── error · THE REFUSAL. The state that makes this product different. ── -->
+  <section data-state="error" class="ag-state" hidden>
+    <div class="ag-verdict ag-verdict--unrun">
+      <span class="ag-verdict__k">Could not run</span>
+      <span class="ag-verdict__n">check 2 returned review, not merged</span>
+    </div>
+    <p class="ag-p ag-p--mid">The vendor scored <span class="ag-mono">0.86</span>—a candidate, not
+      an identity. This check searches <strong style="color:var(--ag-ink-dark)">by vendor_id</strong>,
+      and running it against an id nobody accepted would return
+      <em>“no duplicate found”</em>.</p>
+    <p class="ag-note ag-note--unrun"><strong>That result would be indistinguishable from a clean
+      one.</strong> A search for the wrong company finds nothing, exactly like a search that found
+      nothing. So the check reports that it did not run, and the invoice waits on a human deciding
+      who the vendor is.</p>
   </section>
 
-  <section data-state="success" class="st">
-    <div class="verdict verdict--ok">
-      <span class="verdict__k">Approve</span>
-      <span class="verdict__n">confidence 1.00 — 0 prior payments</span>
+  <!-- ── success · genuinely clean ───────────────────────────────────────── -->
+  <section data-state="success" class="ag-state" hidden>
+    <div class="ag-verdict ag-verdict--approve">
+      <span class="ag-verdict__k">Approve</span>
+      <span class="ag-verdict__n">0 matches · searched 47 prior invoices for V0209</span>
     </div>
-    <div class="tw">
-      <table class="tbl">
-        <caption class="tbl__cap">Searched <span class="mono">V0560</span> — all 1 spelling — on PO <span class="mono">P-3RV105L</span></caption>
-        <thead><tr><th scope="col">Spelling searched</th><th scope="col">Period</th><th scope="col">Matches</th></tr></thead>
-        <tbody>
-          <tr><th scope="row">Brighter Choice Community School</th><td class="mono">202605</td><td><span class="pill pill--ok">none</span></td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="note">No prior <span class="mono">paid</span> row on this PO, amount and period,
-      across every spelling on file.</p>
+    <p class="ag-note">Searched every prior invoice for <span class="ag-mono">V0209</span> on
+      PO <span class="ag-mono">P-200PPLS</span>, amount and period.
+      <strong>This is a clean result, and it is worth the distinction:</strong> the search ran, over
+      a vendor whose identity was accepted at 1.00, and found nothing.</p>
+    <p class="ag-micro" style="margin-top:1rem">Searched by vendor_id, not by name—the same search
+      by name would also have returned zero, and would have meant nothing.</p>
   </section>
 
-  <section data-state="partial" class="st">
-    <div class="verdict verdict--bad">
-      <span class="verdict__k">Deny</span>
-      <span class="verdict__n">confidence 1.00 — already paid</span>
+  <!-- ── duplicate · THE DEMO. Exact match, twin already paid → clawback. ─── -->
+  <section data-state="duplicate" class="ag-state" hidden>
+    <div class="ag-verdict ag-verdict--deny">
+      <span class="ag-verdict__k">Deny</span>
+      <span class="ag-verdict__n">kind exact · action clawback · the twin is already paid</span>
     </div>
-    <div class="tw">
-      <table class="tbl">
-        <caption class="tbl__cap">Searched <span class="mono">V0150</span> — <strong>both</strong> spellings — on PO <span class="mono">BED-807</span></caption>
-        <thead><tr><th scope="col">Invoice</th><th scope="col">Spelling</th><th scope="col">Amount</th><th scope="col">Status</th></tr></thead>
-        <tbody>
-          <tr><th scope="row">INV-00012</th><td>Public School 44</td><td class="mono num">130,899.15</td><td><span class="pill pill--bad">paid</span></td></tr>
-          <tr><th scope="row">INV-00013</th><td>PUBLIC SCHOOL 44</td><td class="mono num">130,899.15</td><td><span class="pill pill--ask">pending</span></td></tr>
-        </tbody>
-      </table>
+
+    <span class="ag-micro">Already out the door</span>
+    <span class="money ag-num">$130,899.15</span>
+
+    <div class="pair">
+      <div class="inv inv--twin">
+        <span class="inv__k">Already paid</span>
+        <span class="inv__id">INV-00012</span>
+        <div style="margin-top:.6rem">
+          <div class="inv__l"><span>vendor, as written</span><span>Public School 44</span></div>
+          <div class="inv__l"><span>po_id</span><span class="same">BED-807</span></div>
+          <div class="inv__l"><span>amount</span><span class="same">130,899.15</span></div>
+          <div class="inv__l"><span>period</span><span class="same">202605</span></div>
+          <div class="inv__l"><span>status</span><span style="color:var(--ag-deny)">paid</span></div>
+        </div>
+      </div>
+
+      <div class="key" aria-label="the three fields that matched">
+        <span class="key__t">matched on</span>
+        <span class="key__b"></span><span class="key__n">po_id</span>
+        <span class="key__b"></span><span class="key__n">amount</span>
+        <span class="key__b"></span><span class="key__n">period</span>
+        <span class="key__t" style="margin-top:.4rem">both → V0150</span>
+      </div>
+
+      <div class="inv">
+        <span class="inv__k">In front of you now</span>
+        <span class="inv__id">INV-00013</span>
+        <div style="margin-top:.6rem">
+          <div class="inv__l"><span>vendor, as written</span><span class="diff">PUBLIC SCHOOL 44</span></div>
+          <div class="inv__l"><span>po_id</span><span class="same">BED-807</span></div>
+          <div class="inv__l"><span>amount</span><span class="same">130,899.15</span></div>
+          <div class="inv__l"><span>period</span><span class="same">202605</span></div>
+          <div class="inv__l"><span>status</span><span>pending</span></div>
+        </div>
+      </div>
     </div>
-    <p class="note note--bad"><strong>Same PO, same amount, same period — two spellings.</strong>
-      A literal name match finds nothing here and reports clean. This was found only because check 2
-      resolved both records into <span class="mono">V0150</span> first.</p>
+
+    <p class="ag-note ag-note--deny"><strong>The only difference between these two rows is
+      capitalisation.</strong> A literal name comparison finds nothing here—the two strings are
+      not equal. Check 2 resolved both to <span class="ag-mono">V0150</span> first, and only then
+      could this check see one payment attempted twice. Because the twin is already
+      <strong>paid</strong>, the action is <span class="ag-mono">clawback</span>, not
+      <span class="ag-mono">block</span>: the money has moved.</p>
   </section>
+
+  <!-- ── near · same PO and period, amount differs → review, never auto-actioned ── -->
+  <section data-state="near" class="ag-state" hidden>
+    <div class="ag-verdict ag-verdict--comment">
+      <span class="ag-verdict__k">Comment</span>
+      <span class="ag-verdict__n">kind near · action review · amount differs</span>
+    </div>
+    <div class="pair">
+      <div class="inv">
+        <span class="inv__k">Prior invoice</span>
+        <span class="inv__id">INV-00204</span>
+        <div style="margin-top:.6rem">
+          <div class="inv__l"><span>po_id</span><span class="same">P-3RV105L</span></div>
+          <div class="inv__l"><span>amount</span><span class="diff">88,400.00</span></div>
+          <div class="inv__l"><span>period</span><span class="same">202604</span></div>
+          <div class="inv__l"><span>status</span><span>paid</span></div>
+        </div>
+      </div>
+      <div class="key">
+        <span class="key__t">matched on</span>
+        <span class="key__b"></span><span class="key__n">po_id</span>
+        <span class="key__b"></span><span class="key__n">vendor_id</span>
+        <span class="key__n" style="color:var(--ag-comment);margin-top:.4rem">amount differs</span>
+      </div>
+      <div class="inv">
+        <span class="inv__k">In front of you now</span>
+        <span class="inv__id">INV-00318</span>
+        <div style="margin-top:.6rem">
+          <div class="inv__l"><span>po_id</span><span class="same">P-3RV105L</span></div>
+          <div class="inv__l"><span>amount</span><span class="diff">33,256.99</span></div>
+          <div class="inv__l"><span>period</span><span class="same">202605</span></div>
+          <div class="inv__l"><span>status</span><span>pending</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="ag-note ag-note--comment"><strong>This is probably fine, and that is exactly why it is
+      not auto-actioned.</strong> Same PO, same vendor, different amount and month—the ordinary
+      shape of a progress billing on a live job. Blocking it would train Angela to click through
+      this check. It is surfaced once, with both rows, and she decides.</p>
+  </section>
+
+</div>
 </main>
-<script src="shell.js"></script>
