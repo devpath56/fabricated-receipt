@@ -39,13 +39,15 @@
      mask and rises into place—the type appears to be dealt rather than faded. Agave's easing
      does the work: fast departure, long soft landing. */
   .kin{display:block;overflow:hidden;line-height:.94}
+  /* A line of display type is a NARRATIVE beat, not a hover response. .42s with a 90ms
+     stagger read as one simultaneous flash from more than a metre away. */
   .kin > span{display:block;transform:translateY(105%);
-    animation:kinUp .42s var(--ag-ease) forwards}
+    animation:kinUp .75s var(--ag-ease) forwards}
   @keyframes kinUp{to{transform:translateY(0)}}
-  .beat[data-on] .kin:nth-of-type(1) > span{animation-delay:.04s}
-  .beat[data-on] .kin:nth-of-type(2) > span{animation-delay:.13s}
-  .beat[data-on] .kin:nth-of-type(3) > span{animation-delay:.22s}
-  .beat[data-on] .kin:nth-of-type(4) > span{animation-delay:.31s}
+  .beat[data-on] .kin:nth-of-type(1) > span{animation-delay:.05s}
+  .beat[data-on] .kin:nth-of-type(2) > span{animation-delay:.30s}
+  .beat[data-on] .kin:nth-of-type(3) > span{animation-delay:.55s}
+  .beat[data-on] .kin:nth-of-type(4) > span{animation-delay:.80s}
 
   .xxl{font-size:clamp(3.2rem,13vw,11rem);font-weight:600;letter-spacing:-.04em;margin:0}
   .xl {font-size:clamp(2rem,6.4vw,5rem);font-weight:600;letter-spacing:-.03em;margin:0}
@@ -54,17 +56,8 @@
   .green{color:var(--ag-green)}
   .lime{color:var(--ag-lime)}
 
-  .lede{margin-top:1.6rem;opacity:0;animation:agIn .3s var(--ag-ease) .5s forwards}
-  .lede--late{animation-delay:1.5s}
-
-  /* ── BEAT 3 · the confidence number, and the cascade that undoes it ────── */
-  .score{display:flex;align-items:center;gap:clamp(1rem,3vw,2.5rem);flex-wrap:wrap}
-  .score__n{font-size:clamp(4rem,15vw,12rem);font-weight:600;letter-spacing:-.05em;
-    line-height:.9;font-variant-numeric:tabular-nums;position:relative;display:inline-block}
-  /* The strike is a scaled bar, not text-decoration—it can be TIMED. */
-  .score__n::after{content:"";position:absolute;left:-2%;right:-2%;top:52%;height:.06em;
-    background:var(--ag-deny);transform:scaleX(0);transform-origin:left center}
-  .beat[data-on] .score__n--struck::after{animation:agBar .34s var(--ag-ease) 1.1s forwards}
+  .lede{margin-top:1.6rem;opacity:0;animation:agIn .6s var(--ag-ease) 1.15s forwards}
+  .lede--late{animation-delay:2.1s}
 
   .rows{width:min(30rem,100%);border-top:1px solid var(--ag-line-dark)}
   .row{display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:center;
@@ -80,9 +73,6 @@
   .lbl{font-size:.72em;letter-spacing:.1em;text-transform:uppercase}
   .lbl--ran{color:var(--ag-green)}
   .lbl--never{color:var(--ag-ink-dark-mid)}
-
-  /* ── The drawn flow line—Agave's green curve, the "this CAUSED that" beat ── */
-  .flow{display:block;width:min(26rem,60vw);height:5rem;margin:.5rem 0 0}
 
   /* ── CHROME ─────────────────────────────────────────────────────────────── */
   .hud{position:fixed;left:0;right:0;bottom:0;z-index:3;
@@ -139,69 +129,8 @@
       <em style="font-style:normal">“I verified it”</em>.</p>
   </section>
 
-  <!-- BEAT 3 · THE AHA. The cascade fills in—and two rows never fill.
-       This is Agave's own AI-card beat, run in reverse: instead of extraction becoming structure,
-       structure reveals that extraction never happened. -->
-  <section class="beat" data-beat="3">
-    <span class="ag-micro">Invoice INV-00021 · $102,369.19 · approved in 1.2s</span>
-    <div class="score">
-      <div>
-        <span class="score__n score__n--struck">0.94</span>
-        <span class="ag-micro" style="margin-top:.6rem">confidence, as shipped</span>
-      </div>
-      <div class="rows ag-cascade" role="table" aria-label="what the four checks actually did">
-        <div class="row" role="row">
-          <span class="row__k" role="cell">1 · intake</span>
-          <span class="row__v" role="cell"><span class="tick"></span><span class="lbl lbl--ran">ran</span></span>
-        </div>
-        <div class="row" role="row">
-          <span class="row__k" role="cell">2 · vendor</span>
-          <span class="row__v" role="cell"><span class="tick"></span><span class="lbl lbl--ran">ran</span></span>
-        </div>
-        <div class="row row--never" role="row">
-          <span class="row__k" role="cell">3 · paid before</span>
-          <span class="row__v" role="cell"><span class="tick tick--never"></span><span class="lbl lbl--never">never ran</span></span>
-        </div>
-        <div class="row row--never" role="row">
-          <span class="row__k" role="cell">4 · job status</span>
-          <span class="row__v" role="cell"><span class="tick tick--never"></span><span class="lbl lbl--never">never ran</span></span>
-        </div>
-      </div>
-    </div>
-    <p class="md lede lede--late">Two of the four checks never ran. The score was averaged over
-      <em style="font-style:normal" class="lime">the two that did</em>.</p>
-  </section>
 
-  <!-- BEAT 4 · the line. Flow line draws from the absence to the price. -->
-  <section class="beat" data-beat="4">
-    <h2 class="xl">
-      <span class="kin"><span>A check that could not run</span></span>
-      <span class="kin"><span>was counted as a check</span></span>
-      <span class="kin"><span class="green">that passed.</span></span>
-    </h2>
-    <svg class="flow" viewBox="0 0 420 80" aria-hidden="true">
-      <path class="ag-flow__path" style="--len:460"
-            d="M4 8 C 4 62, 150 20, 240 46 S 380 70, 412 70"/>
-      <path d="M404 64 l10 6 -10 6" fill="none" stroke="var(--ag-green)" stroke-width="1.5"/>
-    </svg>
-    <p class="md lede lede--late">That is not a bug in a model. It is a
-      <em style="font-style:normal">missing distinction</em>—between
-      <em style="font-style:normal" class="green">“I checked, it is fine”</em> and
-      <em style="font-style:normal" class="lime">“I could not check”</em>.</p>
-  </section>
 
-  <!-- BEAT 5 · the turn. What we built. -->
-  <section class="beat" data-beat="5">
-    <span class="ag-micro">What we built</span>
-    <h2 class="xl">
-      <span class="kin"><span>Four checks that each</span></span>
-      <span class="kin"><span>say <em style="font-style:normal" class="lime">“I could not</em></span></span>
-      <span class="kin"><span><em style="font-style:normal" class="lime">run”</em> out loud.</span></span>
-    </h2>
-    <p class="md lede lede--late">On <strong style="color:var(--ag-ink-dark);font-weight:600">5,801 real
-      NYC capital-project records</strong>—96 purchase orders whose status contradicts itself,
-      502 jobs already closed. None of it invented.</p>
-  </section>
 
 </main>
 
