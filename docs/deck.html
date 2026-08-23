@@ -461,8 +461,14 @@ table.tight td,table.tight th{padding:7px 12px;font-size:12.4px}
 
     /* OPENER — the one pane that is a room, not a document.
        Type is the whole design here: nothing to read, one thing to feel. */
-    .opener{display:flex;flex-direction:column;justify-content:center;min-height:min(68vh,620px);
-      position:relative;isolation:isolate;padding:2.2rem 0}
+    /* THE DISPLAY GOES ON THE ACTIVE STATE, NOT ON .opener.
+       `.pane{display:none}` sits at line 153 and `.opener{display:flex}` sat here with the SAME
+       specificity, 300 lines later — so the later rule won and the opener rendered on every slide,
+       on top of whatever pane was actually selected. A bare `.opener{display:flex}` does not
+       override the hidden state, it REPLACES it. */
+    .pane.opener{position:relative;isolation:isolate;padding:2.2rem 0}
+    .pane.opener[data-active="true"]{display:flex;flex-direction:column;justify-content:center;
+      min-height:min(68vh,620px)}
     /* the diagonal ground, drawn in CSS so it costs no asset and follows the theme */
     .opener::before{content:"";position:absolute;inset:-2rem -2rem;z-index:-1;border-radius:var(--r);
       background:
